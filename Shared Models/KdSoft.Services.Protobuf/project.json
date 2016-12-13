@@ -1,0 +1,24 @@
+{
+    "title": "KdSoft.Services.Protobuf",
+    "version": "1.0.0-*",
+    "description": "Services.Protobuf Class Library",
+    "copyright": "Karl Waclawek",
+    "authors": [ "Karl Waclawek" ],
+
+    "frameworks": {
+        "net451": {
+            "frameworkAssemblies": {
+                "System.Runtime": "",
+                "System.IO": ""
+            }
+        },
+        "netstandard1.3": {
+            "buildOptions": { "define": [ "COREFX" ] }
+        }
+    },
+    "dependencies": {
+        "Google.Protobuf": "3.1.0",
+        "KdSoft.Data.Models.Shared": "1.1.0-*",
+        "KdSoft.Reflection.Portable": "1.0.3"
+    }
+}

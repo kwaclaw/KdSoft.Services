@@ -1,0 +1,28 @@
+{
+    "title": "KdSoft.Services.WebApi.Utils",
+    "version": "1.0.0-*",
+    "description": "Services.WebApi.Utils Class Library",
+    "copyright": "Karl Waclawek",
+    "authors": [ "Karl Waclawek" ],
+
+    "frameworks": {
+        "net451": {},
+        "netstandard1.6": {
+            "buildOptions": { "define": [ "COREFX" ] },
+            "imports": [ "portable-net45+win8" ]
+        }
+    },
+    "dependencies": {
+        "Google.Protobuf": "3.1.0",
+        "KdSoft.Common.VeryPortable": "2.0.2",
+        "KdSoft.Services.Protobuf": "1.0.0-*",
+        "KdSoft.Utils.Portable": "3.1.0",
+        "Microsoft.AspNetCore.Http": "1.1.0-*",
+        "Microsoft.AspNetCore.Http.Abstractions": "1.1.0-*",
+        "Microsoft.AspNetCore.Http.Extensions": "1.1.0-*",
+        "Microsoft.AspNetCore.Mvc": "1.1.0-*",
+        "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.0-*",
+        "Microsoft.AspNetCore.Mvc.Core": "1.1.0-*",
+        "Newtonsoft.Json": "9.0.1-*"
+    }
+}

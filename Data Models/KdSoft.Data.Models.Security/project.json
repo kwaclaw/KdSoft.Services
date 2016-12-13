@@ -1,0 +1,17 @@
+{
+    "title": "KdSoft.Data.Model.Security",
+    "version": "1.0.0-*",
+    "description": "Data.Model.Security Class Library",
+    "copyright": "Karl Waclawek",
+    "authors": [ "Karl Waclawek" ],
+
+    "frameworks": {
+        "net451": {},
+        "netstandard1.3": {
+            "buildOptions": { "define": [ "COREFX" ] },
+            "dependencies": {
+                "NETStandard.Library": "1.6.1-*"
+            }
+        }
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "title": "KdSoft.Data",
+    "version": "1.0.0-*",
+    "description": "Data Class Library",
+    "copyright": "Karl Waclawek",
+    "authors": ["Karl Waclawek"],
+
+    "frameworks": {
+        "net451": {
+            "frameworkAssemblies": {
+                "System.Data": { "type": "build" },
+                "System.Transactions": { "type": "build" }
+            }
+        },
+        "netstandard1.3": {
+            "buildOptions": { "define": [ "COREFX" ] },
+            "dependencies": {
+                "System.Data.Common": "4.3.0-*",
+                "System.Data.SqlClient": "4.3.0-*"
+            }
+        }
+    },
+    "dependencies": {
+        "KdSoft.Utils.Portable": "3.1.0"
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "version": "1.0.0-*",
+    "description": "Services.WebApi.Shared Class Library",
+    "authors": [ "kwaclaw" ],
+
+    "frameworks": {
+        "net451": {
+            "dependencies": { }
+        }
+    },
+    "dependencies": {
+        "KdSoft.Common.VeryPortable": "2.0.2",
+        "KdSoft.Data": "1.0.0-*",
+        "KdSoft.Data.Models.Security": "1.0.0-*",
+        "KdSoft.Services.Json": "1.0.0-*",
+        "KdSoft.Services.Security.Authorization": "1.0.0-*",
+        "KdSoft.Services.Shared": "1.0.0-*",
+        "KdSoft.Services.Shared.Security": "1.0.0-*",
+        "KdSoft.Services.WebApi.Utils": "1.0.0-*",
+        "KdSoft.Utils.Portable": "3.1.0",
+        "Microsoft.AspNetCore.Authorization": "1.1.0-*",
+        "Microsoft.AspNetCore.Localization": "1.1.0-*",
+        "Newtonsoft.Json": "9.0.1-*"
+    }
+}

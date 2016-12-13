@@ -1,0 +1,35 @@
+{
+    "title": "KdSoft.Services.Security.AspNet",
+    "version": "1.0.0-*",
+    "description": "Services.Security.AspNet Class Library",
+    "copyright": "Karl Waclawek",
+    "authors": [ "Karl Waclawek" ],
+
+    "frameworks": {
+        "net451": {
+            "frameworkAssemblies": {
+                "System.Runtime.Extensions": { "type": "build" }
+            }
+        }
+    },
+    "dependencies": {
+        "KdSoft.Services.Shared": "1.0.0-*",
+        "KdSoft.Services.Shared.Security": "1.0.0-*",
+        "KdSoft.Utils.Portable": "3.1.0",
+        "Microsoft.AspNetCore.Authentication": "1.1.0-*",
+        "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0-*",
+        "Microsoft.AspNetCore.Authentication.Google": "1.1.0-*",
+        "Microsoft.AspNetCore.Authentication.JwtBearer": "1.1.0-*",
+        "Microsoft.AspNetCore.Authentication.OAuth": "1.1.0-*",
+        "Microsoft.AspNetCore.Authentication.OpenIdConnect": "1.1.0-*",
+        "Microsoft.AspNetCore.Authorization": "1.1.0-*",
+        "Microsoft.AspNetCore.Cors": "1.1.0-*",
+        "Microsoft.AspNetCore.Http": "1.1.0-*",
+        "Microsoft.AspNetCore.Http.Abstractions": "1.1.0-*",
+        "Microsoft.AspNetCore.Http.Extensions": "1.1.0-*",
+        "Microsoft.AspNetCore.Http.Features": "1.1.0-*",
+        "Microsoft.Extensions.Configuration": "1.1.0-*",
+        "Microsoft.Extensions.Localization.Abstractions": "1.1.0-*",
+        "Newtonsoft.Json": "9.0.1-*"
+    }
+}
