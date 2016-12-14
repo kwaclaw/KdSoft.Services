@@ -1,7 +1,6 @@
 {
-    "title": "KdSoft.Services.Json",
     "version": "1.0.0-*",
-    "description": "Services.Json Class Library",
+    "description": "KdSoft.Services.Json Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -22,5 +21,10 @@
     "dependencies": {
         "KdSoft.Data.Models.Shared": "1.1.0-*",
         "Newtonsoft.Json": "9.0.1-*"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

@@ -1,7 +1,6 @@
 {
-    "title": "KdSoft.Services.Security.Authentication",
     "version": "1.0.0-*",
-    "description": "Services.Security.Authentication Class Library",
+    "description": "KdSoft.Services.Security.Authentication Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -24,5 +23,10 @@
         "KdSoft.StorageBase": "2.0.2",
         "KdSoft.TransientStorage": "2.0.2",
         "KdSoft.Utils": "2.0.2"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

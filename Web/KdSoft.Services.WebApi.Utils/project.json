@@ -1,7 +1,6 @@
 {
-    "title": "KdSoft.Services.WebApi.Utils",
     "version": "1.0.0-*",
-    "description": "Services.WebApi.Utils Class Library",
+    "description": "KdSoft.Services.WebApi.Utils Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -24,5 +23,10 @@
         "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.0-*",
         "Microsoft.AspNetCore.Mvc.Core": "1.1.0-*",
         "Newtonsoft.Json": "9.0.1-*"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

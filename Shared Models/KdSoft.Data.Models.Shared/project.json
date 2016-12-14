@@ -1,7 +1,6 @@
 {
-    "title": "KdSoft.Data.Models.Shared",
     "version": "1.1.0-*",
-    "description": "Data.Models.Shared Class Library",
+    "description": "KdSoft.Data.Models.Shared Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -13,6 +12,11 @@
                 "NETStandard.Library": "1.6.1-*",
                 "Microsoft.CSharp": "4.3.0-*"
             }
+        }
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
         }
     }
 }

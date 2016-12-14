@@ -1,7 +1,6 @@
 {
-    "title": "KdSoft.Data.Authentication",
     "version": "1.0.0-*",
-    "description": "Data.Authentication Class Library",
+    "description": "KdSoft.Data.Authentication Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -15,5 +14,10 @@
         "KdSoft.Data.Models.Security": "1.0.0-*",
         "KdSoft.Data.Models.Shared.Security": "1.0.1-*",
         "KdSoft.Utils": "2.0.2"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

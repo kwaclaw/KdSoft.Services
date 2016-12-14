@@ -1,7 +1,6 @@
 {
-    "title": "KdSoft.Services.Shared",
     "version": "1.0.0-*",
-    "description": "Services.Shared Class Library",
+    "description": "KdSoft.Services.Shared Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -13,6 +12,11 @@
         "KdSoft.Data.Models.Shared": "1.1.0-*",
         "KdSoft.Utils.Portable": "3.1.0",
         "Microsoft.Extensions.Logging.Abstractions": "1.1.0-*",
-        "Nito.Collections.Deque": "1.0.0-*"
+        "Nito.Collections.Deque": "1.0.0"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

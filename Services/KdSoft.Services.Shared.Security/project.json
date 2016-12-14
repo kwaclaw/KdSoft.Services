@@ -1,7 +1,6 @@
 {
-    "title": "KdSoft.Services.Shared.Security",
     "version": "1.0.0-*",
-    "description": "Services.Shared.Security Class Library",
+    "description": "KdSoft.Services.Shared.Security Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -19,5 +18,10 @@
         "KdSoft.Data.Models.Shared.Security": "1.0.1-*",
         "KdSoft.StorageBase": "2.0.2",
         "KdSoft.TransientStorage": "2.0.2"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

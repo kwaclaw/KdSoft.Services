@@ -1,9 +1,8 @@
 {
-    "title": "KdSoft.Data",
     "version": "1.0.0-*",
-    "description": "Data Class Library",
+    "description": "KdSoft.Data Class Library",
     "copyright": "Karl Waclawek",
-    "authors": ["Karl Waclawek"],
+    "authors": [ "Karl Waclawek" ],
 
     "frameworks": {
         "net451": {
@@ -22,5 +21,10 @@
     },
     "dependencies": {
         "KdSoft.Utils.Portable": "3.1.0"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

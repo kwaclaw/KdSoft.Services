@@ -1,7 +1,7 @@
 {
     "title": "KdSoft.Services.Protobuf",
     "version": "1.0.0-*",
-    "description": "Services.Protobuf Class Library",
+    "description": "KdSoft.Services.Protobuf Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -20,5 +20,10 @@
         "Google.Protobuf": "3.1.0",
         "KdSoft.Data.Models.Shared": "1.1.0-*",
         "KdSoft.Reflection.Portable": "1.0.3"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

@@ -1,12 +1,11 @@
 {
-    "title": "KdSoft.Data.Helpers",
     "version": "1.0.0-*",
-    "description": "Data.Helpers Class Library",
+    "description": "KdSoft.Data.Helpers Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
     "frameworks": {
-        "net451": {},
+        "net451": {}
     },
     "dependencies": {
         "Dapper": "1.50.2",
@@ -14,5 +13,10 @@
         "KdSoft.Reflection.Portable": "1.0.3",
         "KdSoft.Utils.Portable": "3.1.0",
         "SqlModeller": "1.0.0.7"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

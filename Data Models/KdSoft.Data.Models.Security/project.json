@@ -1,7 +1,6 @@
 {
-    "title": "KdSoft.Data.Model.Security",
     "version": "1.0.0-*",
-    "description": "Data.Model.Security Class Library",
+    "description": "KdSoft.Data.Model.Security Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -12,6 +11,11 @@
             "dependencies": {
                 "NETStandard.Library": "1.6.1-*"
             }
+        }
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
         }
     }
 }

@@ -1,12 +1,11 @@
 {
     "version": "1.0.0-*",
-    "description": "Services.WebApi.Shared Class Library",
-    "authors": [ "kwaclaw" ],
+    "description": "KdSoft.Services.WebApi.Shared Class Library",
+    "copyright": "Karl Waclawek",
+    "authors": [ "Karl Waclawek" ],
 
     "frameworks": {
-        "net451": {
-            "dependencies": { }
-        }
+        "net451": {}
     },
     "dependencies": {
         "KdSoft.Common.VeryPortable": "2.0.2",
@@ -21,5 +20,10 @@
         "Microsoft.AspNetCore.Authorization": "1.1.0-*",
         "Microsoft.AspNetCore.Localization": "1.1.0-*",
         "Newtonsoft.Json": "9.0.1-*"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }

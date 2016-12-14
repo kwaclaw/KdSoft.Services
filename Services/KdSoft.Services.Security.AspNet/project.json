@@ -1,7 +1,6 @@
 {
-    "title": "KdSoft.Services.Security.AspNet",
     "version": "1.0.0-*",
-    "description": "Services.Security.AspNet Class Library",
+    "description": "KdSoft.Services.Security.AspNet Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
 
@@ -31,5 +30,10 @@
         "Microsoft.Extensions.Configuration": "1.1.0-*",
         "Microsoft.Extensions.Localization.Abstractions": "1.1.0-*",
         "Newtonsoft.Json": "9.0.1-*"
+    },
+    "buildOptions": {
+        "compile": {
+            "includeFiles": [ "../../SharedAssemblyInfo.cs" ]
+        }
     }
 }
