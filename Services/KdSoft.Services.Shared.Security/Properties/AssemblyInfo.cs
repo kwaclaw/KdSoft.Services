@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Services.Security.Shared")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("QLine Solutions Inc.")]
+[assembly: AssemblyCompany("KdSoft")]
 [assembly: AssemblyProduct("Services.Security.Shared")]
-[assembly: AssemblyCopyright("Copyright © QLine Solutions Inc. 2016")]
+[assembly: AssemblyCopyright("Copyright © Karl Waclawek 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

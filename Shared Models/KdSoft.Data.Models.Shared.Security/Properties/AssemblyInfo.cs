@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("QLine.Data.Models.Security.Shared")]
-[assembly: AssemblyDescription("hared security model classes.")]
+[assembly: AssemblyTitle("KdSoft.Data.Models.Security.Shared")]
+[assembly: AssemblyDescription("Shared security model classes.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("QLine.Data.Models.Security.Shared")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyProduct("KdSoft.Data.Models.Security.Shared")]
+[assembly: AssemblyCopyright("Copyright © Karl Waclawek 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

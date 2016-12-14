@@ -18,9 +18,9 @@ using sysClaims = System.Security.Claims;
 
 namespace KdSoft.Services.Security.AspNet
 {
-    class QLineAuthenticationHandler: AuthenticationHandler<QLineAuthenticationOptions>
+    class KdSoftAuthenticationHandler: AuthenticationHandler<KdSoftAuthenticationOptions>
     {
-        struct QLineAuthenticationResult
+        struct AuthenticationResult
         {
             // will be set when authentication succeeded and claims were successfully retrieved
             public AuthenticationTicket Ticket { get; set; }
@@ -37,16 +37,16 @@ namespace KdSoft.Services.Security.AspNet
         }
 
         IAuthenticationProvider provider;
-        AuthenticationContext qlineAuth;
-        QLineAuthenticationResult authResult = default(QLineAuthenticationResult);
+        AuthenticationContext authContext;
+        AuthenticationResult authResult = default(AuthenticationResult);
 
         readonly TokenValidationParameters validationParameters;
         readonly JwtSecurityTokenHandler tokenHandler;
         readonly ILogger logger;
         readonly BufferPool bufferPool;
-        readonly IStringLocalizer<QLineAuthenticationMiddleware> localizer;
+        readonly IStringLocalizer<KdSoftAuthenticationMiddleware> localizer;
 
-        public QLineAuthenticationHandler(TokenValidationParameters validationParameters, JwtSecurityTokenHandler tokenHandler, ILogger logger, IStringLocalizer<QLineAuthenticationMiddleware> localizer) {
+        public KdSoftAuthenticationHandler(TokenValidationParameters validationParameters, JwtSecurityTokenHandler tokenHandler, ILogger logger, IStringLocalizer<KdSoftAuthenticationMiddleware> localizer) {
             this.validationParameters = validationParameters;
             this.tokenHandler = tokenHandler;
             this.logger = logger;
@@ -128,8 +128,8 @@ namespace KdSoft.Services.Security.AspNet
         // this checks the access token, either looking the claims up in the cache, or revalidating the token;
         // if the cache does not contain an entry for the token, then the claims will be added to the cache;
         // returns the authentication ticket, and if the token was newly validated, the token;
-        async Task<QLineAuthenticationResult> CheckQLineToken(string tokenStr) {
-            QLineAuthenticationResult result = default(QLineAuthenticationResult);
+        async Task<AuthenticationResult> CheckCustomToken(string tokenStr) {
+            AuthenticationResult result = default(AuthenticationResult);
 
             string authType = "";
             IList<Claim> claims = null;
@@ -200,8 +200,8 @@ namespace KdSoft.Services.Security.AspNet
 
         //http://stackoverflow.com/questions/28542141/windows-authentication-in-asp-net-5
 
-        async Task<QLineAuthenticationResult> CheckWindowsUser() {
-            QLineAuthenticationResult result = default(QLineAuthenticationResult);
+        async Task<AuthenticationResult> CheckWindowsUser() {
+            AuthenticationResult result = default(AuthenticationResult);
 
             var winIdentity = Context.User.Identity as WindowsIdentity;
             if (winIdentity == null || !winIdentity.IsAuthenticated)
@@ -264,8 +264,8 @@ namespace KdSoft.Services.Security.AspNet
             return result;
         }
 
-        async Task<QLineAuthenticationResult> CheckQLineUser(int userKey, string userName, string authType) {
-            QLineAuthenticationResult result = default(QLineAuthenticationResult);
+        async Task<AuthenticationResult> CheckCustomUser(int userKey, string userName, string authType) {
+            AuthenticationResult result = default(AuthenticationResult);
 
             if (string.IsNullOrEmpty(userName))
                 throw new ArgumentNullException("userName");
@@ -309,21 +309,21 @@ namespace KdSoft.Services.Security.AspNet
 
         async Task<AuthenticateResult> AuthenticateCoreAsync() {
             Exception error = null;
-            QLineAuthenticationResult qlineResult = default(QLineAuthenticationResult);
+            AuthenticationResult coreAuthResult = default(AuthenticationResult);
 
             try {
-                if (qlineAuth.Token != null) {
-                    qlineResult = await CheckQLineToken(qlineAuth.Token).ConfigureAwait(false);
+                if (authContext.Token != null) {
+                    coreAuthResult = await CheckCustomToken(authContext.Token).ConfigureAwait(false);
                 }
-                else if (qlineAuth.AuthReqType == AuthenticationContext.AuthRequestType.QLine) {
-                    int? userKey = await provider.ValidateUser(qlineAuth.UserName, qlineAuth.Password).ConfigureAwait(false);
+                else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.Custom) {
+                    int? userKey = await provider.ValidateUser(authContext.UserName, authContext.Password).ConfigureAwait(false);
                     if (userKey != null) {
-                        qlineResult = await CheckQLineUser(userKey.Value, qlineAuth.UserName, qlineAuth.AuthReqTypeName).ConfigureAwait(false);
+                        coreAuthResult = await CheckCustomUser(userKey.Value, authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
                     }
                 }
-                else if (qlineAuth.AuthReqType == AuthenticationContext.AuthRequestType.OpenId) {
+                else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.OpenId) {
                     var idToken = await OpenIdConnect.CheckOpenIdAuthorizationCode(
-                        qlineAuth.OpenIdIssuer, qlineAuth.OpenIdCode, qlineAuth.OpenIdRedirectUri, Options).ConfigureAwait(false);
+                        authContext.OpenIdIssuer, authContext.OpenIdCode, authContext.OpenIdRedirectUri, Options).ConfigureAwait(false);
                     if (idToken != null) {
                         var subject = (string)idToken["sub"];
                         var issuer = (string)idToken["iss"];
@@ -333,19 +333,19 @@ namespace KdSoft.Services.Security.AspNet
                                 string userName = (string)idToken["email"];
                                 if (string.IsNullOrEmpty(userName))
                                     userName = issuer + "/" + subject;
-                                qlineResult = await CheckQLineUser(userKey.Value, userName, qlineAuth.AuthReqTypeName).ConfigureAwait(false);
+                                coreAuthResult = await CheckCustomUser(userKey.Value, userName, authContext.AuthReqTypeName).ConfigureAwait(false);
                             }
                         }
                     }
                 }
-                else if (qlineAuth.AuthReqType == AuthenticationContext.AuthRequestType.Windows && !string.IsNullOrEmpty(qlineAuth.UserName)) {
-                    int? userKey = await provider.ValidateAdUser(qlineAuth.UserName, qlineAuth.Password).ConfigureAwait(false);
+                else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.Windows && !string.IsNullOrEmpty(authContext.UserName)) {
+                    int? userKey = await provider.ValidateAdUser(authContext.UserName, authContext.Password).ConfigureAwait(false);
                     if (userKey != null) {
-                        qlineResult = await CheckQLineUser(userKey.Value, qlineAuth.UserName, qlineAuth.AuthReqTypeName).ConfigureAwait(false);
+                        coreAuthResult = await CheckCustomUser(userKey.Value, authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
                     }
                 }
                 else {  // otherwise we always check Windows authentication
-                    qlineResult = await CheckWindowsUser().ConfigureAwait(false);
+                    coreAuthResult = await CheckWindowsUser().ConfigureAwait(false);
                 }
             }
             catch (Exception ex) {
@@ -356,16 +356,16 @@ namespace KdSoft.Services.Security.AspNet
                 // Well, we still need some anonymous actions to be accessible for unauthenticated users.
             }
 
-            authResult = qlineResult;
+            this.authResult = coreAuthResult;
 
             if (error != null) {
                 return AuthenticateResult.Fail(error);
             }
-            else if (qlineResult.Ticket == null) {
-                switch (qlineAuth.AuthReqType) {
+            else if (coreAuthResult.Ticket == null) {
+                switch (authContext.AuthReqType) {
                     case AuthenticationContext.AuthRequestType.Windows:
                         return AuthenticateResult.Fail("Windows authentication failed.");
-                    case AuthenticationContext.AuthRequestType.QLine:
+                    case AuthenticationContext.AuthRequestType.Custom:
                         return AuthenticateResult.Fail("The user name or password provided is incorrect.");
                     case AuthenticationContext.AuthRequestType.OpenId:
                         return AuthenticateResult.Fail("OpenId Connect authentication failed.");
@@ -374,34 +374,34 @@ namespace KdSoft.Services.Security.AspNet
                 }
             }
             else {
-                return AuthenticateResult.Success(qlineResult.Ticket);
+                return AuthenticateResult.Success(coreAuthResult.Ticket);
             }
         }
 
         async Task<bool> ApplyHeadersAsync() {
             try {
-                bool qlineAuthRequested = qlineAuth.AuthReqType == AuthenticationContext.AuthRequestType.QLine;
-                bool openIdAuthRequested = qlineAuth.AuthReqType == AuthenticationContext.AuthRequestType.OpenId;
-                bool adAuthRequested = qlineAuth.AuthReqType == AuthenticationContext.AuthRequestType.Windows && !string.IsNullOrEmpty(qlineAuth.UserName);
+                bool customAuthRequested = authContext.AuthReqType == AuthenticationContext.AuthRequestType.Custom;
+                bool openIdAuthRequested = authContext.AuthReqType == AuthenticationContext.AuthRequestType.OpenId;
+                bool adAuthRequested = authContext.AuthReqType == AuthenticationContext.AuthRequestType.Windows && !string.IsNullOrEmpty(authContext.UserName);
                 // ignore call when there are no token-authentication specific headers
-                if (qlineAuth.Token == null && !qlineAuthRequested && !openIdAuthRequested && !adAuthRequested)
+                if (authContext.Token == null && !customAuthRequested && !openIdAuthRequested && !adAuthRequested)
                     return true;
 
                 // Create initial token if login credentials were passed; in this case authToken must be != null!
-                if (qlineAuthRequested || openIdAuthRequested || adAuthRequested) {
+                if (customAuthRequested || openIdAuthRequested || adAuthRequested) {
                     if (authResult.Token == null)  // caller may have sent headers in error
                         return true;
                     var tokenString = tokenHandler.WriteToken(authResult.Token);
                     //tokenString += authResult.Token.RawSignature;  //TODO temporary workaround, remove when fixed
-                    Response.Headers.AppendCommaSeparatedValues(SecurityConfig.QlineTokenKey, tokenString, Options.JwtLifeTime.ToString());
+                    Response.Headers.AppendCommaSeparatedValues(SecurityConfig.TokenKey, tokenString, Options.JwtLifeTime.ToString());
                     return true;
                 }
 
-                // qlineAuth.Token must be != null now because (!qlineAuthRequested && !openIdAuthRequested && !adAuthRequested) is true at this point;
+                // authResult.Token must be != null now because (!customAuthRequested && !openIdAuthRequested && !adAuthRequested) is true at this point;
                 // therefore this.tokenValidTo and this.tokenValidFrom must have proper values
 
-                var qlineRenewHeaderValue = Request.Headers[SecurityConfig.QlineRenewTokenHeader];
-                if (qlineRenewHeaderValue == StringValues.Empty)
+                var renewHeaderValue = Request.Headers[SecurityConfig.RenewTokenHeader];
+                if (renewHeaderValue == StringValues.Empty)
                     return true;
 
                 // Renew access token since renew header exists.
@@ -430,10 +430,10 @@ namespace KdSoft.Services.Security.AspNet
                 }
 
                 try {
-                    var checkResult = await CheckQLineUser(userKey, userNameClaim.Value, authResult.Ticket.Principal.Identity.AuthenticationType).ConfigureAwait(false);
+                    var checkResult = await CheckCustomUser(userKey, userNameClaim.Value, authResult.Ticket.Principal.Identity.AuthenticationType).ConfigureAwait(false);
                     if (checkResult.Token != null) {
                         var tokenString = tokenHandler.WriteToken(checkResult.Token);
-                        Response.Headers.AppendCommaSeparatedValues(SecurityConfig.QlineTokenKey, tokenString, Options.JwtLifeTime.ToString());
+                        Response.Headers.AppendCommaSeparatedValues(SecurityConfig.TokenKey, tokenString, Options.JwtLifeTime.ToString());
                     }
                 }
                 catch (Exception ex) {
@@ -455,13 +455,13 @@ namespace KdSoft.Services.Security.AspNet
 
         void FinalizeResponse() {
             try {
-                bool qlineAuthRequested = qlineAuth.AuthReqType == AuthenticationContext.AuthRequestType.QLine;
-                bool openIdAuthRequested = qlineAuth.AuthReqType == AuthenticationContext.AuthRequestType.OpenId;
-                bool windowsAuthRequested = qlineAuth.AuthReqType == AuthenticationContext.AuthRequestType.Windows;
+                bool customAuthRequested = authContext.AuthReqType == AuthenticationContext.AuthRequestType.Custom;
+                bool openIdAuthRequested = authContext.AuthReqType == AuthenticationContext.AuthRequestType.OpenId;
+                bool windowsAuthRequested = authContext.AuthReqType == AuthenticationContext.AuthRequestType.Windows;
                 bool windowsAuthenticated = false;
 
                 // ignore call when there are no authentication specific headers
-                if (qlineAuth.Token == null && !qlineAuthRequested && !openIdAuthRequested && !windowsAuthRequested) {
+                if (authContext.Token == null && !customAuthRequested && !openIdAuthRequested && !windowsAuthRequested) {
                     var winPrincipal = Context.User as WindowsPrincipal;
                     if (winPrincipal == null)
                         return;
@@ -472,16 +472,16 @@ namespace KdSoft.Services.Security.AspNet
                 }
 
                 if (authResult.Ticket == null) {
-                    switch (qlineAuth.AuthReqType) {
+                    switch (authContext.AuthReqType) {
                         case AuthenticationContext.AuthRequestType.Windows:
-                            if (string.IsNullOrEmpty(qlineAuth.UserName)) {
+                            if (string.IsNullOrEmpty(authContext.UserName)) {
                                 Response.StatusCode = 401;
                                 Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = localizer.GetString("Windows authentication failed.");
                             }
                             else
                                 Response.MakeAuthorizationErrorResponse(localizer.GetString("ActiveDirectory authentication failed."));
                             return;
-                        case AuthenticationContext.AuthRequestType.QLine:
+                        case AuthenticationContext.AuthRequestType.Custom:
                             Response.MakeAuthorizationErrorResponse(localizer.GetString("The user name or password provided is incorrect."));
                             return;
                         case AuthenticationContext.AuthRequestType.OpenId:
@@ -509,7 +509,7 @@ namespace KdSoft.Services.Security.AspNet
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync() {
             provider = Options.AuthenticationProvider;
-            qlineAuth = AuthenticationContext.FromRequestHeaders(Request);
+            authContext = AuthenticationContext.FromRequestHeaders(Request);
 
             try {
                 return AuthenticateCoreAsync();
@@ -521,9 +521,9 @@ namespace KdSoft.Services.Security.AspNet
 
         public override Task<bool> HandleRequestAsync() {
             bool result = false;
-            if (qlineAuth != null) {  // only if we are handling this scheme
+            if (authContext != null) {  // only if we are handling this scheme
                 // if speficially requested authentication failed, then we short-cut the pipeline and return immediately
-                result = authResult.Ticket == null && qlineAuth.AuthReqType != AuthenticationContext.AuthRequestType.None;
+                result = authResult.Ticket == null && authContext.AuthReqType != AuthenticationContext.AuthRequestType.None;
             }
             return Task.FromResult(result);
         }
@@ -537,7 +537,7 @@ namespace KdSoft.Services.Security.AspNet
         //}
 
         protected override async Task FinishResponseAsync() {
-            if (qlineAuth == null)  // we are not handling this scheme
+            if (authContext == null)  // we are not handling this scheme
                 return;
             try {
                 bool success = authResult.Ticket != null && Context.Response.IsSuccessStatusCode();
@@ -546,7 +546,7 @@ namespace KdSoft.Services.Security.AspNet
                 FinalizeResponse();
             }
             finally {
-                authResult = default(QLineAuthenticationResult);
+                authResult = default(AuthenticationResult);
                 var pv = provider;
                 if (pv != null) {
                     provider = null;

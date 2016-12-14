@@ -5,27 +5,27 @@ namespace KdSoft.Services.Security.AspNet
 {
     public static class SecurityConfig
     {
-        public const string QlineAuthHeader = "X-QLine-Auth";
-        public const string QlineAuthWindows = "Windows";
+        public const string AuthHeader = "X-KdSoft-Auth";
+        public const string AuthWindows = "Windows";
 
-        public const string QlineAuthBasic = "QLine";
-        public const string QlineAuthUid = "uid";
-        public const string QlineAuthPwd = "pwd";
+        public const string AuthCustom = "KdSoft";
+        public const string AuthUid = "uid";
+        public const string AuthPwd = "pwd";
 
-        public const string QlineAuthOpenId = "OpenId";
-        public const string QlineAuthOpenIdIssuer = "iss";
-        public const string QlineAuthOpenIdCode = "code";
-        public const string QlineAuthOpenIdRedirectUri = "redir";
+        public const string AuthOpenId = "OpenId";
+        public const string AuthOpenIdIssuer = "iss";
+        public const string AuthOpenIdCode = "code";
+        public const string AuthOpenIdRedirectUri = "redir";
 
-        public const string QlineRenewTokenHeader = "X-QLine-RenewToken";
-        public const string QlineTokenKey = "X-QLine-Token";
-        public const string QlineAuthOptionsHeader = "X-QLine-Auth-Options";
+        public const string RenewTokenHeader = "X-KdSoft-RenewToken";
+        public const string TokenKey = "X-KdSoft-Token";
+        public const string AuthOptionsHeader = "X-KdSoft-Auth-Options";
         public const string ActiveDirectoryClaimsIdPrefix = "#WU%";
 
-        public static void Register(QLineAuthenticationOptions qLineAuthOptions) {
-            QLineAuthOptions = qLineAuthOptions;
+        public static void Register(KdSoftAuthenticationOptions authOptions) {
+            KdSoftAuthOptions = authOptions;
 
-            // for the primary identity the priority order is: authentication type "X-QLine", then WindowsIdentity, then ClaimsIdentity
+            // for the primary identity the priority order is: authentication type "X-KdSoft", then WindowsIdentity, then ClaimsIdentity
             ClaimsPrincipal.PrimaryIdentitySelector = (ids) => {
                 ClaimsIdentity result = null;
                 WindowsIdentity winIdentity = null;
@@ -52,6 +52,6 @@ namespace KdSoft.Services.Security.AspNet
             };
         }
 
-        public static QLineAuthenticationOptions QLineAuthOptions { get; private set; }
+        public static KdSoftAuthenticationOptions KdSoftAuthOptions { get; private set; }
     }
 }

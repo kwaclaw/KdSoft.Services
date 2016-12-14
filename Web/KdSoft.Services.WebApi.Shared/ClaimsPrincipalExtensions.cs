@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using security = KdSoft.Services.Security;
 
-namespace QLine.Services.WebApi
+namespace KdSoft.Services.WebApi
 {
     public static class ClaimsPrincipalExtensions
     {

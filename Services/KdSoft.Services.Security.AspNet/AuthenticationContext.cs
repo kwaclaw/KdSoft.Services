@@ -12,7 +12,7 @@ namespace KdSoft.Services.Security.AspNet
         public enum AuthRequestType
         {
             None,
-            QLine,
+            Custom,
             Windows,
             OpenId
         }
@@ -53,12 +53,12 @@ namespace KdSoft.Services.Security.AspNet
 
         public static string GetAuthReqTypeName(AuthRequestType authReqType) {
             switch (authReqType) {
-                case AuthRequestType.QLine:
-                    return SecurityConfig.QlineAuthBasic;
+                case AuthRequestType.Custom:
+                    return SecurityConfig.AuthCustom;
                 case AuthRequestType.Windows:
-                    return SecurityConfig.QlineAuthWindows;
+                    return SecurityConfig.AuthWindows;
                 case AuthRequestType.OpenId:
-                    return SecurityConfig.QlineAuthOpenId;
+                    return SecurityConfig.AuthOpenId;
                 default:
                     return "";
             }
@@ -73,30 +73,30 @@ namespace KdSoft.Services.Security.AspNet
             result.AuthReqType = AuthRequestType.None;
 
             var authzHeaderValues = request.Headers["Authorization"];
-            var qlineAuthValue = authzHeaderValues
-                .Where(h => h.Length > security.AuthenticationSchemes.QLine.Length && h.StartsWith(security.AuthenticationSchemes.QLine, StringComparison.OrdinalIgnoreCase))
+            var kdSoftAuthValue = authzHeaderValues
+                .Where(h => h.Length > security.AuthenticationSchemes.KdSoft.Length && h.StartsWith(security.AuthenticationSchemes.KdSoft, StringComparison.OrdinalIgnoreCase))
                 .FirstOrDefault();
-            if (qlineAuthValue != null && char.IsWhiteSpace((char)qlineAuthValue[Services.Security.AuthenticationSchemes.QLine.Length])) {
-                result.Token = qlineAuthValue.Substring(Services.Security.AuthenticationSchemes.QLine.Length + 1).Trim();
+            if (kdSoftAuthValue != null && char.IsWhiteSpace((char)kdSoftAuthValue[Services.Security.AuthenticationSchemes.KdSoft.Length])) {
+                result.Token = kdSoftAuthValue.Substring(Services.Security.AuthenticationSchemes.KdSoft.Length + 1).Trim();
             }
 
-            var qlineAuthzHeaderValues = request.Headers.GetCommaSeparatedValues(SecurityConfig.QlineAuthHeader);
-            if (qlineAuthzHeaderValues != null && qlineAuthzHeaderValues.Length > 0) {
+            var kdSoftAuthzHeaderValues = request.Headers.GetCommaSeparatedValues(SecurityConfig.AuthHeader);
+            if (kdSoftAuthzHeaderValues != null && kdSoftAuthzHeaderValues.Length > 0) {
 
-                if (string.Compare(qlineAuthzHeaderValues[0], SecurityConfig.QlineAuthBasic, true) == 0) {
-                    if (qlineAuthzHeaderValues.Length < 3)
+                if (string.Compare(kdSoftAuthzHeaderValues[0], SecurityConfig.AuthCustom, true) == 0) {
+                    if (kdSoftAuthzHeaderValues.Length < 3)
                         goto invalidHeader;
                     KeyValuePair<string, string> nameValue;
                     string uid = null;
                     string pwd = null;
 
-                    for (int indx = 1; indx < qlineAuthzHeaderValues.Length; indx++) {
-                        if (!Utils.TryExtractNameValue(qlineAuthzHeaderValues[indx], out nameValue))
+                    for (int indx = 1; indx < kdSoftAuthzHeaderValues.Length; indx++) {
+                        if (!Utils.TryExtractNameValue(kdSoftAuthzHeaderValues[indx], out nameValue))
                             goto invalidHeader;
-                        if (string.Compare(nameValue.Key, SecurityConfig.QlineAuthUid, true) == 0) {
+                        if (string.Compare(nameValue.Key, SecurityConfig.AuthUid, true) == 0) {
                             uid = nameValue.Value;
                         }
-                        else if (string.Compare(nameValue.Key, SecurityConfig.QlineAuthPwd, true) == 0) {
+                        else if (string.Compare(nameValue.Key, SecurityConfig.AuthPwd, true) == 0) {
                             pwd = nameValue.Value;
                         }
                         else
@@ -107,30 +107,30 @@ namespace KdSoft.Services.Security.AspNet
 
                     result.UserName = uid;
                     result.Password = pwd;
-                    result.AuthReqType = AuthRequestType.QLine;
+                    result.AuthReqType = AuthRequestType.Custom;
 
                 invalidHeader:
                     ;  // skip assigning fields when header values are invalid
                 }
 
-                if (string.Compare(qlineAuthzHeaderValues[0], SecurityConfig.QlineAuthOpenId, true) == 0) {
-                    if (qlineAuthzHeaderValues.Length < 4)
+                if (string.Compare(kdSoftAuthzHeaderValues[0], SecurityConfig.AuthOpenId, true) == 0) {
+                    if (kdSoftAuthzHeaderValues.Length < 4)
                         goto invalidHeader;
                     KeyValuePair<string, string> nameValue;
                     string issuer = null;
                     string authCode = null;
                     string redirectUri = null;
 
-                    for (int indx = 1; indx < qlineAuthzHeaderValues.Length; indx++) {
-                        if (!Utils.TryExtractNameValue(qlineAuthzHeaderValues[indx], out nameValue))
+                    for (int indx = 1; indx < kdSoftAuthzHeaderValues.Length; indx++) {
+                        if (!Utils.TryExtractNameValue(kdSoftAuthzHeaderValues[indx], out nameValue))
                             goto invalidHeader;
-                        if (string.Compare(nameValue.Key, SecurityConfig.QlineAuthOpenIdIssuer, true) == 0) {
+                        if (string.Compare(nameValue.Key, SecurityConfig.AuthOpenIdIssuer, true) == 0) {
                             issuer = nameValue.Value;
                         }
-                        else if (string.Compare(nameValue.Key, SecurityConfig.QlineAuthOpenIdCode, true) == 0) {
+                        else if (string.Compare(nameValue.Key, SecurityConfig.AuthOpenIdCode, true) == 0) {
                             authCode = nameValue.Value;
                         }
-                        else if (string.Compare(nameValue.Key, SecurityConfig.QlineAuthOpenIdRedirectUri, true) == 0) {
+                        else if (string.Compare(nameValue.Key, SecurityConfig.AuthOpenIdRedirectUri, true) == 0) {
                             redirectUri = nameValue.Value;
                         }
                         else
@@ -148,23 +148,23 @@ namespace KdSoft.Services.Security.AspNet
                     ;  // skip assigning fields when header values are invalid
                 }
 
-                else if (string.Compare(qlineAuthzHeaderValues[0], SecurityConfig.QlineAuthWindows, true) == 0) {
-                    if (qlineAuthzHeaderValues.Length == 1)
+                else if (string.Compare(kdSoftAuthzHeaderValues[0], SecurityConfig.AuthWindows, true) == 0) {
+                    if (kdSoftAuthzHeaderValues.Length == 1)
                         goto endHeader;
-                    if (qlineAuthzHeaderValues.Length < 3)
+                    if (kdSoftAuthzHeaderValues.Length < 3)
                         goto invalidHeader;
 
                     KeyValuePair<string, string> nameValue;
                     string uid = null;
                     string pwd = null;
 
-                    for (int indx = 1; indx < qlineAuthzHeaderValues.Length; indx++) {
-                        if (!Utils.TryExtractNameValue(qlineAuthzHeaderValues[indx], out nameValue))
+                    for (int indx = 1; indx < kdSoftAuthzHeaderValues.Length; indx++) {
+                        if (!Utils.TryExtractNameValue(kdSoftAuthzHeaderValues[indx], out nameValue))
                             goto invalidHeader;
-                        if (string.Compare(nameValue.Key, SecurityConfig.QlineAuthUid, true) == 0) {
+                        if (string.Compare(nameValue.Key, SecurityConfig.AuthUid, true) == 0) {
                             uid = nameValue.Value;
                         }
-                        else if (string.Compare(nameValue.Key, SecurityConfig.QlineAuthPwd, true) == 0) {
+                        else if (string.Compare(nameValue.Key, SecurityConfig.AuthPwd, true) == 0) {
                             pwd = nameValue.Value;
                         }
                         else

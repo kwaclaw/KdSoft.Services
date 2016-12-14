@@ -25,7 +25,7 @@ namespace KdSoft.Services.Security.AspNet
         }
 
         public static void MakeAuthorizationErrorResponse(this HttpResponse response, string reason) {
-            response.Headers.AppendCommaSeparatedValues(SecurityConfig.QlineAuthOptionsHeader, AuthenticationContext.AuthRequestTypeNames);
+            response.Headers.AppendCommaSeparatedValues(SecurityConfig.AuthOptionsHeader, AuthenticationContext.AuthRequestTypeNames);
             response.StatusCode = 471;  // setting StatusCode later would reset ReasonPhrase
             if (!string.IsNullOrEmpty(reason)) {
                 if (lineBreaksRegex.IsMatch(reason))

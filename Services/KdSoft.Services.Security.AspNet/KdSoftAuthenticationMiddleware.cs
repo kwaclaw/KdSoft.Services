@@ -10,14 +10,14 @@ using System.Text.Encodings.Web;
 
 namespace KdSoft.Services.Security.AspNet
 {
-    public class QLineAuthenticationMiddleware: AuthenticationMiddleware<QLineAuthenticationOptions>
+    public class KdSoftAuthenticationMiddleware: AuthenticationMiddleware<KdSoftAuthenticationOptions>
     {
         readonly TokenValidationParameters validationParameters;
         readonly JwtSecurityTokenHandler tokenHandler;
         readonly ILogger logger;
-        readonly IStringLocalizer<QLineAuthenticationMiddleware> localizer;
+        readonly IStringLocalizer<KdSoftAuthenticationMiddleware> localizer;
 
-        public QLineAuthenticationMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, UrlEncoder encoder, IOptions<QLineAuthenticationOptions> options, IStringLocalizer<QLineAuthenticationMiddleware> localizer)
+        public KdSoftAuthenticationMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, UrlEncoder encoder, IOptions<KdSoftAuthenticationOptions> options, IStringLocalizer<KdSoftAuthenticationMiddleware> localizer)
             : base(next, options, loggerFactory, encoder)
         {
             this.validationParameters = new TokenValidationParameters
@@ -31,19 +31,19 @@ namespace KdSoft.Services.Security.AspNet
             };
 
             this.tokenHandler = new JwtSecurityTokenHandler();
-            this.logger = loggerFactory.CreateLogger<QLineAuthenticationHandler>();
+            this.logger = loggerFactory.CreateLogger<KdSoftAuthenticationHandler>();
             this.localizer = localizer;
         }
 
-        protected override AuthenticationHandler<QLineAuthenticationOptions> CreateHandler() {
-            return new QLineAuthenticationHandler(validationParameters, tokenHandler, logger, localizer);
+        protected override AuthenticationHandler<KdSoftAuthenticationOptions> CreateHandler() {
+            return new KdSoftAuthenticationHandler(validationParameters, tokenHandler, logger, localizer);
         }
     }
 
-    public static class QLineAuthenticationExtensions
+    public static class KdSoftAuthenticationExtensions
     {
-        public static IApplicationBuilder UseQLineAuthentication(this IApplicationBuilder app, QLineAuthenticationOptions options) {
-            app.UseMiddleware<QLineAuthenticationMiddleware>(Options.Create(options));
+        public static IApplicationBuilder UseKdSoftAuthentication(this IApplicationBuilder app, KdSoftAuthenticationOptions options) {
+            app.UseMiddleware<KdSoftAuthenticationMiddleware>(Options.Create(options));
             return app;
         }
     }

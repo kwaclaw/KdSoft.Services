@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 
-namespace QLine.Services.WebApi
+namespace KdSoft.Services.WebApi
 {
     public class ServiceContext: IServiceContext
     {

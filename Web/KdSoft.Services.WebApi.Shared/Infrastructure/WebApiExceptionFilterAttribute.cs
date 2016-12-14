@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 
-namespace QLine.Services.WebApi.Infrastructure
+namespace KdSoft.Services.WebApi.Infrastructure
 {
     // We use this because some exceptions cannot be serialized by some serialization frameworks.
     public class WebApiExceptionFilterAttribute: ExceptionFilterAttribute

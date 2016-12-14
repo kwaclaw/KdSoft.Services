@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace QLine.Services.WebApi.Infrastructure
+namespace KdSoft.Services.WebApi.Infrastructure
 {
     public class ClaimsCultureProvider: RequestCultureProvider
     {

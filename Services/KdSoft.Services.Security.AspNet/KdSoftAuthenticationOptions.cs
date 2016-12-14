@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace KdSoft.Services.Security.AspNet
 {
-    public class QLineAuthenticationOptions: AuthenticationOptions
+    public class KdSoftAuthenticationOptions: AuthenticationOptions
     {
-        public QLineAuthenticationOptions() { }
+        public KdSoftAuthenticationOptions() { }
 
         public string JwtAudience { get; set; }
         public string JwtIssuer { get; set; }

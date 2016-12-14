@@ -7,7 +7,7 @@ outgoing sequence.
 
 Only one type of authentication is supported at a time. Multiple concurrent identities are not supported.
 
-1) ANY CALL, NO QLINE AUTHORIZATION HEADER, NO JWT TOKEN AUTHORIZATION HEADER
+1) ANY CALL, NO KDSOFT AUTHORIZATION HEADER, NO JWT TOKEN AUTHORIZATION HEADER
 
 * Call ignored by non-Windows authentication logic.
 * Incoming: Server checks Windows if Prinicpal has authenticated WindowsIdentity.
@@ -17,7 +17,7 @@ Only one type of authentication is supported at a time. Multiple concurrent iden
   - if any other, passes it through.
 * This allows for anonymous calls.
 
-2) ANY CALL, "CURRENT USER" WINDOWS AUTHORIZATION HEADER (e.g. "X-QLine-Auth Windows")
+2) ANY CALL, "CURRENT USER" WINDOWS AUTHORIZATION HEADER (e.g. "X-KdSoft-Auth Windows")
 
 * Call ignored by non-Windows authentication logic.
 * Incoming: Server checks if Prinicpal has authenticated WindowsIdentity.
@@ -29,7 +29,7 @@ Only one type of authentication is supported at a time. Multiple concurrent iden
     - if 401, returns 471 response with header containing authentication options and error message.
     - if not 401, passes response through.
 
-3) ANY CALL, FULL WINDOWS AUTHORIZATION HEADER (e.g. "X-QLine-Auth Windows, uid=..., pwd=...")
+3) ANY CALL, FULL WINDOWS AUTHORIZATION HEADER (e.g. "X-KdSoft-Auth Windows, uid=..., pwd=...")
 
 * Call ignored by non-Windows authentication logic.
 * Incoming: Server checks Active Directory credentials.
@@ -39,28 +39,28 @@ Only one type of authentication is supported at a time. Multiple concurrent iden
   - if failure in incoming, returns 471 response with header containing authentication options
     and error message.
   - if success in incoming:
-    - Adds newly created token as response header, e.g. "X-Qline-Token: <token string> <life-time>".
+    - Adds newly created token as response header, e.g. "X-KdSoft-Token: <token string> <life-time>".
   - Response code from application is checked:
     - if 401, returns 471 response with header containing authentication options and error message.
     - if not 401, passes response through.
 
-4) ANY CALL, QCARE AUTHORIZATION HEADER (e.g. "X-QLine-Auth: QCare, uid=..., pwd=...")
+4) ANY CALL, KDSOFT AUTHORIZATION HEADER (e.g. "X-KdSoft-Auth: KdSoft, uid=..., pwd=...")
 
 * Call ignored by Windows authentication logic.
 * Incoming:
-  - QCare authentication logic checks credentials extracted from custom authorization header.
+  - KdSoft authentication logic checks credentials extracted from custom authorization header.
     - if successful, passes control to subsequent middleware.
     - if failure, short circuits call, does not pass control to subsequent middleware.
 * Outgoing:
   - if failure in incoming, returns 471 response with header containing authentication options
     and error message.
   - if success in incoming:
-    - Adds newly created token as response header, e.g. "X-Qline-Token: <token string> <life-time>".
+    - Adds newly created token as response header, e.g. "X-KdSoft-Token: <token string> <life-time>".
   - Response code from application is checked:
     - if 401, returns 471 response with header containing authentication options and error message.
     - if not 401, passes response through.
 
-5) ANY CALL, OPENID AUTHORIZATION HEADER (e.g. "X-QLine-Auth: OpenId, iss=..., code=..., redir=...")
+5) ANY CALL, OPENID AUTHORIZATION HEADER (e.g. "X-KdSoft-Auth: OpenId, iss=..., code=..., redir=...")
 
 * Call ignored by Windows authentication logic.
 * Incoming:
@@ -72,22 +72,22 @@ Only one type of authentication is supported at a time. Multiple concurrent iden
   - if failure in incoming, returns 471 response with header containing authentication options
     and error message.
   - if success in incoming:
-    - Adds newly created token as response header, e.g. "X-Qline-Token: <token string> <life-time>".
+    - Adds newly created token as response header, e.g. "X-KdSoft-Token: <token string> <life-time>".
   - Response code from application is checked:
     - if 401, returns 471 response with header containing authentication options and error message.
     - if not 401, passes response through.
 
-6) ANY CALL WITH JWT TOKEN AUTHORIZATION HEADER (e.g. "Authorization: X-Qline <token string>")
+6) ANY CALL WITH JWT TOKEN AUTHORIZATION HEADER (e.g. "Authorization: X-KdSoft <token string>")
 
 * Call ignored by Windows authentication logic.
 * Incoming:
   - Token authentication logic checks token  extracted from custom authorization header.
-    - if successful, authenticates user, stores the fact of X-QLine authentication.
+    - if successful, authenticates user, stores the fact of X-KdSoft authentication.
     - always passes control to next in sequence to allow for anonymous calls.
 * Outgoing: 
-  - If request included renew header (e.g. "X-QLine-RenewToken"):
+  - If request included renew header (e.g. "X-KdSoft-RenewToken"):
     - if incoming token authentication was successful then new token is appended to response:
-      e.g. as header "X-Qline-Token <token string> <life-time>".
+      e.g. as header "X-KdSoft-Token <token string> <life-time>".
   - Response code from application is checked:
     - if 401, returns 471 response with header containing authentication options and error message.
     - if not 401, passes response through.
@@ -95,7 +95,7 @@ Only one type of authentication is supported at a time. Multiple concurrent iden
 
 CLIENT POINT OF VIEW
 
-1) CLIENT SENDS ANY REQUEST WITH NO QLINE-SPECIFIC HEADERS
+1) CLIENT SENDS ANY REQUEST WITH NO KDSOFT-SPECIFIC HEADERS
 
 * Server checks Windows authentication, if it fails (e.g. anyonymous denied), server responds with 471.
 * Browser handles 471 by showing login options screen.
@@ -103,7 +103,7 @@ CLIENT POINT OF VIEW
 
 2) CLIENT CHOOSES "CURRENT USER" WINDOWS LOGIN OPTION - CALLS GETLOGINPROFILE
 
-* The GetLoginProfile call must include the "X-Qline-Auth: Windows" header.
+* The GetLoginProfile call must include the "X-KdSoft-Auth: Windows" header.
 * If successful, call returns with data, if not, call returns 401.
 * 401 forces browser built-in login dialog, user enters windows logon credentials.
   - if successful, call returns with login profile.
@@ -114,18 +114,18 @@ CLIENT POINT OF VIEW
 3) CLIENT CHOOSES "REMOTE USER" WINDOWS LOGIN OPTION - CALLS GETLOGINPROFILE
 
 * The user should have entered the credentials for this option before making the call.
-* The call must include the "X-Qline-Auth: Windows, uid=<user name>, pwd=<password>" header.
+* The call must include the "X-KdSoft-Auth: Windows, uid=<user name>, pwd=<password>" header.
 * If successful, call returns with data, contains header with new token
-  "X-Qline-Token: <token string> <life-time>".
+  "X-KdSoft-Token: <token string> <life-time>".
 * If failed, call returns 471 with error message, client presents login screen again.
 * If user cancels the login dialog, call returns with 401 and the WWW-Authenticate headers.
 
-4) CLIENT CHOOSES QCARE LOGIN OPTION - CALLS GETLOGINPROFILE
+4) CLIENT CHOOSES KDSOFT LOGIN OPTION - CALLS GETLOGINPROFILE
 
 * The user should have entered the credentials for this option before making the call.
-* The call must include the "X-Qline-Auth: QCare, uid=<user name>, pwd=<password>" header.
+* The call must include the "X-KdSoft-Auth: KdSoft, uid=<user name>, pwd=<password>" header.
 * If successful, call returns with data, contains header with new token
-  "X-Qline-Token: <token string> <life-time>".
+  "X-KdSoft-Token: <token string> <life-time>".
 * If failed, call returns 471 with error message, client presents login screen again.
 * If user cancels the login dialog, call returns with 401 and the WWW-Authenticate headers.
 
@@ -133,22 +133,22 @@ CLIENT POINT OF VIEW
 
 * Client side code will interact with the OpenId Connect provider to authenticate.
   - As a successful result, an authorization code will be received from the OpenId Connect Issuer.
-* The call must include the "X-Qline-Auth: OpenId, iss=<issuer id>, code=<authorization code>" header.
+* The call must include the "X-KdSoft-Auth: OpenId, iss=<issuer id>, code=<authorization code>" header.
 * If successful, call returns with data, contains header with new token
-  "X-Qline-Token: <token string> <life-time>".
+  "X-KdSoft-Token: <token string> <life-time>".
 * If failed, call returns 471 with error message, client presents login screen again.
 * If user cancels the login dialog, call returns with 401 and the WWW-Authenticate headers.
 
-6) CLIENT SENDS ANY REQUEST WITH QLINE-SPECIFIC TOKEN HEADER
+6) CLIENT SENDS ANY REQUEST WITH KDSOFT-SPECIFIC TOKEN HEADER
 
-* The call must include the "Authorization: X-Qline <token string>" header.
+* The call must include the "Authorization: X-KdSoft <token string>" header.
 * Server authenticates call, if successful returns normally.
 * If authentication fails, server returns 471 with error message.
 
-7) CLIENT SENDS ANY REQUEST WITH QLINE-SPECIFIC RENEW TOKEN HEADER
+7) CLIENT SENDS ANY REQUEST WITH KDSOFT-SPECIFIC RENEW TOKEN HEADER
 
-* The call must include the "X-QLine-RenewToken" header in addition to the Authorization header.
+* The call must include the "X-KdSoft-RenewToken" header in addition to the Authorization header.
 * Server authenticates call, if successful returns normally, but includes the header
-  "X-Qline-Token <token string> <life-time>".
+  "X-KdSoft-Token <token string> <life-time>".
 * If authentication fails, server returns 471 with error message.
   

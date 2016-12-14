@@ -17,7 +17,7 @@ namespace KdSoft.Services.Security.AspNet
             string issuer,
             string authCode,
             string redirectUri,
-            QLineAuthenticationOptions options
+            KdSoftAuthenticationOptions options
         ) {
             var http = new HttpClient();
 

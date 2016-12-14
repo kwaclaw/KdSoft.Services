@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace QLine.Services.WebApi.Infrastructure
+namespace KdSoft.Services.WebApi.Infrastructure
 {
     public interface IPermissionConfig {
         TimeSpan PermissionsRefreshTime { get; }

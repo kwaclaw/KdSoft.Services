@@ -1,7 +1,7 @@
 ﻿using KdSoft.Services.Security;
 using System;
 
-namespace QLine.Services.WebApi.Infrastructure
+namespace KdSoft.Services.WebApi.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public class AuthorizationScopeAttribute: Attribute

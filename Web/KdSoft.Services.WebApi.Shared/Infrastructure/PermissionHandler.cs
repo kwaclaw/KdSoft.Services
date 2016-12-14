@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace QLine.Services.WebApi.Infrastructure
+namespace KdSoft.Services.WebApi.Infrastructure
 {
     public class PermissionHandler: AuthorizationHandler<PermissionRequirement>, IPermissionConfig
     {

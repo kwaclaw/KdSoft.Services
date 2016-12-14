@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace QLine.Services.WebApi
+namespace KdSoft.Services.WebApi
 {
     public class BaseWebApiConfig
     {
