@@ -5,19 +5,19 @@ using System.Text;
 
 namespace KdSoft.Services.WebApi
 {
-    public class FileTicketHelper
+    public class FileTicketIssuer
     {
         static readonly char[] tokenSplitChars = new char[] {'.'};
 
         byte[] symmetricKey;
         TimeSpan lifeTime;
 
-        public FileTicketHelper(byte[] symmetricKey, TimeSpan lifeTime) {
+        public FileTicketIssuer(byte[] symmetricKey, TimeSpan lifeTime) {
             this.symmetricKey = symmetricKey;
             this.lifeTime = lifeTime;
         }
 
-        public string CreateFileAccessTicket(Guid fileId, DateTimeOffset expiryTime, bool forWrite) {
+        public string CreateFileAccessTicket(Guid fileId, bool forWrite, DateTimeOffset expiryTime) {
             var fileIdBytes = fileId.ToByteArray();
             var expBytes = BitConverter.GetBytes(expiryTime.UtcTicks);
             byte[] hash;
@@ -49,11 +49,11 @@ namespace KdSoft.Services.WebApi
 
         public string CreateFileAccessTicket(Guid fileId, bool forWrite) {
             var expiryTime = DateTimeOffset.UtcNow + lifeTime;
-            return CreateFileAccessTicket(fileId, expiryTime, forWrite);
+            return CreateFileAccessTicket(fileId, forWrite, expiryTime);
         }
 
-        public Guid ValidateFileAccessTicket(string tokenStr, bool forUpdate) {
-            var parts = tokenStr.Split(tokenSplitChars, StringSplitOptions.RemoveEmptyEntries);
+        public Guid ValidateFileAccessTicket(string ticket, bool forUpdate) {
+            var parts = ticket.Split(tokenSplitChars, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length != 4)
                 throw new ArgumentException("Invalid file access ticket format.");
 
