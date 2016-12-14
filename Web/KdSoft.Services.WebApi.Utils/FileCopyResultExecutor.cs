@@ -9,7 +9,7 @@ namespace KdSoft.Services.WebApi
     public class FileCopyResultExecutor : FileResultExecutorBase
     {
         public FileCopyResultExecutor(ILoggerFactory loggerFactory)
-            : base(CreateLogger<VirtualFileResultExecutor>(loggerFactory)) {
+            : base(CreateLogger<FileCopyResultExecutor>(loggerFactory)) {
         }
 
         public Task ExecuteAsync(ActionContext context, FileCopyResult result) {

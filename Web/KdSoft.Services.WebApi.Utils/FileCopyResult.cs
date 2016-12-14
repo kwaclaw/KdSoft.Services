@@ -27,7 +27,6 @@ namespace KdSoft.Services.WebApi
             }
         }
 
-        //TODO should we redesign to use the FileResultExecutor pattern?
         // see  github.com/aspnet/mvc: src/Microsoft.AspNetCore.Mvc.Core/Internal/FileStreamResultExecutor.cs
         public override Task ExecuteResultAsync(ActionContext context) {
             if (context == null) {
