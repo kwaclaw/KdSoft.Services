@@ -8,7 +8,7 @@
         "net451": {}
     },
     "dependencies": {
-        "KdSoft.Common.VeryPortable": "2.0.2",
+        "KdSoft.Common.VeryPortable": "2.0.3",
         "KdSoft.Data": "1.0.0",
         "KdSoft.Data.Models.Security": "1.0.0",
         "KdSoft.Services.Json": "1.0.0",

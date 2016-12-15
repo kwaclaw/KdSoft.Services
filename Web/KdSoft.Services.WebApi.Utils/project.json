@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "Google.Protobuf": "3.1.0",
-        "KdSoft.Common.VeryPortable": "2.0.2",
+        "KdSoft.Common.VeryPortable": "2.0.3",
         "KdSoft.Services.Protobuf": "1.0.0",
         "KdSoft.Utils.Portable": "3.1.0",
         "Microsoft.AspNetCore.Http": "1.1.0",

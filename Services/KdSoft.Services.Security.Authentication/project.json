@@ -20,9 +20,9 @@
         "KdSoft.Data.Models.Security": "1.0.0",
         "KdSoft.Data.Models.Shared.Security": "1.0.1",
         "KdSoft.Services.Shared.Security": "1.0.0",
-        "KdSoft.StorageBase": "2.0.2",
-        "KdSoft.TransientStorage": "2.0.2",
-        "KdSoft.Utils": "2.0.2"
+        "KdSoft.StorageBase": "2.0.3",
+        "KdSoft.TransientStorage": "2.0.3",
+        "KdSoft.Utils": "2.0.3"
     },
     "buildOptions": {
         "compile": {
