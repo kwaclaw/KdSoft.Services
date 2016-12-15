@@ -1,5 +1,5 @@
 {
-    "version": "1.1.0-*",
+    "version": "1.1.0",
     "description": "KdSoft.Data.Models.Shared Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
@@ -9,8 +9,8 @@
         "netstandard1.3": {
             "buildOptions": { "define": [ "COREFX" ] },
             "dependencies": {
-                "NETStandard.Library": "1.6.1-*",
-                "Microsoft.CSharp": "4.3.0-*"
+                "NETStandard.Library": "1.6.1",
+                "Microsoft.CSharp": "4.3.0"
             }
         }
     },

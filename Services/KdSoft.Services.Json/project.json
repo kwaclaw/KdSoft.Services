@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0-*",
+    "version": "1.0.0",
     "description": "KdSoft.Services.Json Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
@@ -13,14 +13,14 @@
         "netstandard1.3": {
             "buildOptions": { "define": [ "COREFX" ] },
             "dependencies": {
-                "System.Xml.ReaderWriter": "4.3.0-*"
+                "System.Xml.ReaderWriter": "4.3.0"
             },
             "imports": [ "portable-net45+win8" ]
         }
     },
     "dependencies": {
-        "KdSoft.Data.Models.Shared": "1.1.0-*",
-        "Newtonsoft.Json": "9.0.1-*"
+        "KdSoft.Data.Models.Shared": "1.1.0",
+        "Newtonsoft.Json": "9.0.1"
     },
     "buildOptions": {
         "compile": {

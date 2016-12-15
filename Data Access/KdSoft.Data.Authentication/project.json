@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0-*",
+    "version": "1.0.0",
     "description": "KdSoft.Data.Authentication Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
@@ -9,10 +9,10 @@
     },
     "dependencies": {
         "Dapper": "1.50.2",
-        "KdSoft.Data": "1.0.0-*",
-        "KdSoft.Data.Helpers": "1.0.0-*",
-        "KdSoft.Data.Models.Security": "1.0.0-*",
-        "KdSoft.Data.Models.Shared.Security": "1.0.1-*",
+        "KdSoft.Data": "1.0.0",
+        "KdSoft.Data.Helpers": "1.0.0",
+        "KdSoft.Data.Models.Security": "1.0.0",
+        "KdSoft.Data.Models.Shared.Security": "1.0.1",
         "KdSoft.Utils": "2.0.2"
     },
     "buildOptions": {
