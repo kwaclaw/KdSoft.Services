@@ -7,6 +7,25 @@ namespace KdSoft.Services
     {
         public static readonly string[] EmptyStrings = new string[0];
 
+        public static TransactionScope CreateAsyncTxScope(IsolationLevel isolation = IsolationLevel.ReadCommitted) {
+            var txOptions = new TransactionOptions { IsolationLevel = isolation };
+            return new TransactionScope(TransactionScopeOption.Required, txOptions, TransactionScopeAsyncFlowOption.Enabled);
+        }
+
+        public static TransactionScope CreateAsyncTxScope(TransactionScopeOption scopeOption, IsolationLevel isolation = IsolationLevel.ReadCommitted) {
+            var txOptions = new TransactionOptions { IsolationLevel = isolation };
+            return new TransactionScope(scopeOption, txOptions, TransactionScopeAsyncFlowOption.Enabled);
+        }
+
+        public static TransactionScope CreateAsyncTxScope(TransactionScopeOption scopeOption, TimeSpan scopeTimeout, IsolationLevel isolation = IsolationLevel.ReadCommitted) {
+            var txOptions = new TransactionOptions { IsolationLevel = isolation, Timeout = scopeTimeout };
+            return new TransactionScope(scopeOption, txOptions, TransactionScopeAsyncFlowOption.Enabled);
+        }
+
+        public static TransactionScope CreateAsyncTxScope(Transaction transactionToUse, TimeSpan timeout) {
+            return new TransactionScope(transactionToUse, timeout, TransactionScopeAsyncFlowOption.Enabled);
+        }
+
         // syntactic sugar for chaining statements
         public static T Complete<T>(this TransactionScope txScope, T value) {
             txScope.Complete();

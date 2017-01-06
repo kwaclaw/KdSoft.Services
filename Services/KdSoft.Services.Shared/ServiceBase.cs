@@ -92,22 +92,19 @@ namespace KdSoft.Services
         }
 
         protected static TransactionScope CreateAsyncTxScope(IsolationLevel isolation = IsolationLevel.ReadCommitted) {
-            var txOptions = new TransactionOptions { IsolationLevel = isolation };
-            return new TransactionScope(TransactionScopeOption.Required, txOptions, TransactionScopeAsyncFlowOption.Enabled);
+            return Utils.CreateAsyncTxScope(isolation);
         }
 
         protected static TransactionScope CreateAsyncTxScope(TransactionScopeOption scopeOption, IsolationLevel isolation = IsolationLevel.ReadCommitted) {
-            var txOptions = new TransactionOptions { IsolationLevel = isolation };
-            return new TransactionScope(scopeOption, txOptions, TransactionScopeAsyncFlowOption.Enabled);
+            return Utils.CreateAsyncTxScope(scopeOption, isolation);
         }
 
         protected static TransactionScope CreateAsyncTxScope(TransactionScopeOption scopeOption, TimeSpan scopeTimeout, IsolationLevel isolation = IsolationLevel.ReadCommitted) {
-            var txOptions = new TransactionOptions { IsolationLevel = isolation, Timeout = scopeTimeout };
-            return new TransactionScope(scopeOption, txOptions, TransactionScopeAsyncFlowOption.Enabled);
+            return Utils.CreateAsyncTxScope(scopeOption, scopeTimeout, isolation);
         }
 
         protected static TransactionScope CreateAsyncTxScope(Transaction transactionToUse, TimeSpan timeout) {
-            return new TransactionScope(transactionToUse, timeout, TransactionScopeAsyncFlowOption.Enabled);
+            return Utils.CreateAsyncTxScope(transactionToUse, timeout);
         }
 
         // if the Context gets disposed then connections get closed
