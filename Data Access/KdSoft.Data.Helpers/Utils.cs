@@ -79,7 +79,7 @@ namespace KdSoft.Data.Helpers
         }
 
         // Any changes to the Sorts (see ApplyUniqueSortKey) must have been applied already
-        public static void ApplyLastRecordPredicate(this SortNextFilter snf, Dictionary<string, FieldDescriptor> fieldMap) {
+        public static void ApplyLastRecordPredicate(this SortNextFilter snf, IReadOnlyDictionary<string, FieldDescriptor> fieldMap) {
             var lastRec = snf.LastRecord as IDictionary<string, object>;
             if (lastRec == null) {
                 lastRec = new Dictionary<string, object>();
@@ -115,7 +115,7 @@ namespace KdSoft.Data.Helpers
         //}
 
 
-        public static string GetCheckedSortClause(this Sort sort, Dictionary<string, FieldDescriptor> sortFields) {
+        public static string GetCheckedSortClause(this Sort sort, IReadOnlyDictionary<string, FieldDescriptor> sortFields) {
             var fm = sortFields[sort.Field];
             if (!fm.IsSortable)
                 throw new InvalidOperationException(string.Format("Field '{0}' is not sortable.", sort.Field));
@@ -133,7 +133,7 @@ namespace KdSoft.Data.Helpers
             }
         }
 
-        public static OrderByColumn GetCheckedSortColumn(this Sort sort, Dictionary<string, FieldDescriptor> sortFields) {
+        public static OrderByColumn GetCheckedSortColumn(this Sort sort, IReadOnlyDictionary<string, FieldDescriptor> sortFields) {
             var fm = sortFields[sort.Field];
             if (!fm.IsSortable)
                 throw new InvalidOperationException(string.Format("Field '{0}' is not sortable.", sort.Field));

@@ -57,8 +57,8 @@ namespace KdSoft.Data.Helpers
             this SelectQuery query,
             SortNextFilter sortFilter,
             IEnumerable<Sort> uniqueSortKeys,
-            Func<Dictionary<string, FieldDescriptor>, SqlPredicateVisitor> getPredicateVisitor,
-            Dictionary<string, FieldDescriptor> fieldMap
+            Func<IReadOnlyDictionary<string, FieldDescriptor>, SqlPredicateVisitor> getPredicateVisitor,
+            IReadOnlyDictionary<string, FieldDescriptor> fieldMap
         ) {
             sortFilter.ApplyUniqueSortKeys(uniqueSortKeys);
             if (sortFilter.LastRecord != null)

@@ -9,11 +9,11 @@ namespace KdSoft.Data.Helpers
     public class SqlPredicateVisitor  //: IVisitor<Filter>, IVisitor<NotPredicate>, IVisitor<AndPredicate>, IVisitor<OrPredicate>
     {
         protected readonly StringBuilder sb;
-        protected readonly Dictionary<string, FieldDescriptor> fieldMap;
+        protected readonly IReadOnlyDictionary<string, FieldDescriptor> fieldMap;
         protected readonly DynamicParameters args;
         protected int argStartIndex;
 
-        public SqlPredicateVisitor(Dictionary<string, FieldDescriptor> fieldMap, DynamicParameters args, int argStartIndex = 0) {
+        public SqlPredicateVisitor(IReadOnlyDictionary<string, FieldDescriptor> fieldMap, DynamicParameters args, int argStartIndex = 0) {
             sb = new StringBuilder();
             this.fieldMap = fieldMap;
             this.args = args;
