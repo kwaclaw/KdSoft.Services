@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Globalization;
 
 namespace KdSoft.Services
 {
     public interface IServiceContext
     {
-        ILoggerFactory LoggerFactory { get; }
+        IServiceProvider Provider { get; }
         CultureInfo Culture { get; }
     }
 }

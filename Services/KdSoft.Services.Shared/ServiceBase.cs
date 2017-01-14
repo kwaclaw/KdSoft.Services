@@ -1,5 +1,6 @@
 ﻿using KdSoft.Data;
 using KdSoft.Utils;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Transactions;
@@ -45,8 +46,10 @@ namespace KdSoft.Services
         ILogger logger;
         protected ILogger Logger {
             get {
-                if (logger == null)
-                    logger = callContext.LoggerFactory.CreateLogger(this.GetType().FullName);
+                if (logger == null) {
+                    var loggerFactory = callContext.Provider.GetService<ILoggerFactory>();
+                    logger = loggerFactory.CreateLogger(this.GetType().FullName);
+                }
                 return logger;
             }
         }

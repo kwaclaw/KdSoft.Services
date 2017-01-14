@@ -1,5 +1,5 @@
 {
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "KdSoft.Services.Shared Class Library",
     "copyright": "Karl Waclawek",
     "authors": [ "Karl Waclawek" ],
@@ -10,8 +10,9 @@
     "dependencies": {
         "KdSoft.Data": "1.0.0",
         "KdSoft.Data.Models.Shared": "1.1.0",
-        "KdSoft.Utils.Portable": "3.1.0",
+        "KdSoft.Utils.Portable": "3.2.0",
         "Microsoft.Extensions.Logging.Abstractions": "1.1.0",
+        "Microsoft.Extensions.DependencyInjection": "1.1.0",
         "Nito.Collections.Deque": "1.0.0"
     },
     "buildOptions": {

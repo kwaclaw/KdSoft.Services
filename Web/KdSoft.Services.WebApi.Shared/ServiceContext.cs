@@ -1,30 +1,24 @@
-﻿using KdSoft.Services;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Logging;
+using System;
 using System.Globalization;
 
 namespace KdSoft.Services.WebApi
 {
     public class ServiceContext: IServiceContext
     {
-        ILoggerFactory loggerFactory;
-        IHttpContextAccessor accessor;
-
-        public ServiceContext(ILoggerFactory loggerFactory, IHttpContextAccessor accessor) {
-            this.loggerFactory = loggerFactory;
-            this.accessor = accessor;
+        public ServiceContext(IServiceProvider provider, IHttpContextAccessor accessor) {
+            this.Provider = provider;
+            this.Accessor = accessor;
         }
 
-        public ILoggerFactory LoggerFactory {
-            get {
-                return loggerFactory;
-            }
-        }
+        public IServiceProvider Provider { get;}
+
+        public IHttpContextAccessor Accessor { get; }
 
         public CultureInfo Culture {
             get {
-                var requestCultureFeature = (IRequestCultureFeature)accessor.HttpContext?.Features[typeof(IRequestCultureFeature)];
+                var requestCultureFeature = (IRequestCultureFeature)Accessor.HttpContext?.Features[typeof(IRequestCultureFeature)];
                 if (requestCultureFeature != null)
                     return requestCultureFeature.RequestCulture.UICulture;
                 else
