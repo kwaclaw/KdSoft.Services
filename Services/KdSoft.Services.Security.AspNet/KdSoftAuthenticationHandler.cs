@@ -1,4 +1,5 @@
-﻿using KdSoft.Utils;
+﻿using KdSoft.Data.Models.Shared.Security;
+using KdSoft.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -198,6 +199,46 @@ namespace KdSoft.Services.Security.AspNet
             return result;
         }
 
+        async Task<AuthenticationResult> CheckAuthenticatedUser(string userName, string authType) {
+            AuthenticationResult result = default(AuthenticationResult);
+
+            if (string.IsNullOrEmpty(userName))
+                throw new ArgumentNullException("userName");
+
+            // first we need a basic claims identity to create the access token (only UserKey and Name claims)
+            var tokenClaims = new List<Claim>();
+            tokenClaims.Add(new Claim(sysClaims.ClaimTypes.Name, userName));
+            tokenClaims.Add(new Claim(ClaimTypes.AuthType, authType, sysClaims.ClaimValueTypes.String));
+
+            var tokenIdentity = new ClaimsIdentity(tokenClaims, authType, sysClaims.ClaimTypes.Name, sysClaims.ClaimTypes.Role);
+
+            // now we create the token and get the encoded signature (related to ClaimsId claim)
+            var jwtToken = CreateAccessToken(tokenIdentity);
+            string claimsIdStr = jwtToken.RawSignature;
+            byte[] claimsId = Encoding.UTF8.GetBytes(claimsIdStr);
+
+            result.ClaimsId = claimsId;
+
+            var validFrom = jwtToken != null ? jwtToken.ValidFrom : default(DateTime);
+            var validTo = jwtToken != null ? jwtToken.ValidTo : default(DateTime);
+            // this returns extra claims needed by the application (based on the userKey)
+            var claimsResult = await Options.ClaimsCache.RetrieveAndCacheClaimPropertiesAsync(
+                claimsId, null, userName, authType, validFrom, validTo).ConfigureAwait(false);
+
+            result.TokenValidFrom = validFrom;
+            result.TokenValidTo = validTo;
+            result.Token = jwtToken;
+
+            // the ClaimsId claim is not cached itself, but it is attached to the new identity
+            claimsResult.Claims.Add(new Claim(ClaimTypes.ClaimsId, claimsIdStr, ClaimValueTypes.TokenSig));
+            // the finall identity has all the claims needed by the application
+            var claimsIdentity = new ClaimsIdentity(claimsResult.Claims, authType, sysClaims.ClaimTypes.Name, sysClaims.ClaimTypes.Role);
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+            result.Ticket = new AuthenticationTicket(claimsPrincipal, null, authType);
+
+            return result;
+        }
+
         //http://stackoverflow.com/questions/28542141/windows-authentication-in-asp-net-5
 
         async Task<AuthenticationResult> CheckWindowsUser() {
@@ -241,13 +282,12 @@ namespace KdSoft.Services.Security.AspNet
                     return result;
                 if (domain == null)
                     domain = provider.GetDefaultADDomain();
+                var adAccount = new AdAccount { Domain = domain, UserName = userName };
 
-                var userKey = await provider.GetActiveDirectoryUserKey(domain, userName).ConfigureAwait(false);
-                if (userKey == null)
-                    return result;
+                var userKey = await provider.GetActiveDirectoryUserKey(adAccount).ConfigureAwait(false);
 
                 var claimsResult = await Options.ClaimsCache.RetrieveAndCacheClaimPropertiesAsync(
-                  claimsId, userKey.Value, adUserName, authType).ConfigureAwait(false);
+                  claimsId, userKey, adUserName, authType).ConfigureAwait(false);
                 claims = claimsResult.Claims;
                 //result.TokenValidFrom = claimsResult.TokenValidFrom;
                 //result.TokenValidTo = claimsResult.TokenValidTo;
@@ -328,20 +368,32 @@ namespace KdSoft.Services.Security.AspNet
                         var subject = (string)idToken["sub"];
                         var issuer = (string)idToken["iss"];
                         if (subject != null) {
+                            string userName = (string)idToken["email"];
+                            if (string.IsNullOrEmpty(userName))
+                                userName = issuer + "/" + subject;
+
+                            // is the user also known to our security database?
                             int? userKey = await provider.GetOpenIdUserKey(issuer, subject).ConfigureAwait(false);
                             if (userKey != null) {
-                                string userName = (string)idToken["email"];
-                                if (string.IsNullOrEmpty(userName))
-                                    userName = issuer + "/" + subject;
                                 coreAuthResult = await CheckCustomUser(userKey.Value, userName, authContext.AuthReqTypeName).ConfigureAwait(false);
+                            }
+                            else {  // the user is not known to the database, but may still be allowed to perform some operations
+                                coreAuthResult = await CheckAuthenticatedUser(userName, authContext.AuthReqTypeName).ConfigureAwait(false);
                             }
                         }
                     }
                 }
                 else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.Windows && !string.IsNullOrEmpty(authContext.UserName)) {
-                    int? userKey = await provider.ValidateAdUser(authContext.UserName, authContext.Password).ConfigureAwait(false);
-                    if (userKey != null) {
-                        coreAuthResult = await CheckCustomUser(userKey.Value, authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
+                    var adAccount = await provider.ValidateAdUser(authContext.UserName, authContext.Password).ConfigureAwait(false);
+                    if (adAccount != null) {  // user authenticated
+                        // is the user also known to our security database?
+                        int? userKey = await provider.GetActiveDirectoryUserKey(adAccount).ConfigureAwait(false);
+                        if (userKey != null) {
+                            coreAuthResult = await CheckCustomUser(userKey.Value, authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
+                        }
+                        else {  // the user is not known to the database, but may still be allowed to perform some operations
+                            coreAuthResult = await CheckAuthenticatedUser(authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
+                        }
                     }
                 }
                 else {  // otherwise we always check Windows authentication

@@ -61,24 +61,28 @@ namespace KdSoft.Services.Security
 
         public async Task<ClaimProperties> RetrieveAndCacheClaimPropertiesAsync(
             byte[] claimsId,
-            int userKey,
+            int? userKey,
             string userName,
             string authType,
             DateTime tokenValidFrom = default(DateTime),
             DateTime tokenValidTo = default(DateTime)
         ) {
             var propValues = new List<PropertyValue>() {
-                new PropertyValue((int)ClaimIndexes.UserKey, BitConverter.GetBytes(userKey)),
                 new PropertyValue((int)ClaimIndexes.UserName, Encoding.UTF8.GetBytes(userName)),
                 new PropertyValue((int)ClaimIndexes.AuthType, Encoding.UTF8.GetBytes(authType))
             };
-            await AddClaimsToBeCachedAsync(userKey, propValues).ConfigureAwait(false);
+            if (userKey != null) {
+                propValues.Add(new PropertyValue((int)ClaimIndexes.UserKey, BitConverter.GetBytes(userKey.Value)));
+                await AddClaimsToBeCachedAsync(userKey.Value, propValues).ConfigureAwait(false);
+            }
 
             int claimsCount = propValues.Count;
 
             propValues.Add(new PropertyValue(PropertiesStartIndex + (int)PropertyOffsets.TokenValidFrom, BitConverter.GetBytes(tokenValidFrom.Ticks)));
             propValues.Add(new PropertyValue(PropertiesStartIndex + (int)PropertyOffsets.TokenValidTo, BitConverter.GetBytes(tokenValidTo.Ticks)));
-            await AddPropertiesToBeCachedAsync(userKey, propValues).ConfigureAwait(false);
+            if (userKey != null) {
+                await AddPropertiesToBeCachedAsync(userKey.Value, propValues).ConfigureAwait(false);
+            }
 
             var propEntries = await StorePropertyValuesAsync(claimsId, propValues).ConfigureAwait(false);
 

@@ -19,6 +19,12 @@
         public bool IsAuthenticated { get; set; }
     }
 
+    public class AdAccount
+    {
+        public string Domain { get; set; }
+        public string UserName { get; set; }
+    }
+
     public class OpenIdAuthorization
     {
         public string Issuer { get; set; }

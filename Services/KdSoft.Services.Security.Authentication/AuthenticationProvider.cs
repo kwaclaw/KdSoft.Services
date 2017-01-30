@@ -185,7 +185,7 @@ namespace KdSoft.Services.Security
             }
         }
 
-        public Task<int?> ValidateAdUser(string adUserName, string adPassword, string adDomain = null) {
+        public Task<AdAccount> ValidateAdUser(string adUserName, string adPassword, string adDomain = null) {
             string domain, userName;
 
             if (!KdSoft.Services.Security.Utils.TryParseAdUserName(adUserName, out domain, out userName)) {
@@ -202,10 +202,10 @@ namespace KdSoft.Services.Security
                 }
 
                 if (domainContext.ValidateCredentials(userName, adPassword)) {
-                    return GetActiveDirectoryUserKey(domain, userName);
+                    return Task.FromResult(new AdAccount { Domain = domain, UserName = userName });
                 }
                 else {
-                    return Task.FromResult<int?>(null);
+                    return Task.FromResult<AdAccount>(null);
                 }
             }
             finally {
@@ -213,9 +213,9 @@ namespace KdSoft.Services.Security
             }
         }
 
-        public async Task<int?> GetActiveDirectoryUserKey(string domain, string userName) {
+        public async Task<int?> GetActiveDirectoryUserKey(AdAccount adAccount) {
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
-                return await securityDb.GetAdUserKey(domain, userName, ownerGuid).ConfigureAwait(false);
+                return await securityDb.GetAdUserKey(adAccount.Domain, adAccount.UserName, ownerGuid).ConfigureAwait(false);
             }
         }
 

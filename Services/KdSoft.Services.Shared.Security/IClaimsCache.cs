@@ -35,7 +35,7 @@ namespace KdSoft.Services.Security
         /// Caches standard claim and non-claim values and and returns them as claims and properties.
         /// </summary>
         /// <param name="claimsId">Key under which to store the values.</param>
-        /// <param name="userKey">Standard userKey claim value.</param>
+        /// <param name="userKey">Standard userKey claim value. May be <c>null</c>.</param>
         /// <param name="userName">Standard userName claim value.</param>
         /// <param name="authType">Standard authentication type claim value.</param>
         /// <param name="tokenValidFrom">Standard token validFrom date-time property value.</param>
@@ -43,7 +43,7 @@ namespace KdSoft.Services.Security
         /// <returns>Claim values as Claim instances, property values as byte arrays.</returns>
         Task<ClaimProperties> RetrieveAndCacheClaimPropertiesAsync(
             byte[] claimsId,
-            int userKey,
+            int? userKey,
             string userName,
             string authType,
             DateTime tokenValidFrom = default(DateTime),
