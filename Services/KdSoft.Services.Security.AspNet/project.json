@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "KdSoft.Services.Shared": "1.1.0",
-        "KdSoft.Services.Shared.Security": "1.0.0",
+        "KdSoft.Services.Shared.Security": "1.1.0",
         "KdSoft.Utils.Portable": "3.2.0",
         "Microsoft.AspNetCore.Authentication": "1.1.0",
         "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0",
