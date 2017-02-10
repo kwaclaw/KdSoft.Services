@@ -65,7 +65,7 @@ namespace KdSoft.Data
         ConcurrentDictionary<string, DbConnection> connections;
 
         protected DbContext() {
-            connections = new ConcurrentDictionary<string, DbConnection>();
+            connections = new ConcurrentDictionary<string, DbConnection>(StringComparer.OrdinalIgnoreCase);
         }
 
         DbConnection InternalOpenConnection(string name) {
