@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "Dapper": "1.50.2",
-        "KdSoft.Data": "1.0.0",
+        "KdSoft.Data": "1.0.1",
         "KdSoft.Data.Helpers": "1.2.0",
         "KdSoft.Data.Models.Security": "1.0.0",
         "KdSoft.Data.Models.Shared.Security": "1.0.2",

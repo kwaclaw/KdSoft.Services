@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "KdSoft.Common.VeryPortable": "2.0.3",
-        "KdSoft.Data": "1.0.0",
+        "KdSoft.Data": "1.0.1",
         "KdSoft.Data.Models.Security": "1.0.0",
         "KdSoft.Services.Json": "1.0.0",
         "KdSoft.Services.Security.Authorization": "1.0.0",
