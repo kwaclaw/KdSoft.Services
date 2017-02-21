@@ -12,16 +12,16 @@
         }
     },
     "dependencies": {
-        "Google.Protobuf": "3.1.0",
+        "Google.Protobuf": "3.2.0",
         "KdSoft.Common.VeryPortable": "2.0.3",
         "KdSoft.Services.Protobuf": "1.0.0",
-        "KdSoft.Utils.Portable": "3.2.0",
+        "KdSoft.Utils.Portable": "3.3.0",
         "Microsoft.AspNetCore.Http": "1.1.0",
         "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
         "Microsoft.AspNetCore.Http.Extensions": "1.1.0",
-        "Microsoft.AspNetCore.Mvc": "1.1.0",
-        "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.0",
-        "Microsoft.AspNetCore.Mvc.Core": "1.1.0",
+        "Microsoft.AspNetCore.Mvc": "1.1.1",
+        "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.1",
+        "Microsoft.AspNetCore.Mvc.Core": "1.1.1",
         "Newtonsoft.Json": "9.0.1"
     },
     "buildOptions": {

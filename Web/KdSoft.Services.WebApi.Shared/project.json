@@ -16,7 +16,7 @@
         "KdSoft.Services.Shared": "1.1.0",
         "KdSoft.Services.Shared.Security": "1.1.0",
         "KdSoft.Services.WebApi.Utils": "1.0.0",
-        "KdSoft.Utils.Portable": "3.2.0",
+        "KdSoft.Utils.Portable": "3.3.0",
         "Microsoft.AspNetCore.Authorization": "1.1.0",
         "Microsoft.AspNetCore.Localization": "1.1.0",
         "Newtonsoft.Json": "9.0.1"

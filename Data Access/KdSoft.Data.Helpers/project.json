@@ -11,7 +11,7 @@
         "Dapper": "1.50.2",
         "KdSoft.Data.Models.Shared": "1.1.0",
         "KdSoft.Reflection.Portable": "1.0.3",
-        "KdSoft.Utils.Portable": "3.2.0",
+        "KdSoft.Utils.Portable": "3.3.0",
         "SqlModeller": "1.0.0.7"
     },
     "buildOptions": {
