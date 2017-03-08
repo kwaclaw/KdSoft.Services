@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>KdSoft.Services.Security.Authorization Class Library</Description>
+    <Copyright>Karl Waclawek</Copyright>
+    <Authors>Karl Waclawek</Authors>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>KdSoft.Services.Security.Authorization</AssemblyName>
+    <PackageId>KdSoft.Services.Security.Authorization</PackageId>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data Access\KdSoft.Data\KdSoft.Data.csproj" />
+    <ProjectReference Include="..\..\Data Access\KdSoft.Data.Authentication\KdSoft.Data.Authentication.csproj" />
+    <ProjectReference Include="..\..\Data Access\KdSoft.Data.Helpers\KdSoft.Data.Helpers.csproj" />
+    <ProjectReference Include="..\..\Data Models\KdSoft.Data.Models.Security\KdSoft.Data.Models.Security.csproj" />
+    <ProjectReference Include="..\..\Shared Models\KdSoft.Data.Models.Shared.Security\KdSoft.Data.Models.Shared.Security.csproj" />
+    <ProjectReference Include="..\KdSoft.Services.Shared\KdSoft.Services.Shared.csproj" />
+    <ProjectReference Include="..\KdSoft.Services.Shared.Security\KdSoft.Services.Shared.Security.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="KdSoft.StorageBase" Version="2.0.3" />
+    <PackageReference Include="KdSoft.TransientStorage" Version="2.0.3" />
+    <PackageReference Include="KdSoft.Utils" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
+    <Reference Include="System.Text.RegularExpressions" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>
