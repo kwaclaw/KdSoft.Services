@@ -32,15 +32,10 @@
 
   <ItemGroup>
     <PackageReference Include="KdSoft.Common.VeryPortable" Version="2.0.3" />
-    <PackageReference Include="KdSoft.Utils.Portable" Version="3.3.0" />
+    <PackageReference Include="KdSoft.Utils.Portable" Version="3.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Localization" Version="1.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
 </Project>

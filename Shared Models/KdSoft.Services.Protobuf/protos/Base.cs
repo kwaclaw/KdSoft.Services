@@ -10,7 +10,6 @@ using scg = global::System.Collections.Generic;
 namespace KdSoft.Services.Protobuf {
 
   /// <summary>Holder for reflection information generated from Base.proto</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public static partial class BaseReflection {
 
     #region Descriptor
@@ -46,30 +45,35 @@ namespace KdSoft.Services.Protobuf {
 
   }
   #region Messages
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class OpStatus : pb::IMessage<OpStatus> {
     private static readonly pb::MessageParser<OpStatus> _parser = new pb::MessageParser<OpStatus>(() => new OpStatus());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<OpStatus> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::KdSoft.Services.Protobuf.BaseReflection.Descriptor.MessageTypes[0]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public OpStatus() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public OpStatus(OpStatus other) : this() {
       code_ = other.code_;
       description_ = other.description_;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public OpStatus Clone() {
       return new OpStatus(this);
     }
@@ -77,6 +81,7 @@ namespace KdSoft.Services.Protobuf {
     /// <summary>Field number for the "Code" field.</summary>
     public const int CodeFieldNumber = 1;
     private int code_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Code {
       get { return code_; }
       set {
@@ -87,6 +92,7 @@ namespace KdSoft.Services.Protobuf {
     /// <summary>Field number for the "Description" field.</summary>
     public const int DescriptionFieldNumber = 2;
     private string description_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Description {
       get { return description_; }
       set {
@@ -94,10 +100,12 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as OpStatus);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(OpStatus other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -110,6 +118,7 @@ namespace KdSoft.Services.Protobuf {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Code != 0) hash ^= Code.GetHashCode();
@@ -117,10 +126,12 @@ namespace KdSoft.Services.Protobuf {
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Code != 0) {
         output.WriteRawTag(8);
@@ -132,6 +143,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Code != 0) {
@@ -143,6 +155,7 @@ namespace KdSoft.Services.Protobuf {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(OpStatus other) {
       if (other == null) {
         return;
@@ -155,6 +168,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -176,36 +190,43 @@ namespace KdSoft.Services.Protobuf {
 
   }
 
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class Empty : pb::IMessage<Empty> {
     private static readonly pb::MessageParser<Empty> _parser = new pb::MessageParser<Empty>(() => new Empty());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<Empty> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::KdSoft.Services.Protobuf.BaseReflection.Descriptor.MessageTypes[1]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Empty() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Empty(Empty other) : this() {
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Empty Clone() {
       return new Empty(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Empty);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(Empty other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -216,29 +237,35 @@ namespace KdSoft.Services.Protobuf {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(Empty other) {
       if (other == null) {
         return;
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -252,25 +279,29 @@ namespace KdSoft.Services.Protobuf {
 
   }
 
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class Time : pb::IMessage<Time> {
     private static readonly pb::MessageParser<Time> _parser = new pb::MessageParser<Time>(() => new Time());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<Time> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::KdSoft.Services.Protobuf.BaseReflection.Descriptor.MessageTypes[2]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Time() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Time(Time other) : this() {
       hour_ = other.hour_;
       minute_ = other.minute_;
@@ -278,6 +309,7 @@ namespace KdSoft.Services.Protobuf {
       milliSecond_ = other.milliSecond_;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Time Clone() {
       return new Time(this);
     }
@@ -286,8 +318,9 @@ namespace KdSoft.Services.Protobuf {
     public const int HourFieldNumber = 1;
     private int hour_;
     /// <summary>
-    ///  0 - 23
+    /// 0 - 23
     /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Hour {
       get { return hour_; }
       set {
@@ -299,8 +332,9 @@ namespace KdSoft.Services.Protobuf {
     public const int MinuteFieldNumber = 2;
     private int minute_;
     /// <summary>
-    ///  0 - 59
+    /// 0 - 59
     /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Minute {
       get { return minute_; }
       set {
@@ -312,8 +346,9 @@ namespace KdSoft.Services.Protobuf {
     public const int SecondFieldNumber = 3;
     private int second_;
     /// <summary>
-    ///  0 - 59
+    /// 0 - 59
     /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Second {
       get { return second_; }
       set {
@@ -325,8 +360,9 @@ namespace KdSoft.Services.Protobuf {
     public const int MilliSecondFieldNumber = 4;
     private int milliSecond_;
     /// <summary>
-    ///  0 - 999
+    /// 0 - 999
     /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int MilliSecond {
       get { return milliSecond_; }
       set {
@@ -334,10 +370,12 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Time);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(Time other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -352,6 +390,7 @@ namespace KdSoft.Services.Protobuf {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Hour != 0) hash ^= Hour.GetHashCode();
@@ -361,10 +400,12 @@ namespace KdSoft.Services.Protobuf {
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Hour != 0) {
         output.WriteRawTag(8);
@@ -384,6 +425,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Hour != 0) {
@@ -401,6 +443,7 @@ namespace KdSoft.Services.Protobuf {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(Time other) {
       if (other == null) {
         return;
@@ -419,6 +462,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -448,31 +492,36 @@ namespace KdSoft.Services.Protobuf {
 
   }
 
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class Date : pb::IMessage<Date> {
     private static readonly pb::MessageParser<Date> _parser = new pb::MessageParser<Date>(() => new Date());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<Date> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::KdSoft.Services.Protobuf.BaseReflection.Descriptor.MessageTypes[3]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Date() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Date(Date other) : this() {
       year_ = other.year_;
       month_ = other.month_;
       day_ = other.day_;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Date Clone() {
       return new Date(this);
     }
@@ -481,8 +530,9 @@ namespace KdSoft.Services.Protobuf {
     public const int YearFieldNumber = 1;
     private int year_;
     /// <summary>
-    ///  1753 onwards
+    /// 1753 onwards
     /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Year {
       get { return year_; }
       set {
@@ -494,8 +544,9 @@ namespace KdSoft.Services.Protobuf {
     public const int MonthFieldNumber = 2;
     private int month_;
     /// <summary>
-    ///  1 - 12
+    /// 1 - 12
     /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Month {
       get { return month_; }
       set {
@@ -507,8 +558,9 @@ namespace KdSoft.Services.Protobuf {
     public const int DayFieldNumber = 3;
     private int day_;
     /// <summary>
-    ///  1 - 31
+    /// 1 - 31
     /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Day {
       get { return day_; }
       set {
@@ -516,10 +568,12 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Date);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(Date other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -533,6 +587,7 @@ namespace KdSoft.Services.Protobuf {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Year != 0) hash ^= Year.GetHashCode();
@@ -541,10 +596,12 @@ namespace KdSoft.Services.Protobuf {
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Year != 0) {
         output.WriteRawTag(8);
@@ -560,6 +617,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Year != 0) {
@@ -574,6 +632,7 @@ namespace KdSoft.Services.Protobuf {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(Date other) {
       if (other == null) {
         return;
@@ -589,6 +648,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -614,30 +674,35 @@ namespace KdSoft.Services.Protobuf {
 
   }
 
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class DateTime : pb::IMessage<DateTime> {
     private static readonly pb::MessageParser<DateTime> _parser = new pb::MessageParser<DateTime>(() => new DateTime());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<DateTime> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::KdSoft.Services.Protobuf.BaseReflection.Descriptor.MessageTypes[4]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public DateTime() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public DateTime(DateTime other) : this() {
       Date = other.date_ != null ? other.Date.Clone() : null;
       Time = other.time_ != null ? other.Time.Clone() : null;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public DateTime Clone() {
       return new DateTime(this);
     }
@@ -645,6 +710,7 @@ namespace KdSoft.Services.Protobuf {
     /// <summary>Field number for the "Date" field.</summary>
     public const int DateFieldNumber = 1;
     private global::KdSoft.Services.Protobuf.Date date_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::KdSoft.Services.Protobuf.Date Date {
       get { return date_; }
       set {
@@ -655,6 +721,7 @@ namespace KdSoft.Services.Protobuf {
     /// <summary>Field number for the "Time" field.</summary>
     public const int TimeFieldNumber = 2;
     private global::KdSoft.Services.Protobuf.Time time_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::KdSoft.Services.Protobuf.Time Time {
       get { return time_; }
       set {
@@ -662,10 +729,12 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as DateTime);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(DateTime other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -678,6 +747,7 @@ namespace KdSoft.Services.Protobuf {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (date_ != null) hash ^= Date.GetHashCode();
@@ -685,10 +755,12 @@ namespace KdSoft.Services.Protobuf {
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (date_ != null) {
         output.WriteRawTag(10);
@@ -700,6 +772,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (date_ != null) {
@@ -711,6 +784,7 @@ namespace KdSoft.Services.Protobuf {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(DateTime other) {
       if (other == null) {
         return;
@@ -729,6 +803,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -756,30 +831,35 @@ namespace KdSoft.Services.Protobuf {
 
   }
 
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class ServiceError : pb::IMessage<ServiceError> {
     private static readonly pb::MessageParser<ServiceError> _parser = new pb::MessageParser<ServiceError>(() => new ServiceError());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<ServiceError> Parser { get { return _parser; } }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::KdSoft.Services.Protobuf.BaseReflection.Descriptor.MessageTypes[5]; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ServiceError() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ServiceError(ServiceError other) : this() {
       code_ = other.code_;
       message_ = other.message_;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ServiceError Clone() {
       return new ServiceError(this);
     }
@@ -787,6 +867,7 @@ namespace KdSoft.Services.Protobuf {
     /// <summary>Field number for the "Code" field.</summary>
     public const int CodeFieldNumber = 1;
     private int code_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Code {
       get { return code_; }
       set {
@@ -797,6 +878,7 @@ namespace KdSoft.Services.Protobuf {
     /// <summary>Field number for the "Message" field.</summary>
     public const int MessageFieldNumber = 2;
     private string message_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Message {
       get { return message_; }
       set {
@@ -804,10 +886,12 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ServiceError);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(ServiceError other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -820,6 +904,7 @@ namespace KdSoft.Services.Protobuf {
       return true;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Code != 0) hash ^= Code.GetHashCode();
@@ -827,10 +912,12 @@ namespace KdSoft.Services.Protobuf {
       return hash;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Code != 0) {
         output.WriteRawTag(8);
@@ -842,6 +929,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Code != 0) {
@@ -853,6 +941,7 @@ namespace KdSoft.Services.Protobuf {
       return size;
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(ServiceError other) {
       if (other == null) {
         return;
@@ -865,6 +954,7 @@ namespace KdSoft.Services.Protobuf {
       }
     }
 
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {

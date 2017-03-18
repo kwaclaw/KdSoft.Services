@@ -29,12 +29,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.0" />
     <PackageReference Include="Nito.Collections.Deque" Version="1.0.0" />
-    <PackageReference Include="KdSoft.Utils.Portable" Version="3.3.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="KdSoft.Utils.Portable" Version="3.4.0" />
   </ItemGroup>
 
   <ItemGroup>

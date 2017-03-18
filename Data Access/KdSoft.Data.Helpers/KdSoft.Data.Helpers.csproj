@@ -27,13 +27,8 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.2" />
     <PackageReference Include="KdSoft.Reflection.Portable" Version="1.0.3" />
-    <PackageReference Include="KdSoft.Utils.Portable" Version="3.3.0" />
+    <PackageReference Include="KdSoft.Utils.Portable" Version="3.4.0" />
     <PackageReference Include="SqlModeller" Version="1.0.0.7" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
 </Project>

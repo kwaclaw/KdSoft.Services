@@ -7,7 +7,6 @@
     <TargetFrameworks>net462;netstandard1.6</TargetFrameworks>
     <AssemblyName>KdSoft.Services.WebApi.Utils</AssemblyName>
     <PackageId>KdSoft.Services.WebApi.Utils</PackageId>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);portable-net45+win8</PackageTargetFallback>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -27,7 +26,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.2.0" />
     <PackageReference Include="KdSoft.Common.VeryPortable" Version="2.0.3" />
-    <PackageReference Include="KdSoft.Utils.Portable" Version="3.3.0" />
+    <PackageReference Include="KdSoft.Utils.Portable" Version="3.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="1.1.1" />
@@ -35,11 +34,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="1.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
