@@ -5,7 +5,7 @@
     <Copyright>Karl Waclawek</Copyright>
     <VersionPrefix>1.1.0</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
-    <TargetFrameworks>net462;netstandard1.3</TargetFrameworks>
+    <TargetFramework>netstandard1.1</TargetFramework>
     <AssemblyName>KdSoft.Data.Models.Shared</AssemblyName>
     <PackageId>KdSoft.Data.Models.Shared</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -19,10 +19,6 @@
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs" />
   </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <DefineConstants>$(DefineConstants);COREFX</DefineConstants>
-  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />

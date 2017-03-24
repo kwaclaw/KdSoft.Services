@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>KdSoft.Services.Shared.Security Class Library</Description>
     <Copyright>Karl Waclawek</Copyright>
     <VersionPrefix>1.1.0</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
-    <TargetFrameworks>net462;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3</TargetFrameworks>
     <AssemblyName>KdSoft.Services.Shared.Security</AssemblyName>
     <PackageId>KdSoft.Services.Shared.Security</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -28,13 +28,6 @@
   <ItemGroup>
     <PackageReference Include="KdSoft.StorageBase" Version="2.0.3" />
     <PackageReference Include="KdSoft.TransientStorage" Version="2.0.3" />
-  </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <DefineConstants>$(DefineConstants);COREFX</DefineConstants>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
   </ItemGroup>
 

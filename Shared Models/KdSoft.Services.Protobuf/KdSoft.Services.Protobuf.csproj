@@ -5,7 +5,7 @@
     <Copyright>Karl Waclawek</Copyright>
     <AssemblyTitle>KdSoft.Services.Protobuf</AssemblyTitle>
     <Authors>Karl Waclawek</Authors>
-    <TargetFrameworks>net462;netstandard1.3</TargetFrameworks>
+    <TargetFramework>netstandard1.1</TargetFramework>
     <AssemblyName>KdSoft.Services.Protobuf</AssemblyName>
     <PackageId>KdSoft.Services.Protobuf</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -28,9 +28,5 @@
     <PackageReference Include="Google.Protobuf" Version="3.2.0" />
     <PackageReference Include="KdSoft.Reflection.Portable" Version="1.0.3" />
   </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <DefineConstants>$(DefineConstants);COREFX</DefineConstants>
-  </PropertyGroup>
 
 </Project>

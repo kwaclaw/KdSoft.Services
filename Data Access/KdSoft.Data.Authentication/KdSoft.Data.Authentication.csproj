@@ -4,7 +4,7 @@
     <Description>KdSoft.Data.Authentication Class Library</Description>
     <Copyright>Karl Waclawek</Copyright>
     <Authors>Karl Waclawek</Authors>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>KdSoft.Data.Authentication</AssemblyName>
     <PackageId>KdSoft.Data.Authentication</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>

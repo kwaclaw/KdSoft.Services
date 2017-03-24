@@ -5,7 +5,7 @@
     <Copyright>Karl Waclawek</Copyright>
     <VersionPrefix>1.2.0</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>KdSoft.Data.Helpers</AssemblyName>
     <PackageId>KdSoft.Data.Helpers</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -28,7 +28,7 @@
     <PackageReference Include="Dapper" Version="1.50.2" />
     <PackageReference Include="KdSoft.Reflection.Portable" Version="1.0.3" />
     <PackageReference Include="KdSoft.Utils.Portable" Version="3.4.0" />
-    <PackageReference Include="SqlModeller" Version="1.0.0.7" />
+    <PackageReference Include="SqlModeller" Version="1.0.0.7-netstd" />
   </ItemGroup>
 
 </Project>

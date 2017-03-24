@@ -5,7 +5,7 @@
     <Copyright>Karl Waclawek</Copyright>
     <VersionPrefix>1.1.0</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFrameworks>net461</TargetFrameworks>
     <AssemblyName>KdSoft.Services.WebApi.Shared</AssemblyName>
     <PackageId>KdSoft.Services.WebApi.Shared</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -35,7 +35,7 @@
     <PackageReference Include="KdSoft.Utils.Portable" Version="3.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Localization" Version="1.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
   </ItemGroup>
 
 </Project>

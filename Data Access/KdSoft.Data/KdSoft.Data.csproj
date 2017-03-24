@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>KdSoft.Data Class Library</Description>
     <Copyright>Karl Waclawek</Copyright>
     <VersionPrefix>1.0.1</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
-    <TargetFrameworks>net462;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>netstandard1.2</TargetFrameworks>
     <AssemblyName>KdSoft.Data</AssemblyName>
     <PackageId>KdSoft.Data</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -24,11 +24,7 @@
     <PackageReference Include="KdSoft.Utils.Portable" Version="3.4.0" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <DefineConstants>$(DefineConstants);COREFX</DefineConstants>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+  <ItemGroup>
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.3.0" />
   </ItemGroup>

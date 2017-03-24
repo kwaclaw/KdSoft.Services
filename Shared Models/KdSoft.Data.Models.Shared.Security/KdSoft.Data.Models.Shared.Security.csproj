@@ -5,7 +5,7 @@
     <Copyright>Karl Waclawek</Copyright>
     <VersionPrefix>1.0.2</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
-    <TargetFrameworks>net462;netstandard1.3</TargetFrameworks>
+    <TargetFramework>netstandard1.1</TargetFramework>
     <AssemblyName>KdSoft.Data.Models.Shared.Security</AssemblyName>
     <PackageId>KdSoft.Data.Models.Shared.Security</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -19,9 +19,5 @@
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs" />
   </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <DefineConstants>$(DefineConstants);COREFX</DefineConstants>
-  </PropertyGroup>
 
 </Project>

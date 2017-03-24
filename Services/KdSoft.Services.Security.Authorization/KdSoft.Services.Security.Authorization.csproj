@@ -4,7 +4,7 @@
     <Description>KdSoft.Services.Security.Authorization Class Library</Description>
     <Copyright>Karl Waclawek</Copyright>
     <Authors>Karl Waclawek</Authors>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
     <AssemblyName>KdSoft.Services.Security.Authorization</AssemblyName>
     <PackageId>KdSoft.Services.Security.Authorization</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>

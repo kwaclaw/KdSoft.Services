@@ -4,7 +4,7 @@
     <Description>KdSoft.Services.WebApi.Utils Class Library</Description>
     <Copyright>Karl Waclawek</Copyright>
     <Authors>Karl Waclawek</Authors>
-    <TargetFrameworks>net462;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>net461</TargetFrameworks>
     <AssemblyName>KdSoft.Services.WebApi.Utils</AssemblyName>
     <PackageId>KdSoft.Services.WebApi.Utils</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -33,11 +33,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="1.1.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
   </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <DefineConstants>$(DefineConstants);COREFX</DefineConstants>
-  </PropertyGroup>
 
 </Project>
