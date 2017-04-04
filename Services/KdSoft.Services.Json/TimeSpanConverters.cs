@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using KdSoft.Utils;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace KdSoft.Services.Json
 {
@@ -45,12 +42,12 @@ namespace KdSoft.Services.Json
                 return null;
             }
             var value = serializer.Deserialize<string>(reader);
-            return XmlConvert.ToTimeSpan(value);
+            return TimeSpanExtensions.ParseIso(value);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
             var ts = (TimeSpan)value;
-            var tsString = XmlConvert.ToString(ts);
+            var tsString = ts.ToIsoString();
             serializer.Serialize(writer, tsString);
         }
     }

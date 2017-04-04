@@ -1,8 +1,8 @@
-﻿using SqlModeller.Model;
+﻿using KdSoft.Utils;
+using SqlModeller.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Xml;
 
 namespace KdSoft.Data.Helpers
 {
@@ -51,7 +51,7 @@ namespace KdSoft.Data.Helpers
             }
             else if (dataType == typeof(TimeSpan)) {
                 // TimeSpan strings are assumed to be in ISO8601 format
-                convertFieldValue = fieldValue => XmlConvert.ToTimeSpan(fieldValue).Ticks; //TODO remove workaround once Dapper can handle TimeSpan
+                convertFieldValue = fieldValue => TimeSpanExtensions.ParseIso(fieldValue).Ticks; //TODO remove workaround once Dapper can handle TimeSpan
             }
             else {
                 convertFieldValue = fieldValue => Convert.ChangeType(fieldValue, dataType);
@@ -76,7 +76,7 @@ namespace KdSoft.Data.Helpers
             else if (value is DateTimeOffset)
                 return ((DateTimeOffset)value).ToString("o", provider);
             else if (value is TimeSpan)
-                return XmlConvert.ToString((TimeSpan)value);
+                return ((TimeSpan)value).ToIsoString();
             else
                 return value.ToString();
         }

@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>KdSoft.Services.Security.Authentication Class Library</Description>
-    <Copyright>Karl Waclawek</Copyright>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <Authors>Karl Waclawek</Authors>
-    <TargetFramework>net461</TargetFramework>
     <AssemblyName>KdSoft.Services.Security.Authentication</AssemblyName>
     <PackageId>KdSoft.Services.Security.Authentication</PackageId>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <Description>KdSoft.Services.Security.Authentication Class Library</Description>
+    <Authors>Karl Waclawek</Authors>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

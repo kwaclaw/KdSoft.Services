@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>KdSoft.Services.Security.AspNet Class Library</Description>
-    <Copyright>Karl Waclawek</Copyright>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <Authors>Karl Waclawek</Authors>
-    <TargetFramework>net461</TargetFramework>
     <AssemblyName>KdSoft.Services.Security.AspNet</AssemblyName>
     <PackageId>KdSoft.Services.Security.AspNet</PackageId>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <Description>KdSoft.Services.Security.AspNet Class Library</Description>
+    <Authors>Karl Waclawek</Authors>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KdSoft.Utils.Portable" Version="3.4.0" />
+    <PackageReference Include="KdSoft.Utils.Portable" Version="3.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="1.1.1" />
@@ -41,7 +39,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="1.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
   </ItemGroup>
 
 </Project>

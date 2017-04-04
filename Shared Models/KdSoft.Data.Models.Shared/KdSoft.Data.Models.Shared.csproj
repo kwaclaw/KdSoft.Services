@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>KdSoft.Data.Models.Shared Class Library</Description>
-    <Copyright>Karl Waclawek</Copyright>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <Authors>Karl Waclawek</Authors>
-    <TargetFramework>netstandard1.1</TargetFramework>
     <AssemblyName>KdSoft.Data.Models.Shared</AssemblyName>
     <PackageId>KdSoft.Data.Models.Shared</PackageId>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <Description>KdSoft.Data.Models.Shared Class Library</Description>
+    <Authors>Karl Waclawek</Authors>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <TargetFramework>netstandard1.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

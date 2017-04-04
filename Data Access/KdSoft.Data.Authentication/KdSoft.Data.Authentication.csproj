@@ -1,18 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>KdSoft.Data.Authentication Class Library</Description>
-    <Copyright>Karl Waclawek</Copyright>
-    <Authors>Karl Waclawek</Authors>
-    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>KdSoft.Data.Authentication</AssemblyName>
     <PackageId>KdSoft.Data.Authentication</PackageId>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <VersionPrefix>1.0.1</VersionPrefix>
+    <Description>KdSoft.Data.Authentication Class Library</Description>
+    <Authors>Karl Waclawek</Authors>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <TargetFrameworks>netstandard1.3</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

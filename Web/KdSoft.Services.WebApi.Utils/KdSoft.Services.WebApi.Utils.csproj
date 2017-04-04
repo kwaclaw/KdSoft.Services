@@ -1,18 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>KdSoft.Services.WebApi.Utils Class Library</Description>
-    <Copyright>Karl Waclawek</Copyright>
-    <Authors>Karl Waclawek</Authors>
-    <TargetFrameworks>net461</TargetFrameworks>
     <AssemblyName>KdSoft.Services.WebApi.Utils</AssemblyName>
     <PackageId>KdSoft.Services.WebApi.Utils</PackageId>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <Description>KdSoft.Services.WebApi.Utils Class Library</Description>
+    <Authors>Karl Waclawek</Authors>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <TargetFrameworks>net461</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
