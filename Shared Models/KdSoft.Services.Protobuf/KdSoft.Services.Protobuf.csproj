@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.2.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.3.0" />
     <PackageReference Include="KdSoft.Reflection.Portable" Version="1.0.3" />
   </ItemGroup>
 
