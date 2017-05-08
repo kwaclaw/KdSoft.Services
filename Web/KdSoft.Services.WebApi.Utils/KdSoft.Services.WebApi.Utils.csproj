@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>KdSoft.Services.WebApi.Utils</AssemblyName>
     <PackageId>KdSoft.Services.WebApi.Utils</PackageId>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.1.1</VersionPrefix>
     <Description>KdSoft.Services.WebApi.Utils Class Library</Description>
     <Authors>Karl Waclawek</Authors>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>

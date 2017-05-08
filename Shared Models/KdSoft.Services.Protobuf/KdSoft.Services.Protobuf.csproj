@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>KdSoft.Services.Protobuf</AssemblyName>
     <PackageId>KdSoft.Services.Protobuf</PackageId>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>1.0.1</VersionPrefix>
     <Description>KdSoft.Services.Protobuf Class Library</Description>
     <Authors>Karl Waclawek</Authors>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
