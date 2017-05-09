@@ -1,0 +1,97 @@
+﻿using KdSoft.Utils;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Immutable;
+using System.IO;
+using System.Reflection;
+
+namespace KdSoft.Services
+{
+    public class ScriptManager: IScriptManager
+    {
+        readonly ConcurrentDictionary<string, Script> scriptsMap;
+        readonly ScriptOptions scriptOptions;
+
+        public readonly string ScriptsDirectory;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="scriptsDirectory">Absolute path to scripts directory.</param>
+        public ScriptManager(string scriptsDirectory, SourceReferenceResolver resolver = null) {
+            this.ScriptsDirectory = scriptsDirectory;
+
+            // explicit using statements for these "imported" namespaces aren't needed
+            var options = ScriptOptions.Default.AddImports(
+                "System",
+                "System.Collections.Generic",
+                "System.Linq",
+                "System.Text",
+                "System.Threading.Tasks",
+                "System.Diagnostics",
+                "System.Dynamic"
+            ).AddReferences(
+                typeof(TimeSpanExtensions).GetTypeInfo().Assembly,
+                typeof(ValueWrapper).GetTypeInfo().Assembly,
+                // for running scripts from a script
+                typeof(MetadataReference).GetTypeInfo().Assembly,
+                typeof(Script).GetTypeInfo().Assembly,
+                typeof(CSharpScript).GetTypeInfo().Assembly,
+                typeof(IScriptManager).GetTypeInfo().Assembly
+            ).WithSourceResolver(
+                resolver ?? new SourceFileResolver(ImmutableArray<string>.Empty, scriptsDirectory)
+            );
+            this.scriptOptions = options;
+
+            scriptsMap = new ConcurrentDictionary<string, Script>();
+        }
+
+        Script CreateScript(string fileName, Type scriptGlobalsType, Func<ScriptOptions, ScriptOptions> updateOptions) {
+            var scriptFile = Path.Combine(ScriptsDirectory, fileName);
+            string scriptCode = File.ReadAllText(scriptFile);
+            var newOptions = updateOptions?.Invoke(scriptOptions) ?? scriptOptions;
+            return CSharpScript.Create(scriptCode, options: newOptions, globalsType: scriptGlobalsType);
+        }
+
+        Script UpdateScript(string fileName, Script oldScript, Type scriptGlobalsType, Func<ScriptOptions, ScriptOptions> updateOptions) {
+            return CreateScript(fileName, scriptGlobalsType, updateOptions);
+        }
+
+        /// <summary>
+        /// Gets the cached script instance by file name. Recreates script if file was modified.
+        /// Modification detection is based on Archive flag being set.
+        /// </summary>
+        /// <param name="fileName">File name (not path) of file in Scripts directory.</param>
+        /// <param name="scriptGlobalsType">Type of global script parameter object.
+        /// Used only when script is first created.</param>
+        /// <param name="updateOptions">Function delegate that returns a modified <see cref="ScriptOptions"/> instance.
+        /// Used only when script is first created.</param>
+        /// <returns>Script instance.</returns>
+        /// <remarks>Using the <c>updateOptions</c> argument applies script options *before* the script is created.
+        /// When options are changed on an existing script instance, an new script is compiled/created and this
+        /// can lead to out-of-memory issues, as script instances are currently not garbage-collectible.</remarks>
+        public Script GetScript(string fileName, Type scriptGlobalsType, Func<ScriptOptions, ScriptOptions> updateOptions = null) {
+            Script result;
+            var scriptFile = Path.Combine(ScriptsDirectory, fileName);
+
+            Func<string, Script> createScript = (string fn) => CreateScript(fn, scriptGlobalsType, updateOptions);
+            Func<string, Script, Script> updateScript = (string fn, Script oldScript) => UpdateScript(fn, oldScript, scriptGlobalsType, updateOptions);
+
+            // if file has been modified (means if Archive bit is set) we add or replace the script
+            if ((File.GetAttributes(scriptFile) & FileAttributes.Archive) == FileAttributes.Archive) {
+                result = scriptsMap.AddOrUpdate(fileName, createScript, updateScript);
+                // now that the script is loaded we must clear the Archive flag
+                File.SetAttributes(scriptFile, File.GetAttributes(scriptFile) & ~FileAttributes.Archive);
+            }
+            // if file is not modified, we retrieve the script, or create it if not yet created
+            else {
+                result = scriptsMap.GetOrAdd(fileName, createScript);
+            }
+
+            return result;
+        }
+    }
+}
