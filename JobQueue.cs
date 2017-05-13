@@ -234,9 +234,7 @@ namespace KdSoft.Services
                 throw new InvalidOperationException("Job queue is shut down");
             await EnqueueJob(job).ConfigureAwait(false);
             // re-start the queue if necessary
-#pragma warning disable S1481 // Unused local variables should be removed
-            var restartTask = CheckRestart();
-#pragma warning restore S1481 // Unused local variables should be removed
+            CheckRestart();
         }
 
         #region Job Completion
@@ -315,6 +313,8 @@ namespace KdSoft.Services
             }, TaskContinuationOptions.ExecuteSynchronously);
 
             cancelToken.Register(() => completion.CompletionSource.TrySetCanceled());
+
+            CheckRestart();  // we may need to restart the queue to process finished jobs
             return completionTask;
         }
 
