@@ -1,6 +1,5 @@
 ﻿using KdSoft.Models;
 using KdSoft.Utils;
-using Microsoft.VisualStudio.Threading;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -167,8 +166,7 @@ namespace KdSoft.Services
                 }
 
                 // continue when at least one job is done - if we wait for all then we could get held up
-                var firstTaskDone = await Task.WhenAny(newJobTasks).ConfigureAwait(false);
-                firstTaskDone.Forget();
+                await Task.WhenAny(newJobTasks).ConfigureAwait(false);
             };
             //TODO re-enable constraints - might give errors
             // re-enable constraints - one at a time (serialized, not concurrently - no MARS limit to consider);
