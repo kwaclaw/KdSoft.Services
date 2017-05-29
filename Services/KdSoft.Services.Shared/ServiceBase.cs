@@ -48,7 +48,7 @@ namespace KdSoft.Services
             get {
                 if (logger == null) {
                     var loggerFactory = callContext.Provider.GetService<ILoggerFactory>();
-                    logger = loggerFactory.CreateLogger(this.GetType().FullName);
+                    logger = loggerFactory.CreateLogger(this.GetType());
                 }
                 return logger;
             }

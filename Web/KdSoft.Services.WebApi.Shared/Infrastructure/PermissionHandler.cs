@@ -22,7 +22,7 @@ namespace KdSoft.Services.WebApi.Infrastructure
         }
 
         public PermissionHandler(ILoggerFactory loggerFactory) {
-            logger = loggerFactory.CreateLogger(this.GetType().FullName);
+            logger = loggerFactory.CreateLogger(this.GetType());
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement) {

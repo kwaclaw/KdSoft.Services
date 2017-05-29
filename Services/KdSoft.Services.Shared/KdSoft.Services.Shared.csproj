@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>KdSoft.Services.Shared</AssemblyName>
     <PackageId>KdSoft.Services.Shared</PackageId>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.1.1</VersionPrefix>
     <Description>KdSoft.Services.Shared Class Library</Description>
     <Authors>Karl Waclawek</Authors>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
