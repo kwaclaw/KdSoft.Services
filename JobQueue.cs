@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace KdSoft.Services
 {
-    public abstract class JobQueue<T, K, S>
-        where T : IIdentifiable<K>
-        where K : IEquatable<K>
-        where S : IIdentifiable<K>
+    public abstract class JobQueue<TJob, TKey, TStatus>
+        where TJob : IIdentifiable<TKey>
+        where TKey : IEquatable<TKey>
+        where TStatus : IIdentifiable<TKey>
     {
         const int maxConcurrentJobs = 10;
         // const int dequeueThreshold = maxConcurrentJobs * 2 / 3;
@@ -20,6 +20,10 @@ namespace KdSoft.Services
         Task runJobsTask;
 
         readonly object statusSyncObj = new object();
+
+        /// <summary>
+        /// Activity status of job queue.
+        /// </summary>
         public enum QueueStatus: int
         {
             Stopped = 0,
@@ -34,12 +38,16 @@ namespace KdSoft.Services
 
         #region Must Override
 
+        /// <summary>
+        /// Initializes job queue.
+        /// </summary>
+        /// <returns>Initialization task.</returns>
         protected abstract Task Initialize();
 
         /// <summary>
         /// Map of currently running jobs.
         /// </summary>
-        protected abstract IDictionary<T, Task> RunningJobs { get; }
+        protected abstract IDictionary<TJob, Task> RunningJobs { get; }
 
         /// <summary>
         /// Runs new job instance based on job argument. Must not throw an exception!
@@ -47,7 +55,7 @@ namespace KdSoft.Services
         /// </summary>
         /// <param name="job">Specifies job to run.</param>
         /// <returns><see cref="Task"/> instance representing job.</returns>
-        protected abstract Task RunJob(T job);
+        protected abstract Task RunJob(TJob job);
 
         /// <summary>
         /// Returns queued and finished jobs as an atomic operation. Must not throw an exception!
@@ -55,8 +63,8 @@ namespace KdSoft.Services
         /// <param name="waitingIds">Job ids to be included in the finished jobs result.</param>
         /// <param name="maxConcurrentJobs">Maximum number of concurrently runnable queued jobs to return.</param>
         /// <returns>Queued and finished jobs.</returns>
-        protected abstract Task<(IEnumerable<T> queued, IEnumerable<S> finished)> GetWaitingJobs(
-            IEnumerable<K> waitingIds, int maxConcurrentJobs
+        protected abstract Task<(IEnumerable<TJob> queued, IEnumerable<TStatus> finished)> GetWaitingJobs(
+            IEnumerable<TKey> waitingIds, int maxConcurrentJobs
         );
 
         /// <summary>
@@ -64,11 +72,11 @@ namespace KdSoft.Services
         /// </summary>
         /// <param name="job">Specifies job to queue.</param>
         /// <returns><see cref="Task"/> representing queuing operation.</returns>
-        protected abstract Task EnqueueJob(T job);
+        protected abstract Task EnqueueJob(TJob job);
 
         #endregion
 
-        Task CreateAndStartJob(T job) {
+        Task CreateAndStartJob(TJob job) {
             // this would implement any logic concerning conflicts/concurrency with running jobs
             var jobTask = RunJob(job);  // must not throw!
             if (jobTask == null)
@@ -201,12 +209,21 @@ namespace KdSoft.Services
             return doRestart;
         }
 
+        /// <summary>
+        /// Starts job queue.
+        /// </summary>
+        /// <returns>Startup task.</returns>
         public async Task<bool> Start() {
             this.isShutDown = 0;
             await Initialize().ConfigureAwait(false);
             return CheckRestart();
         }
 
+        /// <summary>
+        /// Shuts job queue down.
+        /// </summary>
+        /// <param name="wait">Indicates if the shutdown task should finish only after all jobs are finished.</param>
+        /// <returns>Shutdown task.</returns>
         public async Task Shutdown(bool wait) {
             int lastShutDown = Interlocked.CompareExchange(ref isShutDown, shutDownActive, 0);
             if (lastShutDown != 0)
@@ -215,7 +232,7 @@ namespace KdSoft.Services
             if (wait) {
                 // repeatedly wait for the runningJobs tasks until no more jobs are available
                 ICollection<Task> rjs;
-                while (true && isShutDown != 0) {
+                while (isShutDown != 0) {
                     lock (jobSyncObj) {
                         rjs = RunningJobs.Values;
                     }
@@ -227,7 +244,12 @@ namespace KdSoft.Services
             }
         }
 
-        public async Task QueueJob(T job) {
+        /// <summary>
+        /// Adds new job to queue.
+        /// </summary>
+        /// <param name="job">Job to enqueue.</param>
+        /// <returns>Enqueuing task.</returns>
+        public async Task QueueJob(TJob job) {
             if (isShutDown != 0)
                 throw new InvalidOperationException("Job queue is shut down");
             await EnqueueJob(job).ConfigureAwait(false);
@@ -242,17 +264,17 @@ namespace KdSoft.Services
 
         class JobCompletion
         {
-            readonly HashSet<K> jobIds;
-            readonly List<S> completedJobs;
-            public readonly TaskCompletionSource<IList<S>> CompletionSource;
+            readonly HashSet<TKey> jobIds;
+            readonly List<TStatus> completedJobs;
+            public readonly TaskCompletionSource<IList<TStatus>> CompletionSource;
 
-            public JobCompletion(IEnumerable<K> jobIds) {
-                this.jobIds = new HashSet<K>(jobIds);
-                completedJobs = new List<S>();
-                CompletionSource = new TaskCompletionSource<IList<S>>();
+            public JobCompletion(IEnumerable<TKey> jobIds) {
+                this.jobIds = new HashSet<TKey>(jobIds);
+                completedJobs = new List<TStatus>();
+                CompletionSource = new TaskCompletionSource<IList<TStatus>>();
             }
 
-            public bool Finished(IEnumerable<S> finishedJobs) {
+            public bool Finished(IEnumerable<TStatus> finishedJobs) {
                 foreach (var job in finishedJobs) {
                     if (jobIds.Remove(job.Id)) {
                         completedJobs.Add(job);
@@ -264,13 +286,13 @@ namespace KdSoft.Services
                 return result;
             }
 
-            public void UnionInto(HashSet<K> globalSet) {
+            public void UnionInto(HashSet<TKey> globalSet) {
                 globalSet.UnionWith(jobIds);
             }
         }
 
-        HashSet<K> GetWaitingJobIds() {
-            var result = new HashSet<K>();
+        HashSet<TKey> GetWaitingJobIds() {
+            var result = new HashSet<TKey>();
             lock (completionSync) {
                 var completionNode = jobCompletions.First;
                 while (completionNode != null) {
@@ -282,7 +304,7 @@ namespace KdSoft.Services
             return result;
         }
 
-        void ProcessFinishedJobs(IEnumerable<S> finishedJobs) {
+        void ProcessFinishedJobs(IEnumerable<TStatus> finishedJobs) {
             lock (completionSync) {
                 var completionNode = jobCompletions.First;
                 while (completionNode != null) {
@@ -296,7 +318,13 @@ namespace KdSoft.Services
             }
         }
 
-        public Task<IList<S>> JobsFinished(IEnumerable<K> jobIds, CancellationToken cancelToken) {
+        /// <summary>
+        /// Creates a task that waits for a specific set of jobs to finish.
+        /// </summary>
+        /// <param name="jobIds">Job identifiers to check for completion.</param>
+        /// <param name="cancelToken">Cancellation token.</param>
+        /// <returns>List of <c>TStatus</c> instances.</returns>
+        public Task<IList<TStatus>> JobsFinished(IEnumerable<TKey> jobIds, CancellationToken cancelToken) {
             var completion = new JobCompletion(jobIds);
             LinkedListNode<JobCompletion> completionNode;
             lock (completionSync) {

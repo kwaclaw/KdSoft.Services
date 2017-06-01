@@ -10,17 +10,25 @@ using System.Reflection;
 
 namespace KdSoft.Services
 {
+    /// <summary>
+    /// Manages a cache of compiled scripts that can be looked up by file name or relative file path.
+    /// </summary>
     public class ScriptManager: IScriptManager
     {
         readonly ConcurrentDictionary<string, Script> scriptsMap;
         readonly ScriptOptions scriptOptions;
 
+        /// <summary>
+        /// Root directory where scripts are located.
+        /// </summary>
+        /// <remarks>Scripts located in sub-directories need  to be identified by a file path relative to the root directory.</remarks>
         public readonly string ScriptsDirectory;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="scriptsDirectory">Absolute path to scripts directory.</param>
+        /// <param name="resolver">Source reference resolver.</param>
         public ScriptManager(string scriptsDirectory, SourceReferenceResolver resolver = null) {
             this.ScriptsDirectory = scriptsDirectory;
 

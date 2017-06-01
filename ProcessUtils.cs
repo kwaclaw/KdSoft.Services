@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace KdSoft.Utils
 {
+    /// <summary>
+    /// Process utility routines.
+    /// </summary>
     public static class ProcessUtils
     {
         class CancelRegHolder
@@ -13,6 +16,15 @@ namespace KdSoft.Utils
             public CancellationTokenRegistration Value;
         }
 
+        /// <summary>
+        /// Runs process as specified by a <see cref="ProcessStartInfo"/> instance.
+        /// </summary>
+        /// <param name="startInfo">Specifies process to run.</param>
+        /// <param name="cancelToken">Cancellation token to stop process.</param>
+        /// <param name="log"><see cref="ILogger"/> instance to use for logging. If <c>null</c> no logging is performed.</param>
+        /// <param name="errorReceived">Callback to handle process standard error output. Turns on standard error redirection.</param>
+        /// <param name="outputReceived">Callback to handle process standard output. Turns on standard output redirection.</param>
+        /// <returns>Task representing process.</returns>
         public static Task<Process> Run(
             ProcessStartInfo startInfo,
             CancellationToken cancelToken,
@@ -23,9 +35,9 @@ namespace KdSoft.Utils
             if (startInfo == null)
                 throw new ArgumentNullException(nameof(startInfo));
             if (startInfo.RedirectStandardError && errorReceived == null)
-                throw new ArgumentNullException("Must handle redirected error output.", nameof(errorReceived));
+                throw new ArgumentNullException(nameof(errorReceived), "Must handle redirected error output.");
             if (startInfo.RedirectStandardOutput && outputReceived == null)
-                throw new ArgumentNullException("Must handle redirected standard output.", nameof(outputReceived));
+                throw new ArgumentNullException(nameof(outputReceived), "Must handle redirected standard output.");
 
             var tcs = new TaskCompletionSource<Process>();
             var process = new Process {
