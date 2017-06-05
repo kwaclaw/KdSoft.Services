@@ -64,10 +64,6 @@ namespace KdSoft.Services
             return CSharpScript.Create(scriptCode, options: newOptions, globalsType: scriptGlobalsType);
         }
 
-        Script UpdateScript(string fileName, Script oldScript, Type scriptGlobalsType, Func<ScriptOptions, ScriptOptions> updateOptions) {
-            return CreateScript(fileName, scriptGlobalsType, updateOptions);
-        }
-
         /// <summary>
         /// Gets the cached script instance by file name. Recreates script if file was modified.
         /// Modification detection is based on Archive flag being set.
@@ -79,14 +75,14 @@ namespace KdSoft.Services
         /// Used only when script is first created.</param>
         /// <returns>Script instance.</returns>
         /// <remarks>Using the <c>updateOptions</c> argument applies script options *before* the script is created.
-        /// When options are changed on an existing script instance, an new script is compiled/created and this
+        /// When options are changed on an existing script instance, a new script is compiled/created and this
         /// can lead to out-of-memory issues, as script instances are currently not garbage-collectible.</remarks>
         public Script GetScript(string fileName, Type scriptGlobalsType, Func<ScriptOptions, ScriptOptions> updateOptions = null) {
             Script result;
             var scriptFile = Path.Combine(ScriptsDirectory, fileName);
 
             Func<string, Script> createScript = (string fn) => CreateScript(fn, scriptGlobalsType, updateOptions);
-            Func<string, Script, Script> updateScript = (string fn, Script oldScript) => UpdateScript(fn, oldScript, scriptGlobalsType, updateOptions);
+            Func<string, Script, Script> updateScript = (string fn, Script oldScript) => CreateScript(fn, scriptGlobalsType, updateOptions);
 
             // if file has been modified (means if Archive bit is set) we add or replace the script
             if ((File.GetAttributes(scriptFile) & FileAttributes.Archive) == FileAttributes.Archive) {
