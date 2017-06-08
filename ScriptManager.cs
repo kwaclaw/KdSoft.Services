@@ -24,9 +24,6 @@ namespace KdSoft.Services
         /// <remarks>Scripts located in sub-directories need  to be identified by a file path relative to the root directory.</remarks>
         public readonly string ScriptsDirectory;
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
         /// <param name="scriptsDirectory">Absolute path to scripts directory.</param>
         /// <param name="resolver">Source reference resolver.</param>
         public ScriptManager(string scriptsDirectory, SourceReferenceResolver resolver = null) {

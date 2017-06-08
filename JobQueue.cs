@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace KdSoft.Services
 {
+    /// <summary>
+    /// Base class for implementing a job queue.
+    /// </summary>
+    /// <typeparam name="TJob">Type of job.</typeparam>
+    /// <typeparam name="TKey">Type of key that identifies job.</typeparam>
+    /// <typeparam name="TStatus">Type of job status.</typeparam>
     public abstract class JobQueue<TJob, TKey, TStatus>
         where TJob : IIdentifiable<TKey>
         where TKey : IEquatable<TKey>
@@ -20,6 +26,9 @@ namespace KdSoft.Services
         Task runJobsTask;
 
         readonly object statusSyncObj = new object();
+        readonly object jobSyncObj = new object();
+
+        protected JobQueue() { }
 
         /// <summary>
         /// Activity status of job queue.
@@ -31,10 +40,6 @@ namespace KdSoft.Services
             Active = 555
         }
         QueueStatus queueStatus = QueueStatus.Stopped;
-
-        protected readonly object jobSyncObj = new object();
-
-        protected JobQueue() { }
 
         #region Must Override
 
