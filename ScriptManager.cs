@@ -65,7 +65,7 @@ namespace KdSoft.Services
         /// Gets the cached script instance by file name. Recreates script if file was modified.
         /// Modification detection is based on Archive flag being set.
         /// </summary>
-        /// <param name="fileName">File name (not path) of file in Scripts directory.</param>
+        /// <param name="fileName">Relative path of file in Scripts directory.</param>
         /// <param name="scriptGlobalsType">Type of global script parameter object.
         /// Used only when script is first created.</param>
         /// <param name="updateOptions">Function delegate that returns a modified <see cref="ScriptOptions"/> instance.

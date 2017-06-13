@@ -35,8 +35,11 @@ namespace KdSoft.Services
         /// </summary>
         public enum QueueStatus: int
         {
+            /// <summary />
             Stopped = 0,
+            /// <summary />
             Pending = 999,
+            /// <summary />
             Active = 555
         }
         QueueStatus queueStatus = QueueStatus.Stopped;

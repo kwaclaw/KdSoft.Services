@@ -7,8 +7,11 @@ namespace KdSoft.Utils
     /// </summary>
     public class ProcessResult
     {
+        /// <summary />
         public int ExitCode { get; set; }
+        /// <summary />
         public string Errors { get; set; }
+        /// <summary />
         public string Output { get; set; }
     }
 }
