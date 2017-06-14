@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.5</TargetFramework>
-    <RootNamespace>KdSoft.Services.Utils</RootNamespace>
-    <AssemblyName>KdSoft.Services.Utils</AssemblyName>
     <CodeAnalysisRuleSet>..\..\Solution.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
