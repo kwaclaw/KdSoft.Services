@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package Base;
+
+option csharp_namespace = "KdSoft.Services.Protobuf";
+
+//message Error {
+//  int32 Code = 1;
+//  string Reason = 2;
+//}
+
+message OpStatus {
+  int32 Code = 1;
+  string Description = 2;
+}
+
+message Empty { }
+
+message Time {
+  int32 Hour = 1;   // 0 - 23
+  int32 Minute = 2; // 0 - 59
+  int32 Second = 3;  // 0 - 59
+  int32 MilliSecond = 4;  // 0 - 999
+}
+ 
+message Date {
+  int32 Year = 1;   // 1753 onwards
+  int32 Month = 2; // 1 - 12
+  int32 Day = 3;   // 1 - 31
+}
+
+message DateTime {
+  Date Date = 1;
+  Time Time = 2;
+}
+
+message ServiceError {
+   int32 Code = 1;
+   string Message = 2;
+}
+
