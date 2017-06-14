@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NuGet.config = NuGet.config
 		Nuget_ClearAllCaches.cmd = Nuget_ClearAllCaches.cmd
 		Projects_SuperClear.cmd = Projects_SuperClear.cmd
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Access", "Data Access", "{74333CB7-F7BE-4082-8B04-DB36161F4C94}"
