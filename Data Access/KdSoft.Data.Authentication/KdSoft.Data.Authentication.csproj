@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>KdSoft.Data.Authentication Class Library</Description>
+    <VersionPrefix>1.0.1</VersionPrefix>
+    <Authors>Karl Waclawek</Authors>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <CodeAnalysisRuleSet>..\..\Solution.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KdSoft.Data\KdSoft.Data.csproj" />
+    <ProjectReference Include="..\KdSoft.Data.Helpers\KdSoft.Data.Helpers.csproj" />
+    <ProjectReference Include="..\..\Data Models\KdSoft.Data.Models.Security\KdSoft.Data.Models.Security.csproj" />
+    <ProjectReference Include="..\..\Shared Models\KdSoft.Data.Models.Shared.Security\KdSoft.Data.Models.Shared.Security.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="KdSoft.Utils" Version="2.0.3" />
+  </ItemGroup>
+
+</Project>
