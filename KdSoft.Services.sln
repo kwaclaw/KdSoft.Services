@@ -67,6 +67,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{8775046D
 		tools\ProtoGen.cmd = tools\ProtoGen.cmd
 	EndProjectSection
 EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Documentation", "documentation\Documentation.shfbproj", "{D936185C-CCDE-42E5-9E97-49033F569FC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,9 @@ Global
 		{690DFA00-CEA3-403B-8145-44355E63FA75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690DFA00-CEA3-403B-8145-44355E63FA75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{690DFA00-CEA3-403B-8145-44355E63FA75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D936185C-CCDE-42E5-9E97-49033F569FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D936185C-CCDE-42E5-9E97-49033F569FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D936185C-CCDE-42E5-9E97-49033F569FC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

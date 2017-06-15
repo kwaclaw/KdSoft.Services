@@ -35,5 +35,6 @@ project.lock.json
 project.fragment.lock.json
 tokenkey.json
 gitInfo.txt
+documentation/Help/*
 
 
