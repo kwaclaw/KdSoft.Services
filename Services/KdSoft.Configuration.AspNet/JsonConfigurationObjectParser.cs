@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KdSoft.AspNet.Configuration
+namespace KdSoft.Configuration.AspNet
 {
     /// <summary>
     /// Helper class to parse a <see cref="JObject"/> instance into an <c>IDictionary&lt;string, string&gt;</c>.

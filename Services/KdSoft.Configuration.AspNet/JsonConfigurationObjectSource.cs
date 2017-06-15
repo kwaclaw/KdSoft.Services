@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using System;
 
-namespace KdSoft.AspNet.Configuration
+namespace KdSoft.Configuration.AspNet
 {
     /// <summary>
     /// Represents a <see cref="JObject"/> instance as an <see cref="IConfigurationSource"/>.

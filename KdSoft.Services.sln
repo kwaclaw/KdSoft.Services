@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KdSoft.Data.Helpers", "Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KdSoft.Data.Models.Security", "Data Models\KdSoft.Data.Models.Security\KdSoft.Data.Models.Security.csproj", "{2E280143-1AB4-4C50-8E6B-FB98F746618D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KdSoft.AspNet.Configuration", "Services\KdSoft.AspNet.Configuration\KdSoft.AspNet.Configuration.csproj", "{18ABE965-D56D-4D16-BD06-404B94B4CE72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KdSoft.Configuration.AspNet", "Services\KdSoft.Configuration.AspNet\KdSoft.Configuration.AspNet.csproj", "{18ABE965-D56D-4D16-BD06-404B94B4CE72}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KdSoft.Services.Json", "Services\KdSoft.Services.Json\KdSoft.Services.Json.csproj", "{99D011B8-3851-4DBD-8446-1E520026C2D4}"
 EndProject

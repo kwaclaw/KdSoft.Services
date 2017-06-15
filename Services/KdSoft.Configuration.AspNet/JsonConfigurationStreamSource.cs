@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 
-namespace KdSoft.AspNet.Configuration
+namespace KdSoft.Configuration.AspNet
 {
     /// <summary>
     /// Represents a JSON <see cref="System.IO.Stream"/> as an <see cref="IConfigurationSource"/>.

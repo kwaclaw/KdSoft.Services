@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace KdSoft.AspNet.Configuration
+namespace KdSoft.Configuration.AspNet
 {
     /// <summary>
     /// Helper class to parse a JSON <see cref="System.IO.Stream"/> into an <c>IDictionary&lt;string, string&gt;</c>.

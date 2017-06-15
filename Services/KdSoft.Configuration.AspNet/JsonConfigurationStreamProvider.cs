@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace KdSoft.AspNet.Configuration
+namespace KdSoft.Configuration.AspNet
 {
     /// <summary>
     /// A JSON <see cref="System.IO.Stream"/> based <see cref="IConfigurationProvider"/>.
