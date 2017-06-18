@@ -3,8 +3,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Data.Common;
+using System.Globalization;
 
 namespace KdSoft.Data
 {
@@ -14,6 +14,8 @@ namespace KdSoft.Data
     /// being elevated to a Distributed Transaction when not necessary.
     /// </summary>
     /// <typeparam name="C">For type-safe sub-typing.</typeparam>
+    /// <remarks>Database connections opened from this instance will only be closed/returned to the pool
+    /// when this instance is closed/disposed of.</remarks>
     public class DbContext<C>: IDisposable, IDbContext where C : DbContext<C>, new()
     {
         #region Static and Factory Members
@@ -62,7 +64,9 @@ namespace KdSoft.Data
 
         #endregion
 
-        ConcurrentDictionary<string, DbConnection> connections;
+        readonly ConcurrentDictionary<string, DbConnection> connections;
+
+        CultureInfo IDbContext.Culture => throw new NotImplementedException();
 
         protected DbContext() {
             connections = new ConcurrentDictionary<string, DbConnection>(StringComparer.OrdinalIgnoreCase);
@@ -87,18 +91,30 @@ namespace KdSoft.Data
             }
         }
 
+
+        #region IDbContext
+
+        DbConnectionSetting IDbContext.GetConnectionSetting(string name) {
+            return GetConnectionSetting(name);
+        }
+
+        /// <inheritdoc cref="IDbContext.OpenConnection(string)"/>
         public DbConnection OpenConnection(string name) {
             return connections.GetOrAdd(name, this.InternalOpenConnection);
         }
 
+        /// <inheritdoc cref="IDbContext.OpenNewConnection(string)"/>
         public DbConnection OpenNewConnection(string name) {
             return InternalOpenConnection(name);
         }
 
         CultureInfo culture;
+        /// <inheritdoc cref="IDbContext.Culture"/>
         public CultureInfo Culture {
             get { return culture ?? CultureInfo.CurrentUICulture; }
         }
+
+        #endregion
 
         public static bool TryGetConnectionSetting(string name, out DbConnectionSetting value) {
             lock (connectionSettings) {
@@ -106,6 +122,7 @@ namespace KdSoft.Data
             }
         }
 
+        /// <inheritdoc cref="IDbContext.GetConnectionSetting(string)"/>
         public static DbConnectionSetting GetConnectionSetting(string name) {
             lock (connectionSettings) {
                 return connectionSettings[name];
