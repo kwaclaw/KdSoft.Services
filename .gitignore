@@ -38,3 +38,4 @@ gitInfo.txt
 documentation/Help/*
 
 
+/docfx_project/api/.manifest
