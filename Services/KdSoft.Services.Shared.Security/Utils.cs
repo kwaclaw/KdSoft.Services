@@ -54,34 +54,5 @@ namespace KdSoft.Services.Security
 
             return Convert.FromBase64CharArray(chars, 0, chars.Length); // Standard base64 decoder
         }
-
-        // Parses an AD user name into its components. Does not perform full validation of characters.
-        // Returns true when either exactly one '\' or '@' character is found, or none of them.
-        // In the latter case the domain will be returned as null.
-        public static bool TryParseAdUserName(string adUserName, out string domain, out string userName) {
-            int slashIndex;
-            if ((slashIndex = adUserName.IndexOf('\\')) == adUserName.LastIndexOf('\\') && slashIndex >= 0) {
-                domain = adUserName.Substring(0, slashIndex);
-                userName = adUserName.Substring(slashIndex + 1);
-                return true;
-            }
-
-            int atIndex;
-            if ((atIndex = adUserName.IndexOf('@')) == adUserName.LastIndexOf('@') && atIndex >= 0) {
-                userName = adUserName.Substring(0, atIndex);
-                domain = adUserName.Substring(atIndex + 1);
-                return true;
-            }
-
-            if (atIndex < 0 && slashIndex < 0) {
-                userName = adUserName;
-                domain = null;
-                return true;
-            }
-
-            userName = null; ;
-            domain = null;
-            return false;
-        }
     }
 }
