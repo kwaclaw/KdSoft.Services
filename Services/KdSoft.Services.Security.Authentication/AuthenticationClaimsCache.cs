@@ -1,4 +1,6 @@
-﻿using KdSoft.Services.StorageServices;
+﻿using KdSoft.Data.Models.Shared.Security;
+using KdSoft.Services.StorageServices;
+using System;
 using System.Collections.Generic;
 using System.Security;
 using System.Threading.Tasks;
@@ -11,7 +13,15 @@ namespace KdSoft.Services.Security
         public const string CacheName = "KdSoft.AuthenticationClaims";
         protected IAuthenticationProvider Provider { get; private set; }
 
-        public AuthenticationClaimsCache(IClaimsCacheConfig config, IAuthenticationProvider provider) : base(CacheName, config) {
+        public AuthenticationClaimsCache(IClaimsCacheConfig config, IAuthenticationProvider provider)
+            : base(
+                CacheName,
+                config,
+                new ClaimDesc(  // UserKey
+                    new PropDesc(claims.ClaimTypes.NameIdentifier, typeof(Int32).FullName),
+                    claims.ClaimValueTypes.Integer32,
+                    Int32ClaimDecode)
+        ) {
             this.Provider = provider;
         }
 
@@ -41,17 +51,49 @@ namespace KdSoft.Services.Security
             }
         }
 
-        protected override async Task AddClaimsToBeCachedAsync(int userKey, List<PropertyValue> properties) {
-            await base.AddClaimsToBeCachedAsync(userKey, properties);
+        protected override async Task AddClaimsToBeCachedAsync(string userName, string authType, byte[] userKeyBytes, List<PropertyValue> properties) {
+            await base.AddClaimsToBeCachedAsync(userName, authType, userKeyBytes, properties).ConfigureAwait(false);
 
-            var user = await Provider.GetUserByKey(userKey).ConfigureAwait(false);
-            if (user == null) {
-                throw new SecurityException("User not found.");
+            Data.Models.Security.User user = null;
+            if (userKeyBytes != null) {
+                int index = 0;
+                var userKey = Utils.Converter.ToInt32(userKeyBytes, ref index);
+                user = await Provider.GetUserByKey(userKey).ConfigureAwait(false);
+                if (user == null) {
+                    throw new SecurityException("User not found.");
+                }
+
+                AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Email, user.Email);
+                AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Surname, user.Surname);
+                AddStringPropertyIfNotNull(properties, claims.ClaimTypes.GivenName, user.GivenName);
             }
 
-            AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Email, user.Email);
-            AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Surname, user.Surname);
-            AddStringPropertyIfNotNull(properties, claims.ClaimTypes.GivenName, user.GivenName);
+            // if we have an AD account, let's fill in missing properties from there
+            if (user == null || user.Email == null || user.Surname == null || user.GivenName == null) {
+                switch (authType) {
+                    case claims.AuthenticationTypes.Windows:
+                    case claims.AuthenticationTypes.Kerberos:
+                    case claims.AuthenticationTypes.Negotiate:
+                        string domain, uname;
+                        if (AdAccount.TryParse(userName, out domain, out uname) && domain == null) {
+                            domain = AdUtils.GetDefaultADDomain();
+                        }
+                        else {
+                            break;
+                        }
+                        var adUser = AdUtils.GetUserPrincipal(new AdAccount { Domain = domain, UserName = uname });
+
+                        if (user?.Email == null)
+                            AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Email, adUser.EmailAddress);
+                        if (user?.Surname == null)
+                            AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Surname, adUser.Surname);
+                        if (user?.GivenName == null)
+                            AddStringPropertyIfNotNull(properties, claims.ClaimTypes.GivenName, adUser.GivenName);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 }

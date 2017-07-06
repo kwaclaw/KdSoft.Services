@@ -5,7 +5,6 @@ using KdSoft.Data.Models.Shared.Security;
 using KdSoft.Utils;
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices.AccountManagement;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -185,32 +184,12 @@ namespace KdSoft.Services.Security
             }
         }
 
-        public Task<AdAccount> ValidateAdUser(string adUserName, string adPassword, string adDomain = null) {
-            string domain, userName;
+        public Task<AdAccount> ValidateAdUser(string adUserName, string adPassword) {
+            return Task.FromResult(AdUtils.ValidateAdUser(adUserName, adPassword));
+        }
 
-            if (!KdSoft.Services.Security.Utils.TryParseAdUserName(adUserName, out domain, out userName)) {
-                throw new SecurityException("Invalid AD user name.");
-            }
-
-            PrincipalContext domainContext = null;
-            try {
-                try {
-                    domainContext = new PrincipalContext(ContextType.Domain, domain);
-                }
-                catch (PrincipalServerDownException) {
-                    domainContext = new PrincipalContext(ContextType.Machine, null);
-                }
-
-                if (domainContext.ValidateCredentials(userName, adPassword)) {
-                    return Task.FromResult(new AdAccount { Domain = domain, UserName = userName });
-                }
-                else {
-                    return Task.FromResult<AdAccount>(null);
-                }
-            }
-            finally {
-                domainContext?.Dispose();
-            }
+        public Task<(AdAccount, ISet<AdAccount>)> ValidateAdUserWithGroups(string adUserName, string adPassword) {
+            return Task.FromResult(AdUtils.ValidateAdUserWithGroups(adUserName, adPassword));
         }
 
         public async Task<int?> GetActiveDirectoryUserKey(AdAccount adAccount) {
@@ -220,28 +199,7 @@ namespace KdSoft.Services.Security
         }
 
         public string GetDefaultADDomain() {
-            PrincipalContext domainContext = null;
-            try {
-                try {
-                    domainContext = new PrincipalContext(ContextType.Domain);
-                    var dnsName = domainContext.ConnectedServer;
-                    int lastDotIndex = dnsName.LastIndexOf('.');
-                    if (lastDotIndex < 0)
-                        return dnsName;
-                    int firstDotIndex = dnsName.IndexOf('.');
-                    if (firstDotIndex < 0)
-                        return dnsName.Substring(0, lastDotIndex);
-                    firstDotIndex++;
-                    return dnsName.Substring(firstDotIndex, lastDotIndex - firstDotIndex);
-                }
-                catch (PrincipalServerDownException) {
-                    domainContext = new PrincipalContext(ContextType.Machine);
-                    return domainContext.ConnectedServer;
-                }
-            }
-            finally {
-                domainContext?.Dispose();
-            }
+            return AdUtils.GetDefaultADDomain();
         }
 
         public string GetOwnerGuid() {

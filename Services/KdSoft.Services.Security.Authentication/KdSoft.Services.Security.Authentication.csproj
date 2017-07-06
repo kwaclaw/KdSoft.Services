@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>KdSoft.Services.Security.Authentication Class Library</Description>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.2.0</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
     <TargetFramework>net461</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -34,10 +34,12 @@
     <PackageReference Include="KdSoft.StorageBase" Version="2.0.3" />
     <PackageReference Include="KdSoft.TransientStorage" Version="2.0.3" />
     <PackageReference Include="KdSoft.Utils" Version="2.0.3" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.IdentityModel" />
   </ItemGroup>
 
 </Project>
