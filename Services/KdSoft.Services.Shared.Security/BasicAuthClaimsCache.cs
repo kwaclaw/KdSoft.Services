@@ -8,10 +8,12 @@ using claims = System.Security.Claims;
 
 namespace KdSoft.Services.Security
 {
-    public class BasicAuthClaimsCache: ClaimsCache, IClaimsCache
+    public abstract class BasicAuthClaimsCache: ClaimsCache, IClaimsCache
     {
-        protected BasicAuthClaimsCache(string name, IClaimsCacheConfig config): base(name, config) {
-            //do nothing
+        protected readonly ClaimDesc userKeyClaimDesc;
+
+        protected BasicAuthClaimsCache(string name, IClaimsCacheConfig config, ClaimDesc userKeyClaimDesc): base(name, config) {
+            this.userKeyClaimDesc = userKeyClaimDesc;
         }
 
         protected static string StringClaimDecode(byte[] bytes) {
@@ -19,22 +21,21 @@ namespace KdSoft.Services.Security
         }
 
         protected static string Int32ClaimDecode(byte[] bytes) {
-            int value = BitConverter.ToInt32(bytes, 0);
+            int indx = 0;
+            int value = Utils.Converter.ToInt32(bytes, ref indx);
             return value.ToString();
         }
 
+        /// <inheritdoc/>
         protected override IList<ClaimDesc> GetClaimDescriptions() {
             // order of entries must maych enum ClaimIndexes
             var result = new List<ClaimDesc>() {
-                new ClaimDesc( // UserId
-                    new PropDesc(claims.ClaimTypes.NameIdentifier, typeof(Int32).FullName),
-                    claims.ClaimValueTypes.Integer32,
-                    Int32ClaimDecode),
-                new ClaimDesc( // UserName
+                userKeyClaimDesc,  // UserKey
+                new ClaimDesc(     // UserName
                     new PropDesc(claims.ClaimTypes.Name, typeof(string).FullName),
                     claims.ClaimValueTypes.String,
                     StringClaimDecode),
-                new ClaimDesc(
+                new ClaimDesc(     // AuthenticationType
                     new PropDesc(ClaimTypes.AuthType, typeof(string).FullName),
                     claims.ClaimValueTypes.String,
                     StringClaimDecode),
@@ -42,6 +43,7 @@ namespace KdSoft.Services.Security
             return result;
         }
 
+        /// <inheritdoc/>
         protected override IList<PropDesc> GetPropertyDescriptions() {
             // order of entries must maych enum PropertyOffsets
             var result = new List<PropDesc>() {
@@ -51,19 +53,20 @@ namespace KdSoft.Services.Security
             return result;
         }
 
-        protected virtual Task AddClaimsToBeCachedAsync(int userKey, List<PropertyValue> properties) {
+        protected virtual Task AddClaimsToBeCachedAsync(string userName, string authType, byte[] userKeyBytes, List<PropertyValue> properties) {
             return Task.FromResult(0);
         }
 
-        protected virtual Task AddPropertiesToBeCachedAsync(int userKey, List<PropertyValue> properties) {
+        protected virtual Task AddPropertiesToBeCachedAsync(string userName, string authType, byte[] userKeyBytes, List<PropertyValue> properties) {
             return Task.FromResult(0);
         }
 
+        /// <inheritdoc/>
         public async Task<ClaimProperties> RetrieveAndCacheClaimPropertiesAsync(
             byte[] claimsId,
-            int? userKey,
             string userName,
             string authType,
+            byte[] userKeyBytes,
             DateTime tokenValidFrom = default(DateTime),
             DateTime tokenValidTo = default(DateTime)
         ) {
@@ -71,18 +74,16 @@ namespace KdSoft.Services.Security
                 new PropertyValue((int)ClaimIndexes.UserName, Encoding.UTF8.GetBytes(userName)),
                 new PropertyValue((int)ClaimIndexes.AuthType, Encoding.UTF8.GetBytes(authType))
             };
-            if (userKey != null) {
-                propValues.Add(new PropertyValue((int)ClaimIndexes.UserKey, BitConverter.GetBytes(userKey.Value)));
-                await AddClaimsToBeCachedAsync(userKey.Value, propValues).ConfigureAwait(false);
+            if (userKeyBytes != null) {
+                propValues.Add(new PropertyValue((int)ClaimIndexes.UserKey, userKeyBytes));
             }
+            await AddClaimsToBeCachedAsync(userName, authType, userKeyBytes, propValues).ConfigureAwait(false);
 
             int claimsCount = propValues.Count;
 
-            propValues.Add(new PropertyValue(PropertiesStartIndex + (int)PropertyOffsets.TokenValidFrom, BitConverter.GetBytes(tokenValidFrom.Ticks)));
-            propValues.Add(new PropertyValue(PropertiesStartIndex + (int)PropertyOffsets.TokenValidTo, BitConverter.GetBytes(tokenValidTo.Ticks)));
-            if (userKey != null) {
-                await AddPropertiesToBeCachedAsync(userKey.Value, propValues).ConfigureAwait(false);
-            }
+            propValues.Add(new PropertyValue(PropertiesStartIndex + (int)PropertyOffsets.TokenValidFrom, Utils.Converter.ToBytes(tokenValidFrom.Ticks)));
+            propValues.Add(new PropertyValue(PropertiesStartIndex + (int)PropertyOffsets.TokenValidTo, Utils.Converter.ToBytes(tokenValidTo.Ticks)));
+            await AddPropertiesToBeCachedAsync(userName, authType, userKeyBytes, propValues).ConfigureAwait(false);
 
             var propEntries = await StorePropertyValuesAsync(claimsId, propValues).ConfigureAwait(false);
 
@@ -101,6 +102,15 @@ namespace KdSoft.Services.Security
             };
         }
 
+        /// <summary>
+        /// Returns claim and property values for a given cache entry identifier.
+        /// </summary>
+        /// <param name="claimsId">Identifier for cache entry.</param>
+        /// <param name="propIndexes">Denotes the indexes of the values to return from the cache entry's stored values array.
+        /// If <c>null</c> then this means all stored values.</param>
+        /// <param name="claimsCount">Indicates how many of the entries in the <c>propIndexes</c> list are claim indexes, counted from the start.
+        /// This argument is ignored when <c>propIndexes == null</c>.</param>
+        /// <returns></returns>
         public async Task<ClaimProperties> GetClaimPropertyValuesAsync(byte[] claimsId, IList<int> propIndexes = null, int claimsCount = 0) {
             var propEntries = await GetPropertyValuesAsync(claimsId, propIndexes).ConfigureAwait(false);
 
@@ -128,6 +138,11 @@ namespace KdSoft.Services.Security
                 Claims = claims,
                 Properties = properties
             };
+        }
+
+        /// <inheritdoc/>
+        public string GetUserKeyString(byte[] userKeyBytes) {
+            return Int32ClaimDecode(userKeyBytes);
         }
     }
 }

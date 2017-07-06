@@ -35,17 +35,17 @@ namespace KdSoft.Services.Security
         /// Caches standard claim and non-claim values and and returns them as claims and properties.
         /// </summary>
         /// <param name="claimsId">Key under which to store the values.</param>
-        /// <param name="userKey">Standard userKey claim value. May be <c>null</c>.</param>
         /// <param name="userName">Standard userName claim value.</param>
         /// <param name="authType">Standard authentication type claim value.</param>
+        /// <param name="userKeyBytes">Encoded (serialized) standard userKey claim value. May be <c>null</c>.</param>
         /// <param name="tokenValidFrom">Standard token validFrom date-time property value.</param>
         /// <param name="tokenValidTo">Standard token validTo date-time property value.</param>
         /// <returns>Claim values as Claim instances, property values as byte arrays.</returns>
         Task<ClaimProperties> RetrieveAndCacheClaimPropertiesAsync(
             byte[] claimsId,
-            int? userKey,
             string userName,
             string authType,
+            byte[] userKeyBytes,
             DateTime tokenValidFrom = default(DateTime),
             DateTime tokenValidTo = default(DateTime)
         );
@@ -82,5 +82,12 @@ namespace KdSoft.Services.Security
         /// <param name="claimsId">Key to check.</param>
         /// <returns><c>true</c> if entries for the key exist, <c>false</c> otherwise.</returns>
         bool ClaimsExist(byte[] claimsId);
+
+        /// <summary>
+        /// Returns user key converted to string. Should be used as the authoritative way
+        /// to stringify the user key.
+        /// </summary>
+        /// <param name="userKeyBytes">Encoded user key.</param>
+        string GetUserKeyString(byte[] userKeyBytes);
     }
 }

@@ -1,9 +1,23 @@
-﻿using System;
+﻿using KdSoft.Serialization.Buffer;
+using System;
 
 namespace KdSoft.Services.Security
 {
+    /// <summary>
+    /// Static utility/helper methods.
+    /// </summary>
     public static class Utils
     {
+        /// <summary>
+        /// Serializer like <see cref="BitConverter"/>, with methods to serialize into existing byte arrays.
+        /// </summary>
+        public static readonly ByteConverter Converter = new ByteConverter(BitConverter.IsLittleEndian ? ByteOrder.LittleEndian : ByteOrder.BigEndian);
+
+        /// <summary>
+        /// Encodes URL into Base64 string.
+        /// </summary>
+        /// <param name="arg">UTF-8 encoded URL.</param>
+        /// <returns>Base64 encoded URL.</returns>
         public static string Base64UrlEncode(byte[] arg) {
             int len = arg.Length;
             int outCapacity = ((len + 2 - ((len + 2) % 3)) / 3) * 4;
@@ -24,6 +38,11 @@ namespace KdSoft.Services.Security
             return new string(chars, 0, outLength);
         }
 
+        /// <summary>
+        /// Decodes Base64 encoded URL.
+        /// </summary>
+        /// <param name="arg">Base64 encoded URL.</param>
+        /// <returns>UTF-8 encoded URL.</returns>
         public static byte[] Base64UrlDecode(string arg) {
             char[] chars = null;
             switch (arg.Length % 4) // Pad with trailing '='s

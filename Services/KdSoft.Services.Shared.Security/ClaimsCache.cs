@@ -146,7 +146,7 @@ namespace KdSoft.Services.Security
             var createLockRequests = new PropRequest[propValues.Count];
             for (int i = 0; i < createLockRequests.Length; i++)
                 createLockRequests[i] = new PropRequest(propValues[i].Index, LockMode.Create);
-            var getResult = await Store.GetAsync(claimsId, new ArraySegment<PropRequest>(createLockRequests), MaxLockWaitTimeSeconds, false);
+            var getResult = await Store.GetAsync(claimsId, new ArraySegment<PropRequest>(createLockRequests), MaxLockWaitTimeSeconds, false).ConfigureAwait(false);
             if (getResult.Status != ErrorCode.None)
                 throw new ClaimsCacheException(string.Format("Claims Cache Error: {0}.", getResult.Status.ToString()), (int)getResult.Status);
 
@@ -164,7 +164,7 @@ namespace KdSoft.Services.Security
             }
 
             // this clears the locks, but must run outside of a finally block
-            var errorCode = await Store.PutAsync(claimsId, entries);
+            var errorCode = await Store.PutAsync(claimsId, entries).ConfigureAwait(false);
             if (populateEx != null)  // throw previous exception, if there was one
                 throw populateEx;
             if (errorCode != ErrorCode.None)
@@ -227,7 +227,7 @@ namespace KdSoft.Services.Security
                 readLockRequests = new ArraySegment<PropRequest>(rlRequests);
             }
 
-            var getResult = await Store.GetAsync(claimsId, readLockRequests, MaxLockWaitTimeSeconds, false);
+            var getResult = await Store.GetAsync(claimsId, readLockRequests, MaxLockWaitTimeSeconds, false).ConfigureAwait(false);
             if (getResult.Status != ErrorCode.None)
                 throw new ClaimsCacheException(string.Format("Claims Cache Error: {0}.", getResult.Status.ToString()), (int)getResult.Status);
 
@@ -240,7 +240,7 @@ namespace KdSoft.Services.Security
                 // PropEnty is a struct, we better assign to its Value property directly
                 clearLockEntries.Array[indx].Value = null;
             }
-            var errorCode = await Store.PutAsync(claimsId, clearLockEntries);
+            var errorCode = await Store.PutAsync(claimsId, clearLockEntries).ConfigureAwait(false);
             // we ignore lock id mismatches on overlapping read locks
             if (errorCode != ErrorCode.None && errorCode != ErrorCode.LockIdMismatch)
                 throw new ClaimsCacheException(string.Format("Claims Cache Error: {0}.", errorCode.ToString()), (int)errorCode);
@@ -254,7 +254,7 @@ namespace KdSoft.Services.Security
         }
 
         public async Task<bool> RemoveClaimsAsync(byte[] claimsId) {
-            var deleteResult = await Store.DeleteAsync(claimsId, MaxLockWaitTimeSeconds, true);
+            var deleteResult = await Store.DeleteAsync(claimsId, MaxLockWaitTimeSeconds, true).ConfigureAwait(false);
             if (deleteResult.Status != ErrorCode.None)
                 throw new ClaimsCacheException(string.Format("Claims Cache Error: {0}.", deleteResult.Status.ToString()), (int)deleteResult.Status);
             return deleteResult.Deleted;

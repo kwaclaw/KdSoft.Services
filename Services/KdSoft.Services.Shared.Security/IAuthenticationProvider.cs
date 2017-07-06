@@ -9,7 +9,8 @@ namespace KdSoft.Services.Security
     public interface IAuthenticationProvider: IDisposable
     {
         Task<int?> ValidateUser(string userName, string passWord);
-        Task<AdAccount> ValidateAdUser(string adUserName, string adPassword, string adDomain = null);
+        Task<AdAccount> ValidateAdUser(string adUserName, string adPassword);
+        Task<(AdAccount, ISet<AdAccount>)> ValidateAdUserWithGroups(string adUserName, string adPassword);
 
         Task<int?> GetActiveDirectoryUserKey(AdAccount adAccount);
         string GetDefaultADDomain();

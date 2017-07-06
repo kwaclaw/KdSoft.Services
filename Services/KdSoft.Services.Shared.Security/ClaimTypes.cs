@@ -8,6 +8,8 @@ namespace KdSoft.Services.Security
         public const string Permission = "urn:x-kdsoft:Permission";
         public const string ClaimsId = "urn:x-kdsoft:ClaimsId";
         public const string AuthType = "urn:x-kdsoft:AuthType";
+        public const string AdSecurityGroup = "urn:x-kdsoft:AdSecurityGroup";
+        public const string AuthTimeUtc = "urn:x-kdsoft:AuthTimeUtc";
     }
 
     public static class ClaimValueTypes
