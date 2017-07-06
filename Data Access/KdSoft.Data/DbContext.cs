@@ -98,18 +98,18 @@ namespace KdSoft.Data
             return GetConnectionSetting(name);
         }
 
-        /// <inheritdoc cref="IDbContext.OpenConnection(string)"/>
+        /// <inheritdoc />
         public DbConnection OpenConnection(string name) {
             return connections.GetOrAdd(name, this.InternalOpenConnection);
         }
 
-        /// <inheritdoc cref="IDbContext.OpenNewConnection(string)"/>
+        /// <inheritdoc />
         public DbConnection OpenNewConnection(string name) {
             return InternalOpenConnection(name);
         }
 
         CultureInfo culture;
-        /// <inheritdoc cref="IDbContext.Culture"/>
+        /// <inheritdoc />
         public CultureInfo Culture {
             get { return culture ?? CultureInfo.CurrentUICulture; }
         }
@@ -122,7 +122,7 @@ namespace KdSoft.Data
             }
         }
 
-        /// <inheritdoc cref="IDbContext.GetConnectionSetting(string)"/>
+        /// <inheritdoc />
         public static DbConnectionSetting GetConnectionSetting(string name) {
             lock (connectionSettings) {
                 return connectionSettings[name];
