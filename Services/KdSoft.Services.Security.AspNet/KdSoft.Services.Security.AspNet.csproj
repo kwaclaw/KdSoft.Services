@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>KdSoft.Services.Security.AspNet Class Library</Description>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.2.0</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
     <TargetFramework>net461</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\KdSoft.Services.Security.Authentication\KdSoft.Services.Security.Authentication.csproj" />
     <ProjectReference Include="..\KdSoft.Services.Shared\KdSoft.Services.Shared.csproj" />
     <ProjectReference Include="..\KdSoft.Services.Shared.Security\KdSoft.Services.Shared.Security.csproj" />
   </ItemGroup>

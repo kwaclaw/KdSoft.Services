@@ -75,7 +75,7 @@ namespace KdSoft.Services.Security.AspNet
         // also tries to normalize the key
         public string GetActiveDirectoryClaimsKey(string adUserName) {
             string domain, userName;
-            if (Security.Utils.TryParseAdUserName(adUserName, out domain, out userName)) {
+            if (AdAccount.TryParse(adUserName, out domain, out userName)) {
                 if (domain == null)
                     domain = provider.GetDefaultADDomain();
                 return string.Concat(SecurityConfig.ActiveDirectoryClaimsIdPrefix, domain.ToUpperInvariant(), "\\", userName.ToUpperInvariant());
@@ -144,12 +144,14 @@ namespace KdSoft.Services.Security.AspNet
                 // if no claims were found then they probably got removed immediately before the call
                 if (claimsResult.Claims != null && claimsResult.Claims.Count > 0) {
                     claims = claimsResult.Claims;
+                    int indx = 0;
 
                     var tickBytes = claimsResult.Properties[(int)PropertyOffsets.TokenValidFrom];
-                    result.TokenValidFrom = new DateTime(BitConverter.ToInt64(tickBytes, 0));
+                    result.TokenValidFrom = new DateTime(Security.Utils.Converter.ToInt64(tickBytes, ref indx));
 
                     tickBytes = claimsResult.Properties[(int)PropertyOffsets.TokenValidTo];
-                    result.TokenValidTo = new DateTime(BitConverter.ToInt64(tickBytes, 0));
+                    indx = 0;
+                    result.TokenValidTo = new DateTime(Security.Utils.Converter.ToInt64(tickBytes, ref indx));
 
                     authType = claimsResult.Claims[(int)ClaimIndexes.AuthType].Value;
 
@@ -166,12 +168,17 @@ namespace KdSoft.Services.Security.AspNet
                 var tokenIdentity = (ClaimsIdentity)tokenPrincipal.Identity;
                 var jwtToken = (JwtSecurityToken)secToken;
 
+                byte[] userKeyBytes = null;
                 var userKeyClaim = tokenIdentity.FindFirst(sysClaims.ClaimTypes.NameIdentifier);
-                if (userKeyClaim == null)
+                if (userKeyClaim != null) {
                     throw new SecurityTokenValidationException("Missing user key.");
-                int userKey;
-                if (!Int32.TryParse(userKeyClaim.Value, out userKey))
-                    throw new SecurityTokenValidationException("Invalid user key.");
+                    if (Int32.TryParse(userKeyClaim.Value, out int ukey)) {
+                        userKeyBytes = Security.Utils.Converter.ToBytes(ukey);
+                    }
+                    else
+                        throw new SecurityTokenValidationException("Invalid user key.");
+                }
+
                 var userNameClaim = tokenIdentity.FindFirst(sysClaims.ClaimTypes.Name);
                 if (userNameClaim == null)
                     throw new SecurityTokenValidationException("Missing user name.");
@@ -180,7 +187,7 @@ namespace KdSoft.Services.Security.AspNet
                 var validFrom = jwtToken != null ? jwtToken.ValidFrom : default(DateTime);
                 var validTo = jwtToken != null ? jwtToken.ValidTo : default(DateTime);
                 var claimsResult = await Options.ClaimsCache.RetrieveAndCacheClaimPropertiesAsync(
-                  claimsId, userKey, userNameClaim.Value, authType, validFrom, validTo).ConfigureAwait(false);
+                    claimsId, userNameClaim.Value, authType, userKeyBytes, validFrom, validTo).ConfigureAwait(false);
 
                 claims = claimsResult.Claims;
 
@@ -199,6 +206,7 @@ namespace KdSoft.Services.Security.AspNet
             return result;
         }
 
+        // the user is not known to the database, but may still be allowed to perform some operations
         async Task<AuthenticationResult> CheckAuthenticatedUser(string userName, string authType) {
             AuthenticationResult result = default(AuthenticationResult);
 
@@ -219,11 +227,11 @@ namespace KdSoft.Services.Security.AspNet
 
             result.ClaimsId = claimsId;
 
-            var validFrom = jwtToken != null ? jwtToken.ValidFrom : default(DateTime);
-            var validTo = jwtToken != null ? jwtToken.ValidTo : default(DateTime);
+            var validFrom = jwtToken?.ValidFrom ?? default(DateTime);
+            var validTo = jwtToken?.ValidTo ?? default(DateTime);
             // this returns extra claims needed by the application (based on the userKey)
             var claimsResult = await Options.ClaimsCache.RetrieveAndCacheClaimPropertiesAsync(
-                claimsId, null, userName, authType, validFrom, validTo).ConfigureAwait(false);
+                claimsId, userName, authType, null, validFrom, validTo).ConfigureAwait(false);
 
             result.TokenValidFrom = validFrom;
             result.TokenValidTo = validTo;
@@ -231,7 +239,7 @@ namespace KdSoft.Services.Security.AspNet
 
             // the ClaimsId claim is not cached itself, but it is attached to the new identity
             claimsResult.Claims.Add(new Claim(ClaimTypes.ClaimsId, claimsIdStr, ClaimValueTypes.TokenSig));
-            // the finall identity has all the claims needed by the application
+            // the final identity has all the claims needed by the application
             var claimsIdentity = new ClaimsIdentity(claimsResult.Claims, authType, sysClaims.ClaimTypes.Name, sysClaims.ClaimTypes.Role);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             result.Ticket = new AuthenticationTicket(claimsPrincipal, null, authType);
@@ -278,16 +286,20 @@ namespace KdSoft.Services.Security.AspNet
 
             if (claims == null) {  // no claims, check if we know the user, then populate the claims cache
                 string domain, userName;
-                if (!Security.Utils.TryParseAdUserName(adUserName, out domain, out userName))
+                if (!AdAccount.TryParse(adUserName, out domain, out userName))
                     return result;
                 if (domain == null)
                     domain = provider.GetDefaultADDomain();
                 var adAccount = new AdAccount { Domain = domain, UserName = userName };
 
                 var userKey = await provider.GetActiveDirectoryUserKey(adAccount).ConfigureAwait(false);
+                byte[] userKeyBytes = null;
+                if (userKey != null) {
+                    userKeyBytes = Security.Utils.Converter.ToBytes(userKey.Value);
+                }
 
                 var claimsResult = await Options.ClaimsCache.RetrieveAndCacheClaimPropertiesAsync(
-                  claimsId, userKey, adUserName, authType).ConfigureAwait(false);
+                    claimsId, adUserName, authType, userKeyBytes).ConfigureAwait(false);
                 claims = claimsResult.Claims;
                 //result.TokenValidFrom = claimsResult.TokenValidFrom;
                 //result.TokenValidTo = claimsResult.TokenValidTo;
@@ -304,6 +316,7 @@ namespace KdSoft.Services.Security.AspNet
             return result;
         }
 
+        // the user is known to the database
         async Task<AuthenticationResult> CheckCustomUser(int userKey, string userName, string authType) {
             AuthenticationResult result = default(AuthenticationResult);
 
@@ -325,11 +338,11 @@ namespace KdSoft.Services.Security.AspNet
 
             result.ClaimsId = claimsId;
 
-            var validFrom = jwtToken != null ? jwtToken.ValidFrom : default(DateTime);
-            var validTo = jwtToken != null ? jwtToken.ValidTo : default(DateTime);
+            var validFrom = jwtToken?.ValidFrom ?? default(DateTime);
+            var validTo = jwtToken?.ValidTo ?? default(DateTime);
             // this returns extra claims needed by the application (based on the userKey)
             var claimsResult = await Options.ClaimsCache.RetrieveAndCacheClaimPropertiesAsync(
-                claimsId, userKey, userName, authType, validFrom, validTo).ConfigureAwait(false);
+                claimsId, userName, authType, Security.Utils.Converter.ToBytes(userKey), validFrom, validTo).ConfigureAwait(false);
 
             result.TokenValidFrom = validFrom;
             result.TokenValidTo = validTo;
