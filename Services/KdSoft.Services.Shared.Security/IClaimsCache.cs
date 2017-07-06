@@ -51,13 +51,15 @@ namespace KdSoft.Services.Security
         );
 
         /// <summary>
-        /// Returns claims and non-claim properties.
+        /// Returns claims and non-claim properties for a given cache entry identifier.
+        /// A cache entry can hold multiple properties, arranged by index.
         /// </summary>
         /// <param name="claimsId">Key for which to return the properties.</param>
         /// <param name="propIndexes">Indexes of properties to return, claims indexes must come before property indexes.
         /// If the value is <c>null</c> then all clainms and properties are returned.</param>
-        /// <param name="claimsCount">Number of claims, also starting index of non-claim properties.</param>
-        /// <returns>Lists off claims and properties for the given key.</returns>
+        /// <param name="claimsCount">Number of claims, also starting index of non-claim properties.
+        /// This argument is ignored when <c>propIndexes == null</c>.</param>
+        /// <returns>Lists of claims and properties for the given key.</returns>
         Task<ClaimProperties> GetClaimPropertyValuesAsync(byte[] claimsId, IList<int> propIndexes = null, int claimsCount = 0);
 
         /// <summary>

@@ -32,7 +32,7 @@ namespace KdSoft.Services.Security
 
         public ClaimDesc(PropDesc propDesc, string valueType, ClaimTypeDecoder decoder, ClaimTypeMultiDecoder multiDecoder = null) {
             if ((decoder == null && multiDecoder == null) || (decoder != null && multiDecoder != null))
-                throw new ArgumentException("Exactly one of decoder and multiDecoder must be null.");
+                throw new ArgumentException("Exactly one of decoder and multiDecoder must be not-null.");
             this.PropDesc = propDesc;
             this.ValueType = valueType;
             this.Decoder = decoder;
@@ -48,6 +48,7 @@ namespace KdSoft.Services.Security
         TimeSpan MaxLockWaitTime { get; }
     }
 
+
     public abstract class ClaimsCache
     {
         protected TransientStore Store { get; private set; }
@@ -55,6 +56,22 @@ namespace KdSoft.Services.Security
         protected ArraySegment<PropRequest> AllReadLockRequests { get; private set; }
         protected int MaxLockWaitTimeSeconds { get; private set; }
         protected readonly byte[] emptyBuffer = new byte[0];
+
+        /// <summary>
+        /// Implements initialization of claim and property definitions.
+        /// </summary>
+        protected abstract class PropertiesInitializer
+        {
+            /// <summary>
+            /// Returns a list of claim definitions.
+            /// </summary>
+            public abstract IList<ClaimDesc> GetClaimDescriptions();
+
+            /// <summary>
+            /// Returns a list of property definitions.
+            /// </summary>
+            public abstract IList<PropDesc> GetPropertyDescriptions();
+        }
 
         protected struct ClaimTypeDesc
         {
@@ -73,13 +90,13 @@ namespace KdSoft.Services.Security
 
         protected Dictionary<string, ClaimTypeDesc> ClaimTypeDescs { get; private set; }
 
-        public ClaimsCache(string name, IClaimsCacheConfig config) {
+        protected ClaimsCache(string name, IClaimsCacheConfig config, PropertiesInitializer initializer) {
             this.MaxLockWaitTimeSeconds = (int)config.MaxLockWaitTime.TotalSeconds;
 
             ClaimTypeDescs = new Dictionary<string, ClaimTypeDesc>();
 
-            var claimDescs = GetClaimDescriptions();
-            var propDescs = GetPropertyDescriptions();
+            var claimDescs = initializer.GetClaimDescriptions();
+            var propDescs = initializer.GetPropertyDescriptions();
 
             var propertyDescs = new PropDesc[claimDescs.Count + propDescs.Count];
             int propertyIndex = 0;
@@ -113,10 +130,6 @@ namespace KdSoft.Services.Security
                 readLockRequests[i] = new PropRequest(i, LockMode.Read);
             AllReadLockRequests = new ArraySegment<PropRequest>(readLockRequests);
         }
-
-        protected abstract IList<ClaimDesc> GetClaimDescriptions();
-
-        protected abstract IList<PropDesc> GetPropertyDescriptions();
 
         public int PropertiesStartIndex { get; private set; }
 

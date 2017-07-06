@@ -8,40 +8,45 @@ using claims = System.Security.Claims;
 
 namespace KdSoft.Services.Security
 {
+    /// <summary>
+    /// Default authentication claims cache, using <c>Int32</c> user key, email, surname and given name claims.
+    /// </summary>
     public class AuthenticationClaimsCache: BasicAuthClaimsCache
     {
         public const string CacheName = "KdSoft.AuthenticationClaims";
         protected IAuthenticationProvider Provider { get; private set; }
 
-        public AuthenticationClaimsCache(IClaimsCacheConfig config, IAuthenticationProvider provider)
-            : base(
-                CacheName,
-                config,
+        public AuthenticationClaimsCache(IClaimsCacheConfig config, IAuthenticationProvider provider) : base(CacheName, config, new PropsInitializer()) {
+            this.Provider = provider;
+        }
+
+        protected class PropsInitializer: BasicPropertiesInitializer
+        {
+            public PropsInitializer() : base(
                 new ClaimDesc(  // UserKey
                     new PropDesc(claims.ClaimTypes.NameIdentifier, typeof(Int32).FullName),
                     claims.ClaimValueTypes.Integer32,
                     Int32ClaimDecode)
-        ) {
-            this.Provider = provider;
-        }
+            ) {
+                //
+            }
 
-        static readonly char[] splitSep = new[] { ',' };
-
-        protected override IList<ClaimDesc> GetClaimDescriptions() {
-            var result = base.GetClaimDescriptions();
-            result.Add(new ClaimDesc(
-                new PropDesc(claims.ClaimTypes.Email, typeof(string).FullName),
-                claims.ClaimValueTypes.String,
-                StringClaimDecode));
-            result.Add(new ClaimDesc(
-                new PropDesc(claims.ClaimTypes.Surname, typeof(string).FullName),
-                claims.ClaimValueTypes.String,
-                StringClaimDecode));
-            result.Add(new ClaimDesc(
-                new PropDesc(claims.ClaimTypes.GivenName, typeof(string).FullName),
-                claims.ClaimValueTypes.String,
-                StringClaimDecode));
-            return result;
+            public override IList<ClaimDesc> GetClaimDescriptions() {
+                var result = base.GetClaimDescriptions();
+                result.Add(new ClaimDesc(
+                    new PropDesc(claims.ClaimTypes.Email, typeof(string).FullName),
+                    claims.ClaimValueTypes.String,
+                    StringClaimDecode));
+                result.Add(new ClaimDesc(
+                    new PropDesc(claims.ClaimTypes.Surname, typeof(string).FullName),
+                    claims.ClaimValueTypes.String,
+                    StringClaimDecode));
+                result.Add(new ClaimDesc(
+                    new PropDesc(claims.ClaimTypes.GivenName, typeof(string).FullName),
+                    claims.ClaimValueTypes.String,
+                    StringClaimDecode));
+                return result;
+            }
         }
 
         void AddStringPropertyIfNotNull(List<PropertyValue> properties, string claimType, string value) {

@@ -5,13 +5,16 @@ using KdSoft.Services.StorageServices.Transient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using claims = System.Security.Claims;
-using System.Security;
 
 namespace KdSoft.Services.Security
 {
+    /// <summary>
+    /// Default authorization claims cache.
+    /// </summary>
     public class AuthorizationClaimsCache: ClaimsCache
     {
         protected IAuthorizationProvider Provider { get; private set; }
@@ -21,7 +24,7 @@ namespace KdSoft.Services.Security
             string name,
             IAuthorizationClaimsConfig config,
             IAuthorizationProvider provider
-        ) : base(name, config) {
+        ) : base(name, config, new PropsInitializer()) {
             this.RefreshPeriod = config.ClaimsRefreshPeriod;
             this.Provider = provider;
         }
@@ -40,35 +43,49 @@ namespace KdSoft.Services.Security
             return dt.ToString("o");
         }
 
-        protected override IList<ClaimDesc> GetClaimDescriptions() {
-            var result = new List<ClaimDesc>();
-            result.Add(new ClaimDesc(
-                new PropDesc(ClaimTypes.AuthTimeUtc, typeof(DateTimeOffset).FullName),
-                claims.ClaimValueTypes.DateTime,
-                DateTimeOffsetUtcClaimDecode,
-                null));
-            result.Add(new ClaimDesc(
-                new PropDesc(ClaimTypes.AdSecurityGroup, typeof(AdAccount[]).FullName),
-                claims.ClaimValueTypes.String,
-                null,
-                StringSplitClaimDecode));
-            result.Add(new ClaimDesc(
-                new PropDesc(claims.ClaimTypes.Role, typeof(Role[]).FullName),
-                claims.ClaimValueTypes.String,
-                null,
-                StringSplitClaimDecode));
-            result.Add(new ClaimDesc(
-                new PropDesc(ClaimTypes.Permission, typeof(Permission[]).FullName),
-                claims.ClaimValueTypes.String,
-                null,
-                StringSplitClaimDecode));
-            return result;
+        /// <inheritdoc />
+        protected class PropsInitializer: PropertiesInitializer
+        {
+            /// <inheritdoc />
+            public override IList<ClaimDesc> GetClaimDescriptions() {
+                var result = new List<ClaimDesc>();
+                result.Add(new ClaimDesc(
+                    new PropDesc(ClaimTypes.AuthTimeUtc, typeof(DateTimeOffset).FullName),
+                    claims.ClaimValueTypes.DateTime,
+                    DateTimeOffsetUtcClaimDecode,
+                    null));
+                result.Add(new ClaimDesc(
+                    new PropDesc(ClaimTypes.AdSecurityGroup, typeof(AdAccount[]).FullName),
+                    claims.ClaimValueTypes.String,
+                    null,
+                    StringSplitClaimDecode));
+                result.Add(new ClaimDesc(
+                    new PropDesc(claims.ClaimTypes.Role, typeof(Role[]).FullName),
+                    claims.ClaimValueTypes.String,
+                    null,
+                    StringSplitClaimDecode));
+                result.Add(new ClaimDesc(
+                    new PropDesc(ClaimTypes.Permission, typeof(Permission[]).FullName),
+                    claims.ClaimValueTypes.String,
+                    null,
+                    StringSplitClaimDecode));
+                return result;
+            }
+
+            /// <inheritdoc />
+            public override IList<PropDesc> GetPropertyDescriptions() {
+                return new List<PropDesc>();
+            }
         }
 
-        protected override IList<PropDesc> GetPropertyDescriptions() {
-            return new List<PropDesc>();
-        }
-
+        /// <summary>
+        /// Uses the configured authorization provider and Active Directory (if applicable) to retrieve
+        /// authorization information and add it to the <see param="properties"/> list passed as argument.
+        /// </summary>
+        /// <param name="userName">User name component.</param>
+        /// <param name="authType">Authentication type component.</param>
+        /// <param name="userKey">User key component.</param>
+        /// <param name="properties">List to add authorization properties to.</param>
         protected virtual async Task AddClaimsToBeCachedAsync(string userName, string authType, int? userKey, List<PropertyValue> properties) {
             StringBuilder strBuilder = null;
 
@@ -121,6 +138,14 @@ namespace KdSoft.Services.Security
             }
         }
 
+        /// <summary>
+        /// Uses the configured authorization provider and Active Directory (if applicable) to retrieve
+        /// non-claim authorization information and add it to the <see param="properties"/> list passed as argument.
+        /// </summary>
+        /// <param name="userName">User name component.</param>
+        /// <param name="authType">Authentication type component.</param>
+        /// <param name="userKey">User key component.</param>
+        /// <param name="properties">List to add authorization properties to.</param>
         protected virtual Task AddPropertiesToBeCachedAsync(string userName, string authType, int? userKey, List<PropertyValue> properties) {
             return Task.FromResult(0);
         }

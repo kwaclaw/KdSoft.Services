@@ -8,12 +8,14 @@ using claims = System.Security.Claims;
 
 namespace KdSoft.Services.Security
 {
+    /// <summary>
+    /// Base class for authentication claims cache.
+    /// </summary>
     public abstract class BasicAuthClaimsCache: ClaimsCache, IClaimsCache
     {
-        protected readonly ClaimDesc userKeyClaimDesc;
 
-        protected BasicAuthClaimsCache(string name, IClaimsCacheConfig config, ClaimDesc userKeyClaimDesc): base(name, config) {
-            this.userKeyClaimDesc = userKeyClaimDesc;
+        protected BasicAuthClaimsCache(string name, IClaimsCacheConfig config, BasicPropertiesInitializer initializer) : base(name, config, initializer) {
+            //
         }
 
         protected static string StringClaimDecode(byte[] bytes) {
@@ -27,30 +29,40 @@ namespace KdSoft.Services.Security
         }
 
         /// <inheritdoc/>
-        protected override IList<ClaimDesc> GetClaimDescriptions() {
-            // order of entries must maych enum ClaimIndexes
-            var result = new List<ClaimDesc>() {
-                userKeyClaimDesc,  // UserKey
-                new ClaimDesc(     // UserName
-                    new PropDesc(claims.ClaimTypes.Name, typeof(string).FullName),
-                    claims.ClaimValueTypes.String,
-                    StringClaimDecode),
-                new ClaimDesc(     // AuthenticationType
-                    new PropDesc(ClaimTypes.AuthType, typeof(string).FullName),
-                    claims.ClaimValueTypes.String,
-                    StringClaimDecode),
-            };
-            return result;
-        }
+        protected class BasicPropertiesInitializer: PropertiesInitializer
+        {
+            readonly ClaimDesc userKeyClaimDesc;
 
-        /// <inheritdoc/>
-        protected override IList<PropDesc> GetPropertyDescriptions() {
-            // order of entries must maych enum PropertyOffsets
-            var result = new List<PropDesc>() {
-                new PropDesc("TokenValidFrom", "Int64"),
-                new PropDesc("TokenValidTo", "Int64"),
-            };
-            return result;
+            public BasicPropertiesInitializer(ClaimDesc userKeyClaimDesc) {
+                this.userKeyClaimDesc = userKeyClaimDesc;
+            }
+
+            /// <inheritdoc/>
+            public override IList<ClaimDesc> GetClaimDescriptions() {
+                // order of entries must maych enum ClaimIndexes
+                var result = new List<ClaimDesc>() {
+                    userKeyClaimDesc,  // UserKey
+                    new ClaimDesc(     // UserName
+                        new PropDesc(claims.ClaimTypes.Name, typeof(string).FullName),
+                        claims.ClaimValueTypes.String,
+                        StringClaimDecode),
+                    new ClaimDesc(     // AuthenticationType
+                        new PropDesc(ClaimTypes.AuthType, typeof(string).FullName),
+                        claims.ClaimValueTypes.String,
+                        StringClaimDecode),
+                };
+                return result;
+            }
+
+            /// <inheritdoc/>
+            public override IList<PropDesc> GetPropertyDescriptions() {
+                // order of entries must maych enum PropertyOffsets
+                var result = new List<PropDesc>() {
+                    new PropDesc("TokenValidFrom", "Int64"),
+                    new PropDesc("TokenValidTo", "Int64"),
+                };
+                return result;
+            }
         }
 
         protected virtual Task AddClaimsToBeCachedAsync(string userName, string authType, byte[] userKeyBytes, List<PropertyValue> properties) {
@@ -61,7 +73,7 @@ namespace KdSoft.Services.Security
             return Task.FromResult(0);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public async Task<ClaimProperties> RetrieveAndCacheClaimPropertiesAsync(
             byte[] claimsId,
             string userName,
@@ -102,15 +114,7 @@ namespace KdSoft.Services.Security
             };
         }
 
-        /// <summary>
-        /// Returns claim and property values for a given cache entry identifier.
-        /// </summary>
-        /// <param name="claimsId">Identifier for cache entry.</param>
-        /// <param name="propIndexes">Denotes the indexes of the values to return from the cache entry's stored values array.
-        /// If <c>null</c> then this means all stored values.</param>
-        /// <param name="claimsCount">Indicates how many of the entries in the <c>propIndexes</c> list are claim indexes, counted from the start.
-        /// This argument is ignored when <c>propIndexes == null</c>.</param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public async Task<ClaimProperties> GetClaimPropertyValuesAsync(byte[] claimsId, IList<int> propIndexes = null, int claimsCount = 0) {
             var propEntries = await GetPropertyValuesAsync(claimsId, propIndexes).ConfigureAwait(false);
 
@@ -140,7 +144,7 @@ namespace KdSoft.Services.Security
             };
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public string GetUserKeyString(byte[] userKeyBytes) {
             return Int32ClaimDecode(userKeyBytes);
         }
