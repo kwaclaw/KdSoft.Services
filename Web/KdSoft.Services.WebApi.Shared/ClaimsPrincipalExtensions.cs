@@ -36,5 +36,12 @@ namespace KdSoft.Services.WebApi
                 throw new InvalidOperationException("Missing UserName.");
             return claim.Value;
         }
+
+        public static string GetUserAuthType(this ClaimsPrincipal principal) {
+            var claim = principal.FindFirst(security.ClaimTypes.AuthType);
+            if (claim == null)
+                throw new InvalidOperationException("Missing AuthType.");
+            return claim.Value;
+        }
     }
 }
