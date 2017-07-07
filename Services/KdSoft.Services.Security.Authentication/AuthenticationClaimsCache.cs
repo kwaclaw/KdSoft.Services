@@ -75,28 +75,17 @@ namespace KdSoft.Services.Security
 
             // if we have an AD account, let's fill in missing properties from there
             if (user == null || user.Email == null || user.Surname == null || user.GivenName == null) {
-                switch (authType) {
-                    case claims.AuthenticationTypes.Windows:
-                    case claims.AuthenticationTypes.Kerberos:
-                    case claims.AuthenticationTypes.Negotiate:
-                        string domain, uname;
-                        if (AdAccount.TryParse(userName, out domain, out uname) && domain == null) {
-                            domain = AdUtils.GetDefaultADDomain();
-                        }
-                        else {
-                            break;
-                        }
-                        var adUser = AdUtils.GetUserPrincipal(new AdAccount { Domain = domain, UserName = uname });
+                if (AdUtils.IsAdAuthType(authType) && AdAccount.TryParse(userName, out string domain, out string uname)) {
+                    if (domain == null)
+                        domain = AdUtils.GetDefaultADDomain();
+                    var adUser = AdUtils.GetUserPrincipal(new AdAccount { Domain = domain, UserName = uname });
 
-                        if (user?.Email == null)
-                            AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Email, adUser.EmailAddress);
-                        if (user?.Surname == null)
-                            AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Surname, adUser.Surname);
-                        if (user?.GivenName == null)
-                            AddStringPropertyIfNotNull(properties, claims.ClaimTypes.GivenName, adUser.GivenName);
-                        break;
-                    default:
-                        break;
+                    if (user?.Email == null)
+                        AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Email, adUser.EmailAddress);
+                    if (user?.Surname == null)
+                        AddStringPropertyIfNotNull(properties, claims.ClaimTypes.Surname, adUser.Surname);
+                    if (user?.GivenName == null)
+                        AddStringPropertyIfNotNull(properties, claims.ClaimTypes.GivenName, adUser.GivenName);
                 }
             }
         }

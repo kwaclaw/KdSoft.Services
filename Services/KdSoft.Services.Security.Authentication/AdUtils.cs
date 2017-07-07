@@ -7,6 +7,18 @@ namespace KdSoft.Services.Security
 {
     public static class AdUtils
     {
+        public static bool IsAdAuthType(string authType) {
+            switch (authType.ToUpperInvariant()) {
+                case "WINDOWS":
+                case "KERBEROS":
+                case "NEGOTIATE":
+                case "NTLM":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static AdAccount ValidateAdUser(string adUserName, string adPassword) {
             string domain, userName;
 

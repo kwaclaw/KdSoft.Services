@@ -259,16 +259,6 @@ namespace KdSoft.Services.Security.AspNet
             string adUserName = winIdentity.Name;
             string authType = winIdentity.AuthenticationType;
 
-            // first we check if we are already authenticated through Windows - we assume it is the primary Identity
-            //switch (authenticationType) {
-            //  case System.Security.Claims.AuthenticationTypes.Windows:
-            //  case System.Security.Claims.AuthenticationTypes.Kerberos:
-            //  case System.Security.Claims.AuthenticationTypes.Negotiate:
-            //    break;
-            //  default:
-            //    return result;
-            //}
-
             IList<Claim> claims = null;
             var claimsIdStr = GetActiveDirectoryClaimsKey(adUserName);
             var claimsId = Encoding.UTF8.GetBytes(claimsIdStr);

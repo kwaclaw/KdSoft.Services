@@ -93,29 +93,17 @@ namespace KdSoft.Services.Security
             properties.Add(CreatePropValue(ClaimTypes.AuthTimeUtc, Utils.Converter.ToBytes(DateTimeOffset.UtcNow.Ticks)));
 
             // if we have an AD account, add the AD security groups as claims
-            switch (authType) {
-                case claims.AuthenticationTypes.Windows:
-                case claims.AuthenticationTypes.Kerberos:
-                case claims.AuthenticationTypes.Negotiate:
-                    string domain, uname;
-                    if (AdAccount.TryParse(userName, out domain, out uname)) {
-                        if (domain == null)
-                            domain = AdUtils.GetDefaultADDomain();
-                    }
-                    else {
-                        break;
-                    }
-                    var adGroups = AdUtils.GetAdSecurityGroups(new AdAccount { Domain = domain, UserName = uname });
+            if (AdUtils.IsAdAuthType(authType) && AdAccount.TryParse(userName, out string domain, out string uname)) {
+                if (domain == null)
+                    domain = AdUtils.GetDefaultADDomain();
+                var adGroups = AdUtils.GetAdSecurityGroups(new AdAccount { Domain = domain, UserName = uname });
 
-                    strBuilder = strBuilder ?? new StringBuilder();
-                    foreach (var adg in adGroups)
-                        strBuilder.Append(adg.ToDownLevelName() + ",");
-                    if (strBuilder.Length > 0)
-                        strBuilder.Remove(strBuilder.Length - 1, 1); // remove last comma
-                    properties.Add(CreateStringPropValue(ClaimTypes.AdSecurityGroup, strBuilder.ToString()));
-                    break;
-                default:
-                    break;
+                strBuilder = strBuilder ?? new StringBuilder();
+                foreach (var adg in adGroups)
+                    strBuilder.Append(adg.ToDownLevelName() + ",");
+                if (strBuilder.Length > 0)
+                    strBuilder.Remove(strBuilder.Length - 1, 1); // remove last comma
+                properties.Add(CreateStringPropValue(ClaimTypes.AdSecurityGroup, strBuilder.ToString()));
             }
 
             // for a registered application user we add the roles and permissions defined in the application
