@@ -76,10 +76,16 @@ namespace KdSoft.Data.Models.Shared.Security
             return new AdAccount { Domain = domain, UserName = userName };
         }
 
-        public string ToSamAccountName() {
+        /// <summary>
+        /// Converts AD account name into the form 'domain\username'
+        /// </summary>
+        public string ToDownLevelName() {
             return string.IsNullOrEmpty(Domain) ? UserName : Domain + '\\' + UserName;
         }
 
+        /// <summary>
+        /// Converts AD account name into the form 'username@domain'
+        /// </summary>
         public string ToUserPrincipalName() {
             return UserName + (string.IsNullOrEmpty(Domain) ? string.Empty : '@' + Domain);
         }
@@ -89,25 +95,32 @@ namespace KdSoft.Data.Models.Shared.Security
         }
 
         public override bool Equals(object obj) {
-            return this.Equals(obj as AdAccount);
+            return Equals(this, obj as AdAccount);
         }
 
         public bool Equals(AdAccount other) {
-            if (other == null)
+            return Equals(this, other);
+        }
+
+        public static bool Equals(AdAccount x, AdAccount y) {
+            if (object.ReferenceEquals(x, y))
+                return true;
+            if (object.ReferenceEquals(x, null) || object.ReferenceEquals(y, null))
                 return false;
+
             var comparer = StringComparer.CurrentCultureIgnoreCase;
-            int result = comparer.Compare(this.Domain, other.Domain);
+            int result = comparer.Compare(x.Domain, y.Domain);
             if (result == 0)
-                result = comparer.Compare(this.UserName, other.UserName);
+                result = comparer.Compare(x.UserName, y.UserName);
             return result == 0;
         }
 
         public static bool operator ==(AdAccount x, AdAccount y) {
-            return x.Equals(y);
+            return Equals(x, y);
         }
 
         public static bool operator !=(AdAccount x, AdAccount y) {
-            return !x.Equals(y);
+            return !Equals(x, y);
         }
     }
 
