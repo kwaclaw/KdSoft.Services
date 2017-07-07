@@ -98,8 +98,9 @@ namespace KdSoft.Services.Security
                 case claims.AuthenticationTypes.Kerberos:
                 case claims.AuthenticationTypes.Negotiate:
                     string domain, uname;
-                    if (AdAccount.TryParse(userName, out domain, out uname) && domain == null) {
-                        domain = AdUtils.GetDefaultADDomain();
+                    if (AdAccount.TryParse(userName, out domain, out uname)) {
+                        if (domain == null)
+                            domain = AdUtils.GetDefaultADDomain();
                     }
                     else {
                         break;
@@ -108,7 +109,7 @@ namespace KdSoft.Services.Security
 
                     strBuilder = strBuilder ?? new StringBuilder();
                     foreach (var adg in adGroups)
-                        strBuilder.Append(adg.ToSamAccountName() + ",");
+                        strBuilder.Append(adg.ToDownLevelName() + ",");
                     if (strBuilder.Length > 0)
                         strBuilder.Remove(strBuilder.Length - 1, 1); // remove last comma
                     properties.Add(CreateStringPropValue(ClaimTypes.AdSecurityGroup, strBuilder.ToString()));
