@@ -1,0 +1,45 @@
+﻿{
+    "DbConnection": {
+        "Name": "AuthenticationDb",
+        "ProviderName": "System.Data.SqlClient",
+        "ConnectionString": "Data Source=.;Initial Catalog=Db.Authentication;uid=dev;pwd=blatant;MultipleActiveResultSets=True;"
+    },
+    "OpenId": {
+        "Google": {
+            "Issuer": "accounts.google.com",
+            "ClientId": "432906566919-tqff6ua9bg8q1gnu80g4j67qmhlqitf9.apps.googleusercontent.com",
+            "ClientSecret": "3IxYljV-fFP87XQGHI-_TJx_"
+        }
+    },
+    "Token": {
+        "JwtAudience": "urn:x-qline:qcare-webapi",
+        "JwtIssuer": "urn:x-qline:qlinesolutions.com",
+        "JwtLifeTimeMinutes": 90
+    },
+    "Claims": {
+        "ClaimsCacheMaxLockWaitSeconds": 3,
+        "ClaimsCacheLockCheckWaitMilliseconds": 400,
+        "ClaimsCacheMemoryCheckPeriodSeconds": 30
+    },
+    "Authorization": {
+        "PermissionsRefreshMinutes": 30
+    },
+    "Scheduler": {
+        /* Specifies the Windows accounts that are allowed to call scheduled services. */
+        "Accounts": [ "nt authority\\system", "qlinesolutions\\qline_qcareuser", "kwaclawek-dev\\kwaclaw" ]
+    },
+    "Request": {
+        /* Maximum number of records to return when a record count parameter can be supplied */
+        "MaxRecordCount": 100
+    },
+    "File": {
+        "AccessKey": "BDA60C96A987431AE93749C3187E91B4FB299E7DA21A0974FC3C89D69D9C6245FA49B9F989310E9371FBC184A8877B20B88ECEC597DB8EFEE64639DD6B53D47F",
+        "AccessLifeTimeSeconds": 120
+    },
+    "QLine": {
+        "minRequiredNonAlphanumericCharacters": 0,
+        "minRequiredPasswordLength": 7,
+        "passwordStrengthRegularExpression": "",
+        "enableBackDoor": false
+    }
+}
