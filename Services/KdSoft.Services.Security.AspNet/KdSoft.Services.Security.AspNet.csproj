@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KdSoft.Services.Security.Authentication\KdSoft.Services.Security.Authentication.csproj" />
+    <ProjectReference Include="..\KdSoft.Services.Security.Authorization\KdSoft.Services.Security.Authorization.csproj" />
     <ProjectReference Include="..\KdSoft.Services.Shared\KdSoft.Services.Shared.csproj" />
     <ProjectReference Include="..\KdSoft.Services.Shared.Security\KdSoft.Services.Shared.Security.csproj" />
   </ItemGroup>
@@ -40,6 +41,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="1.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />

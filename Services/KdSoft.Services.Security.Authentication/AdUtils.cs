@@ -17,14 +17,14 @@ namespace KdSoft.Services.Security
             PrincipalContext domainContext = null;
             try {
                 try {
-                    domainContext = new PrincipalContext(ContextType.Domain, domain);
+                    domainContext = new PrincipalContext(ContextType.Domain, domain, null);
                 }
                 catch (PrincipalServerDownException) {
                     domainContext = new PrincipalContext(ContextType.Machine, null);
                 }
 
                 if (domainContext.ValidateCredentials(userName, adPassword)) {
-                    return new AdAccount { Domain = domain, UserName = userName };
+                    return new AdAccount { Domain = domainContext.GetDomainName(), UserName = userName };
                 }
                 else {
                     return null;
@@ -45,7 +45,7 @@ namespace KdSoft.Services.Security
             PrincipalContext domainContext = null;
             try {
                 try {
-                    domainContext = new PrincipalContext(ContextType.Domain, domain);
+                    domainContext = new PrincipalContext(ContextType.Domain, domain, null);
                 }
                 catch (PrincipalServerDownException) {
                     domainContext = new PrincipalContext(ContextType.Machine, null);
@@ -53,7 +53,7 @@ namespace KdSoft.Services.Security
 
                 if (domainContext.ValidateCredentials(userName, adPassword)) {
                     var securityGroups = GetAdSecurityGroups(domainContext, userName);
-                    return (new AdAccount { Domain = domain, UserName = userName }, securityGroups);
+                    return (new AdAccount { Domain = domainContext.GetDomainName(), UserName = userName }, securityGroups);
                 }
                 else {
                     return (null, null);
@@ -68,7 +68,7 @@ namespace KdSoft.Services.Security
             PrincipalContext domainContext = null;
             try {
                 try {
-                    domainContext = new PrincipalContext(ContextType.Domain, adAccount.Domain);
+                    domainContext = new PrincipalContext(ContextType.Domain, adAccount.Domain, null);
                 }
                 catch (PrincipalServerDownException) {
                     domainContext = new PrincipalContext(ContextType.Machine, null);
@@ -86,32 +86,41 @@ namespace KdSoft.Services.Security
             try {
                 try {
                     domainContext = new PrincipalContext(ContextType.Domain);
-                    var dnsName = domainContext.ConnectedServer;
-                    int lastDotIndex = dnsName.LastIndexOf('.');
-                    if (lastDotIndex < 0)
-                        return dnsName;
-                    int firstDotIndex = dnsName.IndexOf('.');
-                    if (firstDotIndex < 0)
-                        return dnsName.Substring(0, lastDotIndex);
-                    firstDotIndex++;
-                    return dnsName.Substring(firstDotIndex, lastDotIndex - firstDotIndex);
                 }
                 catch (PrincipalServerDownException) {
                     domainContext = new PrincipalContext(ContextType.Machine);
-                    return domainContext.ConnectedServer;
                 }
+                return GetDomainName(domainContext);
             }
             finally {
                 domainContext?.Dispose();
             }
         }
 
-        public static ISet<AdAccount> GetAdSecurityGroups(PrincipalContext domainContext, string userName) {
+        public static string GetDomainName(this PrincipalContext domainContext) {
+            if (domainContext.ContextType == ContextType.Domain) {
+                var dnsName = domainContext.ConnectedServer;
+                int lastDotIndex = dnsName.LastIndexOf('.');
+                if (lastDotIndex < 0)
+                    return dnsName;
+                int firstDotIndex = dnsName.IndexOf('.');
+                if (firstDotIndex < 0)
+                    return dnsName.Substring(0, lastDotIndex);
+                firstDotIndex++;
+                return dnsName.Substring(firstDotIndex, lastDotIndex - firstDotIndex);
+            }
+            else { //if (domainContext.ContextType == ContextType.Machine)
+                return domainContext.ConnectedServer;
+            }
+        }
+
+        public static ISet<AdAccount> GetAdSecurityGroups(this PrincipalContext domainContext, string userName) {
             var result = new HashSet<AdAccount>();
+            var domainName = GetDomainName(domainContext);
             using (var user = UserPrincipal.FindByIdentity(domainContext, userName)) {
                 using (var authGroups = user.GetAuthorizationGroups()) {
                     foreach (var authGroup in authGroups) {
-                        result.Add(AdAccount.Parse(authGroup.SamAccountName));
+                        result.Add(new AdAccount { Domain = domainName, UserName = authGroup.SamAccountName });
                     }
                 }
             }
@@ -123,7 +132,7 @@ namespace KdSoft.Services.Security
             PrincipalContext domainContext = null;
             try {
                 try {
-                    domainContext = new PrincipalContext(ContextType.Domain, account.Domain);
+                    domainContext = new PrincipalContext(ContextType.Domain, account.Domain, null);
                 }
                 catch (PrincipalServerDownException) {
                     domainContext = new PrincipalContext(ContextType.Machine, null);

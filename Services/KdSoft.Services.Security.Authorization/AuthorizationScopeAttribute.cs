@@ -1,8 +1,10 @@
-﻿using KdSoft.Services.Security;
-using System;
+﻿using System;
 
-namespace KdSoft.Services.WebApi.Infrastructure
+namespace KdSoft.Services.Security
 {
+    /// <summary>
+    /// Attribute to mark a class for using a specific <see cref="IAuthorizationScope"/> implementation.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public class AuthorizationScopeAttribute: Attribute
     {
@@ -12,6 +14,9 @@ namespace KdSoft.Services.WebApi.Infrastructure
             this.Type = interfaceType;
         }
 
+        /// <summary>
+        /// Type of <see cref="IAuthorizationScope"/> implementation to use.
+        /// </summary>
         public Type Type { get; private set; }
     }
 }
