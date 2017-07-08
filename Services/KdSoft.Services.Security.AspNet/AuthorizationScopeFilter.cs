@@ -63,16 +63,23 @@ namespace KdSoft.Services.Security.AspNet
 
         /// <inheritdoc />
         public Task OnAuthorizationAsync(AuthorizationFilterContext context) {
+            var httpContext = context.HttpContext;
+            var user = httpContext.User;
+
+            // no sense in retrieving authorization claims if user is anonymous
+            if (!user.Identity.IsAuthenticated)
+                return Task.FromResult(0);
+
             var controllerDescripter = context.ActionDescriptor as ControllerActionDescriptor;
             var controllerType = controllerDescripter?.ControllerTypeInfo;
             if (controllerType == null)
                 return Task.FromResult(0);
 
-            var authorizationScope = GetAuthorizationScope(controllerType, context.HttpContext.RequestServices);
+            var authorizationScope = GetAuthorizationScope(controllerType, httpContext.RequestServices);
             if (authorizationScope == null)
                 return Task.FromResult(0);
                 
-            return AddAuthorizationClaims(context.HttpContext.User, authorizationScope, context.HttpContext.RequestServices);
+            return AddAuthorizationClaims(user, authorizationScope, httpContext.RequestServices);
         }
     }
 }
