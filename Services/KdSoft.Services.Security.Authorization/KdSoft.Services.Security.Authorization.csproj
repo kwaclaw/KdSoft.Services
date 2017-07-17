@@ -35,7 +35,7 @@
     <PackageReference Include="Dapper" Version="1.50.2" />
     <PackageReference Include="KdSoft.Serialization" Version="1.0.0" />
     <PackageReference Include="KdSoft.StorageBase" Version="2.0.3" />
-    <PackageReference Include="KdSoft.TransientStorage" Version="2.0.3" />
+    <PackageReference Include="KdSoft.TransientStorage" Version="3.0.0" />
     <PackageReference Include="KdSoft.Utils" Version="2.0.3" />
   </ItemGroup>
 

@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 namespace KdSoft.Data.Helpers
 {
     /// <summary>
-    /// Case-insensitive dictionary for generating insert and update SQL for a given table
-    /// from property names or <see cref="KeyValuePair{string,object}"/> collections.
+    /// Case-insensitive dictionary for generating insert and update SQL for a given table from
+    /// property names or <see cref="KeyValuePair{T,V}">KeyValuePair&lt;string,object></see> collections.
     /// Does not allow adding or removing properties once created.
     /// </summary>
     /// <remarks>Not thread safe.</remarks>
@@ -19,9 +19,9 @@ namespace KdSoft.Data.Helpers
     {
         const string insertTemplate = @"INSERT INTO {0} ({1}) VALUES ({2}) SELECT CAST(SCOPE_IDENTITY() AS INT)";
 
-        string tableName;
-        IEnumerable<string> keys;
-        IDictionary<string, object> properties;
+        readonly string tableName;
+        readonly IEnumerable<string> keys;
+        readonly IDictionary<string, object> properties;
         string insertSql;
         string updateSql;
 
