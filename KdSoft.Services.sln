@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}"
 	ProjectSection(SolutionItems) = preProject
@@ -70,6 +70,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CAE7EE00-98DD-4F15-9AB4-062A53CFA364}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KdSoft.Services.Security.Tests", "Tests\KdSoft.Services.Security.Tests\KdSoft.Services.Security.Tests.csproj", "{E38BFCC6-0907-4291-B823-E24ABE98146F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docfx_project", "docfx_project", "{12D4597B-C3FC-48E9-B632-871AC11C1D69}"
+	ProjectSection(SolutionItems) = preProject
+		docfx_project\BuildDocs.cmd = docfx_project\BuildDocs.cmd
+		docfx_project\docfx.json = docfx_project\docfx.json
+		docfx_project\RebuildDocs.Cmd = docfx_project\RebuildDocs.Cmd
+		docfx_project\RunSite.cmd = docfx_project\RunSite.cmd
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -174,5 +182,6 @@ Global
 		{BB785B46-FA30-45A6-9B80-1B9E49E21410} = {BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}
 		{8775046D-55A3-4520-A09C-D5EF88BA14A7} = {BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}
 		{E38BFCC6-0907-4291-B823-E24ABE98146F} = {CAE7EE00-98DD-4F15-9AB4-062A53CFA364}
+		{12D4597B-C3FC-48E9-B632-871AC11C1D69} = {BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}
 	EndGlobalSection
 EndGlobal
