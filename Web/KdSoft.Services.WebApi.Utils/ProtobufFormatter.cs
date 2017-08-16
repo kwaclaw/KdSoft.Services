@@ -1,8 +1,8 @@
-﻿using KdSoft.Services.Protobuf;
+﻿using System;
+using System.Threading.Tasks;
+using KdSoft.Services.Protobuf;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
-using System;
-using System.Threading.Tasks;
 
 namespace KdSoft.Services.WebApi
 {

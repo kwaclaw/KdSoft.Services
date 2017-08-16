@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Internal;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace KdSoft.Services.WebApi.Infrastructure
 {
@@ -40,7 +39,7 @@ namespace KdSoft.Services.WebApi.Infrastructure
                 context.Succeed(requirement);
             else
                 context.Fail();
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

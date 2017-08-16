@@ -33,8 +33,8 @@
   <ItemGroup>
     <PackageReference Include="KdSoft.Common.VeryPortable" Version="2.0.3" />
     <PackageReference Include="KdSoft.Utils.Portable" Version="3.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Localization" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 

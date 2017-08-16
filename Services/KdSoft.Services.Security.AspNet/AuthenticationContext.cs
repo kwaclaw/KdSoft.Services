@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Microsoft.AspNetCore.Http;
 using security = KdSoft.Services.Security;
 
 namespace KdSoft.Services.Security.AspNet
@@ -74,8 +74,7 @@ namespace KdSoft.Services.Security.AspNet
 
             var authzHeaderValues = request.Headers["Authorization"];
             var kdSoftAuthValue = authzHeaderValues
-                .Where(h => h.Length > security.AuthenticationSchemes.KdSoft.Length && h.StartsWith(security.AuthenticationSchemes.KdSoft, StringComparison.OrdinalIgnoreCase))
-                .FirstOrDefault();
+                .FirstOrDefault(h => h.Length > security.AuthenticationSchemes.KdSoft.Length && h.StartsWith(security.AuthenticationSchemes.KdSoft, StringComparison.OrdinalIgnoreCase));
             if (kdSoftAuthValue != null && char.IsWhiteSpace((char)kdSoftAuthValue[Services.Security.AuthenticationSchemes.KdSoft.Length])) {
                 result.Token = kdSoftAuthValue.Substring(Services.Security.AuthenticationSchemes.KdSoft.Length + 1).Trim();
             }

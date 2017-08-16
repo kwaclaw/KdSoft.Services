@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
-using System;
+﻿using System;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 
 namespace KdSoft.Services.WebApi
 {

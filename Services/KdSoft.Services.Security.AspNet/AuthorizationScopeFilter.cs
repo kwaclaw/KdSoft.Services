@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Concurrent;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace KdSoft.Services.Security.AspNet
 {

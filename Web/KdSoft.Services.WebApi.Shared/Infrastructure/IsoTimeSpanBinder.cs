@@ -1,9 +1,8 @@
-﻿using KdSoft.Utils;
-using Microsoft.AspNetCore.Mvc.Internal;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
+﻿using System;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
+using KdSoft.Utils;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace KdSoft.Services.WebApi.Infrastructure
 {
@@ -19,7 +18,7 @@ namespace KdSoft.Services.WebApi.Infrastructure
 
             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
             if (valueProviderResult == ValueProviderResult.None) {  // no entry
-                return TaskCache.CompletedTask;
+                return Task.CompletedTask;
             }
 
             bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
@@ -49,7 +48,7 @@ namespace KdSoft.Services.WebApi.Infrastructure
                 }
                 bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, ex, bindingContext.ModelMetadata);
             }
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

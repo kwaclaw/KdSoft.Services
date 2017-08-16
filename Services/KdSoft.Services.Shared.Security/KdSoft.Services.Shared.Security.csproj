@@ -27,10 +27,10 @@
 
   <ItemGroup>
     <PackageReference Include="KdSoft.Serialization" Version="1.0.0" />
-    <PackageReference Include="KdSoft.StorageBase" Version="2.0.3" />
-    <PackageReference Include="KdSoft.TransientStorage" Version="3.0.0" />
+    <PackageReference Include="KdSoft.StorageBase" Version="2.0.4" />
+    <PackageReference Include="KdSoft.TransientStorage" Version="3.1.0" />
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
-    <PackageReference Include="System.ValueTuple" Version="4.3.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
   </ItemGroup>
 
 </Project>

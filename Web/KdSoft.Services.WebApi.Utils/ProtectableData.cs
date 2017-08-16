@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using System.Text;
+﻿using System.Text;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace KdSoft.Services.WebApi
 {

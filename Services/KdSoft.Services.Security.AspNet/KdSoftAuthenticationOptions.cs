@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Tokens;
 
 namespace KdSoft.Services.Security.AspNet
 {
-    public class KdSoftAuthenticationOptions: AuthenticationOptions
+    public class KdSoftAuthenticationOptions: AuthenticationSchemeOptions
     {
         public KdSoftAuthenticationOptions() { }
 
@@ -14,6 +15,9 @@ namespace KdSoft.Services.Security.AspNet
         public string JwtIssuer { get; set; }
         public TimeSpan JwtLifeTime { get; set; }
         public SigningCredentials JwtCredentials { get; set; }
+
+        public TokenValidationParameters ValidationParameters { get; set; }
+        public JwtSecurityTokenHandler TokenHandler { get; set; }
 
         public List<OAuthClientCredentials> OAuthCredentials { get; set; }
 

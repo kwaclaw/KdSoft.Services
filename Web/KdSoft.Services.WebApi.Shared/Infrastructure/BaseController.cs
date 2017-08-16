@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Security;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KdSoft.Services.WebApi.Infrastructure
 {

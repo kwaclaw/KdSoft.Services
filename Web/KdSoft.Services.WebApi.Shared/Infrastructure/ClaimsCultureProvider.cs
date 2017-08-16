@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Primitives;
 
 namespace KdSoft.Services.WebApi.Infrastructure
 {
@@ -13,7 +14,7 @@ namespace KdSoft.Services.WebApi.Infrastructure
             var claimCultures = user.Claims.Where(c => c.Type == ClaimTypes.Locality);
             ProviderCultureResult result = null;
             if (claimCultures.Any())
-                result = new ProviderCultureResult(claimCultures.Select(cc => cc.Value).ToList());
+                result = new ProviderCultureResult(claimCultures.Select(cc => new StringSegment(cc.Value)).ToList());
             return Task.FromResult(result);
         }
     }

@@ -1,6 +1,5 @@
-﻿using KdSoft.Services.WebApi;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Net;
 
 namespace KdSoft.Services.WebApi.Infrastructure
 {

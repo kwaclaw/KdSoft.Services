@@ -1,25 +1,27 @@
-﻿using KdSoft.Data.Models.Shared.Security;
-using KdSoft.Utils;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using KdSoft.Data.Models.Shared.Security;
+using KdSoft.Utils;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
+using Microsoft.IdentityModel.Tokens;
 using sysClaims = System.Security.Claims;
 
 namespace KdSoft.Services.Security.AspNet
 {
-    class KdSoftAuthenticationHandler: AuthenticationHandler<KdSoftAuthenticationOptions>
+    public class KdSoftAuthenticationHandler: AuthenticationHandler<KdSoftAuthenticationOptions>
     {
         struct AuthenticationResult
         {
@@ -41,22 +43,24 @@ namespace KdSoft.Services.Security.AspNet
         AuthenticationContext authContext;
         AuthenticationResult authResult = default(AuthenticationResult);
 
-        readonly TokenValidationParameters validationParameters;
-        readonly JwtSecurityTokenHandler tokenHandler;
-        readonly ILogger logger;
         readonly BufferPool bufferPool;
-        readonly IStringLocalizer<KdSoftAuthenticationMiddleware> localizer;
+        readonly IStringLocalizer<KdSoftAuthenticationHandler> localizer;
 
-        public KdSoftAuthenticationHandler(TokenValidationParameters validationParameters, JwtSecurityTokenHandler tokenHandler, ILogger logger, IStringLocalizer<KdSoftAuthenticationMiddleware> localizer) {
-            this.validationParameters = validationParameters;
-            this.tokenHandler = tokenHandler;
-            this.logger = logger;
+        //TODO add validationParameters and tokenHandler to Options and do some checking in PostConfiguration
+
+        public KdSoftAuthenticationHandler(
+            IOptionsMonitor<KdSoftAuthenticationOptions> options,
+            ILoggerFactory logger,
+            UrlEncoder encoder, 
+            ISystemClock clock,
+            IStringLocalizer<KdSoftAuthenticationHandler> localizer
+        ) : base(options, logger, encoder, clock) {
             this.localizer = localizer;
             this.bufferPool = new BufferPool();
         }
 
         public static ClaimsIdentity CreateClaimsIdentityFromClaims(IList<Claim> claims) {
-            string authType = claims.Where(cl => cl.Type == ClaimTypes.AuthType).First().Value;
+            string authType = claims.First(cl => cl.Type == ClaimTypes.AuthType).Value;
             // if authentication type was set to "" then the token was revoked or logged out of
             if (string.IsNullOrEmpty(authType))
                 throw new SecurityTokenValidationException("Token was revoked.");
@@ -96,7 +100,7 @@ namespace KdSoft.Services.Security.AspNet
                 IssuedAt = now,
                 Expires = now.Add(Options.JwtLifeTime),
             };
-            return (JwtSecurityToken)tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
+            return (JwtSecurityToken)Options.TokenHandler.CreateJwtSecurityToken(tokenDescriptor);
         }
 
         //byte[] GetTokenKey(string tokenStr) {
@@ -156,7 +160,7 @@ namespace KdSoft.Services.Security.AspNet
                     authType = claimsResult.Claims[(int)ClaimIndexes.AuthType].Value;
 
                     var utcNow = DateTime.UtcNow;
-                    if (result.TokenValidTo < (utcNow + validationParameters.ClockSkew.Negate())) {
+                    if (result.TokenValidTo < (utcNow + Options.ValidationParameters.ClockSkew.Negate())) {
                         throw new SecurityTokenExpiredException("Security token has expired.");
                     }
                 }
@@ -164,7 +168,7 @@ namespace KdSoft.Services.Security.AspNet
 
             if (claims == null) { // if no claims are in the cache, revalidate token - it could have been issued from another (trusted) server
                 SecurityToken secToken;
-                var tokenPrincipal = tokenHandler.ValidateToken(tokenStr, validationParameters, out secToken);
+                var tokenPrincipal = Options.TokenHandler.ValidateToken(tokenStr, Options.ValidationParameters, out secToken);
                 var tokenIdentity = (ClaimsIdentity)tokenPrincipal.Identity;
                 var jwtToken = (JwtSecurityToken)secToken;
 
@@ -350,89 +354,6 @@ namespace KdSoft.Services.Security.AspNet
 
         #endregion
 
-        async Task<AuthenticateResult> AuthenticateCoreAsync() {
-            Exception error = null;
-            AuthenticationResult coreAuthResult = default(AuthenticationResult);
-
-            try {
-                if (authContext.Token != null) {
-                    coreAuthResult = await CheckCustomToken(authContext.Token).ConfigureAwait(false);
-                }
-                else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.Custom) {
-                    int? userKey = await provider.ValidateUser(authContext.UserName, authContext.Password).ConfigureAwait(false);
-                    if (userKey != null) {
-                        coreAuthResult = await CheckCustomUser(userKey.Value, authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
-                    }
-                }
-                else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.OpenId) {
-                    var idToken = await OpenIdConnect.CheckOpenIdAuthorizationCode(
-                        authContext.OpenIdIssuer, authContext.OpenIdCode, authContext.OpenIdRedirectUri, Options).ConfigureAwait(false);
-                    if (idToken != null) {
-                        var subject = (string)idToken["sub"];
-                        var issuer = (string)idToken["iss"];
-                        if (subject != null) {
-                            string userName = (string)idToken["email"];
-                            if (string.IsNullOrEmpty(userName))
-                                userName = issuer + "/" + subject;
-
-                            // is the user also known to our security database?
-                            int? userKey = await provider.GetOpenIdUserKey(issuer, subject).ConfigureAwait(false);
-                            if (userKey != null) {
-                                coreAuthResult = await CheckCustomUser(userKey.Value, userName, authContext.AuthReqTypeName).ConfigureAwait(false);
-                            }
-                            else {  // the user is not known to the database, but may still be allowed to perform some operations
-                                coreAuthResult = await CheckAuthenticatedUser(userName, authContext.AuthReqTypeName).ConfigureAwait(false);
-                            }
-                        }
-                    }
-                }
-                else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.Windows && !string.IsNullOrEmpty(authContext.UserName)) {
-                    var adAccount = await provider.ValidateAdUser(authContext.UserName, authContext.Password).ConfigureAwait(false);
-                    if (adAccount != null) {  // user authenticated
-                        // is the user also known to our security database?
-                        int? userKey = await provider.GetActiveDirectoryUserKey(adAccount).ConfigureAwait(false);
-                        if (userKey != null) {
-                            coreAuthResult = await CheckCustomUser(userKey.Value, authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
-                        }
-                        else {  // the user is not known to the database, but may still be allowed to perform some operations
-                            coreAuthResult = await CheckAuthenticatedUser(authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
-                        }
-                    }
-                }
-                else {  // otherwise we always check Windows authentication
-                    coreAuthResult = await CheckWindowsUser().ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex) {
-                error = ex;
-                logger.LogError("User validation error.", ex);
-                // As we are only authenticating here, we still let the call go through to the controller action. 
-                // Our controller will check if the user is authenticated or not. Why do we do this? 
-                // Well, we still need some anonymous actions to be accessible for unauthenticated users.
-            }
-
-            this.authResult = coreAuthResult;
-
-            if (error != null) {
-                return AuthenticateResult.Fail(error);
-            }
-            else if (coreAuthResult.Ticket == null) {
-                switch (authContext.AuthReqType) {
-                    case AuthenticationContext.AuthRequestType.Windows:
-                        return AuthenticateResult.Fail("Windows authentication failed.");
-                    case AuthenticationContext.AuthRequestType.Custom:
-                        return AuthenticateResult.Fail("The user name or password provided is incorrect.");
-                    case AuthenticationContext.AuthRequestType.OpenId:
-                        return AuthenticateResult.Fail("OpenId Connect authentication failed.");
-                    default:
-                        return AuthenticateResult.Fail("Authentication failed.");
-                }
-            }
-            else {
-                return AuthenticateResult.Success(coreAuthResult.Ticket);
-            }
-        }
-
         async Task<bool> ApplyHeadersAsync() {
             try {
                 bool customAuthRequested = authContext.AuthReqType == AuthenticationContext.AuthRequestType.Custom;
@@ -446,7 +367,7 @@ namespace KdSoft.Services.Security.AspNet
                 if (customAuthRequested || openIdAuthRequested || adAuthRequested) {
                     if (authResult.Token == null)  // caller may have sent headers in error
                         return true;
-                    var tokenString = tokenHandler.WriteToken(authResult.Token);
+                    var tokenString = Options.TokenHandler.WriteToken(authResult.Token);
                     //tokenString += authResult.Token.RawSignature;  //TODO temporary workaround, remove when fixed
                     Response.Headers.AppendCommaSeparatedValues(SecurityConfig.TokenKey, tokenString, Options.JwtLifeTime.ToString());
                     return true;
@@ -487,7 +408,7 @@ namespace KdSoft.Services.Security.AspNet
                 try {
                     var checkResult = await CheckCustomUser(userKey, userNameClaim.Value, authResult.Ticket.Principal.Identity.AuthenticationType).ConfigureAwait(false);
                     if (checkResult.Token != null) {
-                        var tokenString = tokenHandler.WriteToken(checkResult.Token);
+                        var tokenString = Options.TokenHandler.WriteToken(checkResult.Token);
                         Response.Headers.AppendCommaSeparatedValues(SecurityConfig.TokenKey, tokenString, Options.JwtLifeTime.ToString());
                     }
                 }
@@ -497,7 +418,7 @@ namespace KdSoft.Services.Security.AspNet
                 }
             }
             catch (Exception ex) {
-                logger.LogError("ApplyHeaders error.", ex);
+                Logger.LogError("ApplyHeaders error.", ex);
                 goto failedGrant;  // fatal, user should not be authorized
             }
 
@@ -556,31 +477,120 @@ namespace KdSoft.Services.Security.AspNet
                 }
             }
             catch (Exception ex) {
-                logger.LogError("ApplyResponseChallenge error.", ex);
+                Logger.LogError("ApplyResponseChallenge error.", ex);
+            }
+        }
+
+        protected virtual async Task FinishResponseAsync() {
+            if (authContext == null)  // we are not handling this scheme
+                return;
+
+            var ticket = (await HandleAuthenticateOnceSafeAsync())?.Ticket;
+            if (ticket != null) {
+                bool success = Context.Response.IsSuccessStatusCode();
+                if (success)
+                    await ApplyHeadersAsync();
+                FinalizeResponse();
             }
         }
 
         #region Overrides
 
-        protected override Task<AuthenticateResult> HandleAuthenticateAsync() {
+        protected override Task InitializeEventsAsync() {
+            return base.InitializeEventsAsync();
+        }
+
+        protected override Task InitializeHandlerAsync() {
+            authResult = default(AuthenticationResult);
             provider = Options.AuthenticationProvider;
             authContext = AuthenticationContext.FromRequestHeaders(Request);
 
-            try {
-                return AuthenticateCoreAsync();
-            }
-            catch (Exception ex) {
-                return Task.FromResult(AuthenticateResult.Fail(ex));
-            }
+            Context.Response.OnStarting(FinishResponseAsync);
+
+            return Task.CompletedTask;
         }
 
-        public override Task<bool> HandleRequestAsync() {
-            bool result = false;
-            if (authContext != null) {  // only if we are handling this scheme
-                // if speficially requested authentication failed, then we short-cut the pipeline and return immediately
-                result = authResult.Ticket == null && authContext.AuthReqType != AuthenticationContext.AuthRequestType.None;
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync() {
+            Exception error = null;
+            AuthenticationResult coreAuthResult = default(AuthenticationResult);
+
+            try {
+                if (authContext.Token != null) {
+                    coreAuthResult = await CheckCustomToken(authContext.Token).ConfigureAwait(false);
+                }
+                else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.Custom) {
+                    int? userKey = await provider.ValidateUser(authContext.UserName, authContext.Password).ConfigureAwait(false);
+                    if (userKey != null) {
+                        coreAuthResult = await CheckCustomUser(userKey.Value, authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
+                    }
+                }
+                else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.OpenId) {
+                    var idToken = await OpenIdConnect.CheckOpenIdAuthorizationCode(
+                        authContext.OpenIdIssuer, authContext.OpenIdCode, authContext.OpenIdRedirectUri, Options).ConfigureAwait(false);
+                    if (idToken != null) {
+                        var subject = (string)idToken["sub"];
+                        var issuer = (string)idToken["iss"];
+                        if (subject != null) {
+                            string userName = (string)idToken["email"];
+                            if (string.IsNullOrEmpty(userName))
+                                userName = issuer + "/" + subject;
+
+                            // is the user also known to our security database?
+                            int? userKey = await provider.GetOpenIdUserKey(issuer, subject).ConfigureAwait(false);
+                            if (userKey != null) {
+                                coreAuthResult = await CheckCustomUser(userKey.Value, userName, authContext.AuthReqTypeName).ConfigureAwait(false);
+                            }
+                            else {  // the user is not known to the database, but may still be allowed to perform some operations
+                                coreAuthResult = await CheckAuthenticatedUser(userName, authContext.AuthReqTypeName).ConfigureAwait(false);
+                            }
+                        }
+                    }
+                }
+                else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.Windows && !string.IsNullOrEmpty(authContext.UserName)) {
+                    var adAccount = await provider.ValidateAdUser(authContext.UserName, authContext.Password).ConfigureAwait(false);
+                    if (adAccount != null) {  // user authenticated
+                        // is the user also known to our security database?
+                        int? userKey = await provider.GetActiveDirectoryUserKey(adAccount).ConfigureAwait(false);
+                        if (userKey != null) {
+                            coreAuthResult = await CheckCustomUser(userKey.Value, authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
+                        }
+                        else {  // the user is not known to the database, but may still be allowed to perform some operations
+                            coreAuthResult = await CheckAuthenticatedUser(authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
+                        }
+                    }
+                }
+                else {  // otherwise we always check Windows authentication
+                    coreAuthResult = await CheckWindowsUser().ConfigureAwait(false);
+                }
             }
-            return Task.FromResult(result);
+            catch (Exception ex) {
+                error = ex;
+                Logger.LogError("User validation error.", ex);
+                // As we are only authenticating here, we still let the call go through to the controller action. 
+                // Our controller will check if the user is authenticated or not. Why do we do this? 
+                // Well, we still need some anonymous actions to be accessible for unauthenticated users.
+            }
+
+            this.authResult = coreAuthResult;
+
+            if (error != null) {
+                return AuthenticateResult.Fail(error);
+            }
+            else if (coreAuthResult.Ticket == null) {
+                switch (authContext.AuthReqType) {
+                    case AuthenticationContext.AuthRequestType.Windows:
+                        return AuthenticateResult.Fail("Windows authentication failed.");
+                    case AuthenticationContext.AuthRequestType.Custom:
+                        return AuthenticateResult.Fail("The user name or password provided is incorrect.");
+                    case AuthenticationContext.AuthRequestType.OpenId:
+                        return AuthenticateResult.Fail("OpenId Connect authentication failed.");
+                    default:
+                        return AuthenticateResult.Fail("Authentication failed.");
+                }
+            }
+            else {
+                return AuthenticateResult.Success(coreAuthResult.Ticket);
+            }
         }
 
         //protected override Task<bool> HandleForbiddenAsync(ChallengeContext context) {
@@ -590,25 +600,6 @@ namespace KdSoft.Services.Security.AspNet
         //protected override Task<bool> HandleUnauthorizedAsync(ChallengeContext context) {
         //    return base.HandleUnauthorizedAsync(context);
         //}
-
-        protected override async Task FinishResponseAsync() {
-            if (authContext == null)  // we are not handling this scheme
-                return;
-            try {
-                bool success = authResult.Ticket != null && Context.Response.IsSuccessStatusCode();
-                if (success)
-                    await ApplyHeadersAsync();
-                FinalizeResponse();
-            }
-            finally {
-                authResult = default(AuthenticationResult);
-                var pv = provider;
-                if (pv != null) {
-                    provider = null;
-                    pv.Dispose();
-                }
-            }
-        }
 
         #endregion
     }

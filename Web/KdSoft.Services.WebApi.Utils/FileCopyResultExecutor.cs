@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.Features;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace KdSoft.Services.WebApi
 {
@@ -12,8 +12,8 @@ namespace KdSoft.Services.WebApi
             : base(CreateLogger<FileCopyResultExecutor>(loggerFactory)) {
         }
 
-        public Task ExecuteAsync(ActionContext context, FileCopyResult result) {
-            SetHeadersAndLog(context, result);
+        public virtual Task ExecuteAsync(ActionContext context, FileCopyResult result) {
+            SetHeadersAndLog(context, result, null);
             return WriteFileAsync(context, result);
         }
 

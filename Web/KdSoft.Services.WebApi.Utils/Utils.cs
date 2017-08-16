@@ -1,8 +1,8 @@
-﻿using KdSoft.Data.Models.Shared;
+﻿using System;
+using System.Net;
+using KdSoft.Data.Models.Shared;
 using KdSoft.Utils;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Net;
 
 namespace KdSoft.Services.WebApi
 {
