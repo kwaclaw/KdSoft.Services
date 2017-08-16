@@ -1,10 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		NuGet.config = NuGet.config
 		Nuget_ClearAllCaches.cmd = Nuget_ClearAllCaches.cmd
 		Projects_SuperClear.cmd = Projects_SuperClear.cmd
@@ -55,7 +56,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KdSoft.Services.WebApi.Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KdSoft.Services.WebApi.Utils", "Web\KdSoft.Services.WebApi.Utils\KdSoft.Services.WebApi.Utils.csproj", "{690DFA00-CEA3-403B-8145-44355E63FA75}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artifacts", "artifacts", "{BB785B46-FA30-45A6-9B80-1B9E49E21410}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{BB785B46-FA30-45A6-9B80-1B9E49E21410}"
 	ProjectSection(SolutionItems) = preProject
 		artifacts\CollectPackages.cmd = artifacts\CollectPackages.cmd
 		artifacts\MyFeed_push_all.cmd = artifacts\MyFeed_push_all.cmd
@@ -183,5 +184,8 @@ Global
 		{8775046D-55A3-4520-A09C-D5EF88BA14A7} = {BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}
 		{E38BFCC6-0907-4291-B823-E24ABE98146F} = {CAE7EE00-98DD-4F15-9AB4-062A53CFA364}
 		{12D4597B-C3FC-48E9-B632-871AC11C1D69} = {BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0D45E843-08A0-4270-9B73-8C7B6BA4184A}
 	EndGlobalSection
 EndGlobal
