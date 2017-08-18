@@ -490,8 +490,9 @@ namespace KdSoft.Services.Security.AspNet
                 bool success = Context.Response.IsSuccessStatusCode();
                 if (success)
                     await ApplyHeadersAsync();
-                FinalizeResponse();
             }
+
+            FinalizeResponse();
         }
 
         #region Overrides

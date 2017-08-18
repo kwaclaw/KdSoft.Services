@@ -22,9 +22,7 @@ namespace KdSoft.Services.Security.AspNet
         public const string AuthOptionsHeader = "X-KdSoft-Auth-Options";
         public const string ActiveDirectoryClaimsIdPrefix = "#WU%";
 
-        public static void Register(KdSoftAuthenticationOptions authOptions) {
-            KdSoftAuthOptions = authOptions;
-
+        public static void Initialize() {
             // for the primary identity the priority order is: authentication type "X-KdSoft", then WindowsIdentity, then ClaimsIdentity
             ClaimsPrincipal.PrimaryIdentitySelector = (ids) => {
                 ClaimsIdentity result = null;
@@ -51,7 +49,5 @@ namespace KdSoft.Services.Security.AspNet
                     return result;
             };
         }
-
-        public static KdSoftAuthenticationOptions KdSoftAuthOptions { get; private set; }
     }
 }
