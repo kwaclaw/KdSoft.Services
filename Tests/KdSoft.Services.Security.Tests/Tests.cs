@@ -1,15 +1,12 @@
-﻿using KdSoft.Services.WebApi;
-using Microsoft.DotNet.PlatformAbstractions;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
+using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Threading;
+using KdSoft.Services.WebApi;
+using Microsoft.DotNet.PlatformAbstractions;
+using Microsoft.Extensions.Configuration;
 using Xunit;
 using Xunit.Abstractions;
-using System.DirectoryServices;
-using System.DirectoryServices.AccountManagement;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KdSoft.Services.Security.Tests
 {

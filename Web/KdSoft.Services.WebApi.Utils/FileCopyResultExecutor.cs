@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Internal;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace KdSoft.Services.WebApi
 {
+    [Obsolete("Use FileStreamResult and FileStreamresultExecutor instead.")]
     public class FileCopyResultExecutor : FileResultExecutorBase
     {
         public FileCopyResultExecutor(ILoggerFactory loggerFactory)

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace KdSoft.Services.WebApi
 {
+    [Obsolete("Use FileStreamResult and FileStreamresultExecutor instead.")]
     public class FileCopyResult: FileResult
     {
         Func<Stream, Task> copyAsync;

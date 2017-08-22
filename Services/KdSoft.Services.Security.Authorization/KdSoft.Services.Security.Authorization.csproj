@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>KdSoft.Services.Security.Authorization Class Library</Description>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionPrefix>2.0.1</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -37,10 +37,6 @@
     <PackageReference Include="KdSoft.StorageBase" Version="2.0.4" />
     <PackageReference Include="KdSoft.TransientStorage" Version="3.1.0" />
     <PackageReference Include="KdSoft.Utils" Version="2.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.IdentityModel" />
   </ItemGroup>
 
 </Project>
