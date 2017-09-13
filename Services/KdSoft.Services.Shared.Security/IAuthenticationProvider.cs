@@ -8,6 +8,7 @@ namespace KdSoft.Services.Security
 {
     public interface IAuthenticationProvider: IDisposable
     {
+        bool HasUserDatabase { get; }
         Task<int?> ValidateUser(string userName, string passWord);
         Task<AdAccount> ValidateAdUser(string adUserName, string adPassword);
         Task<(AdAccount, ISet<AdAccount>)> ValidateAdUserWithGroups(string adUserName, string adPassword);

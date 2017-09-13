@@ -286,10 +286,12 @@ namespace KdSoft.Services.Security.AspNet
                     domain = provider.GetDefaultADDomain();
                 var adAccount = new AdAccount { Domain = domain, UserName = userName };
 
-                var userKey = await provider.GetActiveDirectoryUserKey(adAccount).ConfigureAwait(false);
                 byte[] userKeyBytes = null;
-                if (userKey != null) {
-                    userKeyBytes = Security.Utils.Converter.ToBytes(userKey.Value);
+                if (provider.HasUserDatabase) {
+                    var userKey = await provider.GetActiveDirectoryUserKey(adAccount).ConfigureAwait(false);
+                    if (userKey != null) {
+                        userKeyBytes = Security.Utils.Converter.ToBytes(userKey.Value);
+                    }
                 }
 
                 var claimsResult = await Options.ClaimsCache.RetrieveAndCacheClaimPropertiesAsync(
@@ -536,8 +538,11 @@ namespace KdSoft.Services.Security.AspNet
                             if (string.IsNullOrEmpty(userName))
                                 userName = issuer + "/" + subject;
 
-                            // is the user also known to our security database?
-                            int? userKey = await provider.GetOpenIdUserKey(issuer, subject).ConfigureAwait(false);
+                            int? userKey = null;
+                            if (provider.HasUserDatabase) {
+                                // is the user also known to our security database?
+                                userKey = await provider.GetOpenIdUserKey(issuer, subject).ConfigureAwait(false);
+                            }
                             if (userKey != null) {
                                 coreAuthResult = await CheckCustomUser(userKey.Value, userName, authContext.AuthReqTypeName).ConfigureAwait(false);
                             }
@@ -550,8 +555,11 @@ namespace KdSoft.Services.Security.AspNet
                 else if (authContext.AuthReqType == AuthenticationContext.AuthRequestType.Windows && !string.IsNullOrEmpty(authContext.UserName)) {
                     var adAccount = await provider.ValidateAdUser(authContext.UserName, authContext.Password).ConfigureAwait(false);
                     if (adAccount != null) {  // user authenticated
-                        // is the user also known to our security database?
-                        int? userKey = await provider.GetActiveDirectoryUserKey(adAccount).ConfigureAwait(false);
+                        int? userKey = null;
+                        if (provider.HasUserDatabase) {
+                            // is the user also known to our security database?
+                            userKey = await provider.GetActiveDirectoryUserKey(adAccount).ConfigureAwait(false);
+                        }
                         if (userKey != null) {
                             coreAuthResult = await CheckCustomUser(userKey.Value, authContext.UserName, authContext.AuthReqTypeName).ConfigureAwait(false);
                         }

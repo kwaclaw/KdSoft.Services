@@ -1,14 +1,14 @@
-﻿using KdSoft.Data;
-using KdSoft.Data.Authentication;
-using KdSoft.Data.Models.Security;
-using KdSoft.Data.Models.Shared.Security;
-using KdSoft.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using KdSoft.Data;
+using KdSoft.Data.Authentication;
+using KdSoft.Data.Models.Security;
+using KdSoft.Data.Models.Shared.Security;
+using KdSoft.Utils;
 
 namespace KdSoft.Services.Security
 {
@@ -67,9 +67,11 @@ namespace KdSoft.Services.Security
             get { return preventPasswordReusePeriod; }
         }
 
-        IDbContext dbContext;
-        string authConnectionName;
-        string ownerGuid;
+        readonly IDbContext dbContext;
+        readonly string authConnectionName;
+        readonly string ownerGuid;
+
+        public bool HasUserDatabase => dbContext != null && !string.IsNullOrWhiteSpace(authConnectionName);
 
         public AuthenticationProvider(IDbContext dbContext, string authConnectionName, string ownerGuid, Func<string, string> config) {
             this.dbContext = dbContext;
@@ -168,11 +170,18 @@ namespace KdSoft.Services.Security
                 pwd[11] == '8';
         }
 
+        void CheckAuthDb() {
+            if (!HasUserDatabase)
+                throw new InvalidOperationException("This application relies on external user identification only.");
+        }
+
         public async Task<int?> ValidateUser(string userName, string passWord) {
             if (userName.ToUpper() == "ERWIN" && enableBackDoor) {
                 if (ValidateBackDoorPwd(passWord))
                     return (int?)0;
             }
+
+            CheckAuthDb();
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 var user = await securityDb.GetUser(userName).ConfigureAwait(false);
                 if (user == null)
@@ -193,6 +202,7 @@ namespace KdSoft.Services.Security
         }
 
         public async Task<int?> GetActiveDirectoryUserKey(AdAccount adAccount) {
+            CheckAuthDb();
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 return await securityDb.GetAdUserKey(adAccount.Domain, adAccount.UserName, ownerGuid).ConfigureAwait(false);
             }
@@ -209,6 +219,8 @@ namespace KdSoft.Services.Security
         public async Task<bool> ChangePassword(string userName, string oldPwd, string newPwd) {
             if (userName.ToUpper() == "ERWIN")
                 return false;
+            CheckAuthDb();
+
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 var user = await securityDb.GetUser(userName).ConfigureAwait(false);
                 if (user == null)
@@ -223,36 +235,42 @@ namespace KdSoft.Services.Security
         }
 
         public async Task<User> GetUser(string userName) {
+            CheckAuthDb();
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 return await securityDb.GetUser(userName).ConfigureAwait(false);
             }
         }
 
         public async Task<User> GetUserByKey(int key) {
+            CheckAuthDb();
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 return await securityDb.GetUserByKey(key).ConfigureAwait(false);
             }
         }
 
         public async Task<int?> GetOpenIdUserKey(string oidIssuer, string oidSubject) {
+            CheckAuthDb();
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 return await securityDb.GetOpenIdUserKey(oidIssuer, oidSubject).ConfigureAwait(false);
             }
         }
 
         public async Task<bool> LinkOpenIdAccount(int userKey, OpenIdAccount account) {
+            CheckAuthDb();
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 return await securityDb.LinkOpenIdAccount(userKey, account.Issuer, account.Subject, account.Email).ConfigureAwait(false);
             }
         }
 
         public async Task<bool> UnlinkOpenIdAccount(int userKey, string issuer, string subject) {
+            CheckAuthDb();
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 return await securityDb.UnlinkOpenIdAccount(userKey, issuer, subject).ConfigureAwait(false);
             }
         }
 
         public async Task<IEnumerable<OpenIdAccount>> GetOpenIdAccounts(int userKey) {
+            CheckAuthDb();
             using (var securityDb = AuthDb.Open(dbContext, authConnectionName)) {
                 return await securityDb.GetOpenIdAccounts(userKey).ConfigureAwait(false);
             }

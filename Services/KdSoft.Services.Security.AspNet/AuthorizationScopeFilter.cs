@@ -46,7 +46,7 @@ namespace KdSoft.Services.Security.AspNet
             try {
                 int? userKey = user.GetUserKeyIfExists();
                 string userName = user.GetUserName();
-                string authType = user.GetUserAuthType();
+                string authType = user.GetUserAuthTypeIfExists() ?? string.Empty;  // must not be null
                 var claimsResult = await authScope.ClaimsCache.GetClaimPropertyValuesAsync(userName, authType, userKey).ConfigureAwait(false);
 
                 var claims = claimsResult.Claims;
@@ -70,8 +70,8 @@ namespace KdSoft.Services.Security.AspNet
             if (!user.Identity.IsAuthenticated)
                 return Task.FromResult(0);
 
-            var controllerDescripter = context.ActionDescriptor as ControllerActionDescriptor;
-            var controllerType = controllerDescripter?.ControllerTypeInfo;
+            var controllerDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+            var controllerType = controllerDescriptor?.ControllerTypeInfo;
             if (controllerType == null)
                 return Task.FromResult(0);
 

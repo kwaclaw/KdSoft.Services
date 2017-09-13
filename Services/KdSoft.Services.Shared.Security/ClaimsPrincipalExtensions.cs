@@ -43,5 +43,10 @@ namespace KdSoft.Services.Security
                 throw new InvalidOperationException("Missing AuthType.");
             return claim.Value;
         }
+
+        public static string GetUserAuthTypeIfExists(this ClaimsPrincipal principal) {
+            var claim = principal.FindFirst(ClaimTypes.AuthType);
+            return claim?.Value;
+        }
     }
 }
