@@ -1,19 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="$(SolutionDir)common.props" />
+
   <PropertyGroup>
+    <Title>KdSoft.Services.Security.Authorization</Title>
     <Description>KdSoft.Services.Security.Authorization Class Library</Description>
     <VersionPrefix>2.0.1</VersionPrefix>
-    <Authors>Karl Waclawek</Authors>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <IncludeSymbols>True</IncludeSymbols>
-    <CodeAnalysisRuleSet>..\..\Solution.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
