@@ -1,0 +1,471 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IClaimsCache
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IClaimsCache
+   ">
+    <meta name="generator" content="docfx 2.26.3.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="KdSoft.Services.Security.IClaimsCache">
+  
+  
+  <h1 id="KdSoft_Services_Security_IClaimsCache" data-uid="KdSoft.Services.Security.IClaimsCache" class="text-break">Interface IClaimsCache
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="KdSoft.Services.Security.html">KdSoft.Services.Security</a></h6>
+  <h6><strong>Assembly</strong>: KdSoft.Services.Shared.Security.dll</h6>
+  <h5 id="KdSoft_Services_Security_IClaimsCache_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IClaimsCache</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="KdSoft_Services_Security_IClaimsCache_PropertiesStartIndex_" data-uid="KdSoft.Services.Security.IClaimsCache.PropertiesStartIndex*"></a>
+  <h4 id="KdSoft_Services_Security_IClaimsCache_PropertiesStartIndex" data-uid="KdSoft.Services.Security.IClaimsCache.PropertiesStartIndex">PropertiesStartIndex</h4>
+  <div class="markdown level1 summary"><p>Returns the starting index for non-claim properties.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int PropertiesStartIndex { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="KdSoft_Services_Security_IClaimsCache_ClaimsExist_" data-uid="KdSoft.Services.Security.IClaimsCache.ClaimsExist*"></a>
+  <h4 id="KdSoft_Services_Security_IClaimsCache_ClaimsExist_System_Byte___" data-uid="KdSoft.Services.Security.IClaimsCache.ClaimsExist(System.Byte[])">ClaimsExist(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Determines if there are netries for a given key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool ClaimsExist(byte[] claimsId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">claimsId</span></td>
+        <td><p>Key to check.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if entries for the key exist, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_IClaimsCache_GetClaimPropertyValuesAsync_" data-uid="KdSoft.Services.Security.IClaimsCache.GetClaimPropertyValuesAsync*"></a>
+  <h4 id="KdSoft_Services_Security_IClaimsCache_GetClaimPropertyValuesAsync_System_Byte___System_Collections_Generic_IList_System_Int32__System_Int32_" data-uid="KdSoft.Services.Security.IClaimsCache.GetClaimPropertyValuesAsync(System.Byte[],System.Collections.Generic.IList{System.Int32},System.Int32)">GetClaimPropertyValuesAsync(Byte[], IList&lt;Int32&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns claims and non-claim properties for a given cache entry identifier.
+A cache entry can hold multiple properties, arranged by index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;ClaimProperties&gt; GetClaimPropertyValuesAsync(byte[] claimsId, IList&lt;int&gt; propIndexes = null, int claimsCount = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">claimsId</span></td>
+        <td><p>Key for which to return the properties.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IList</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">propIndexes</span></td>
+        <td><p>Indexes of properties to return, claims indexes must come before property indexes.
+If the value is <code>null</code> then all clainms and properties are returned.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">claimsCount</span></td>
+        <td><p>Number of claims, also starting index of non-claim properties.
+This argument is ignored when <code>propIndexes == null</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="KdSoft.Services.Security.ClaimProperties.html">ClaimProperties</a>&gt;</td>
+        <td><p>Lists of claims and properties for the given key.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_IClaimsCache_GetClaimsAsync_" data-uid="KdSoft.Services.Security.IClaimsCache.GetClaimsAsync*"></a>
+  <h4 id="KdSoft_Services_Security_IClaimsCache_GetClaimsAsync_System_Byte___System_Collections_Generic_IList_System_Int32__" data-uid="KdSoft.Services.Security.IClaimsCache.GetClaimsAsync(System.Byte[],System.Collections.Generic.IList{System.Int32})">GetClaimsAsync(Byte[], IList&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns claims.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;IList&lt;Claim&gt;&gt; GetClaimsAsync(byte[] claimsId, IList&lt;int&gt; propIndexes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">claimsId</span></td>
+        <td><p>Key for which to return the properties.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IList</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">propIndexes</span></td>
+        <td><p>Indexes of claim properties to return. Must not include non-claim indexes.
+If the value is <code>null</code> then all claims are returned.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Collections.Generic.IList</span>&lt;<span class="xref">System.Security.Claims.Claim</span>&gt;&gt;</td>
+        <td><p>List of claims for the given key.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_IClaimsCache_GetUserKeyString_" data-uid="KdSoft.Services.Security.IClaimsCache.GetUserKeyString*"></a>
+  <h4 id="KdSoft_Services_Security_IClaimsCache_GetUserKeyString_System_Byte___" data-uid="KdSoft.Services.Security.IClaimsCache.GetUserKeyString(System.Byte[])">GetUserKeyString(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Returns user key converted to string. Should be used as the authoritative way
+to stringify the user key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetUserKeyString(byte[] userKeyBytes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">userKeyBytes</span></td>
+        <td><p>Encoded user key.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_IClaimsCache_RemoveClaimsAsync_" data-uid="KdSoft.Services.Security.IClaimsCache.RemoveClaimsAsync*"></a>
+  <h4 id="KdSoft_Services_Security_IClaimsCache_RemoveClaimsAsync_System_Byte___" data-uid="KdSoft.Services.Security.IClaimsCache.RemoveClaimsAsync(System.Byte[])">RemoveClaimsAsync(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Removes all entries for a given key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;bool&gt; RemoveClaimsAsync(byte[] claimsId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">claimsId</span></td>
+        <td><p>Key to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><p><code>true</code> if entries for the key existed, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_IClaimsCache_RetrieveAndCacheClaimPropertiesAsync_" data-uid="KdSoft.Services.Security.IClaimsCache.RetrieveAndCacheClaimPropertiesAsync*"></a>
+  <h4 id="KdSoft_Services_Security_IClaimsCache_RetrieveAndCacheClaimPropertiesAsync_System_Byte___System_String_System_String_System_Byte___System_DateTime_System_DateTime_" data-uid="KdSoft.Services.Security.IClaimsCache.RetrieveAndCacheClaimPropertiesAsync(System.Byte[],System.String,System.String,System.Byte[],System.DateTime,System.DateTime)">RetrieveAndCacheClaimPropertiesAsync(Byte[], String, String, Byte[], DateTime, DateTime)</h4>
+  <div class="markdown level1 summary"><p>Caches standard claim and non-claim values and and returns them as claims and properties.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;ClaimProperties&gt; RetrieveAndCacheClaimPropertiesAsync(byte[] claimsId, string userName, string authType, byte[] userKeyBytes, DateTime tokenValidFrom = default (DateTime), DateTime tokenValidTo = default (DateTime))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">claimsId</span></td>
+        <td><p>Key under which to store the values.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userName</span></td>
+        <td><p>Standard userName claim value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">authType</span></td>
+        <td><p>Standard authentication type claim value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">userKeyBytes</span></td>
+        <td><p>Encoded (serialized) standard userKey claim value. May be <code>null</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.DateTime</span></td>
+        <td><span class="parametername">tokenValidFrom</span></td>
+        <td><p>Standard token validFrom date-time property value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.DateTime</span></td>
+        <td><span class="parametername">tokenValidTo</span></td>
+        <td><p>Standard token validTo date-time property value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="KdSoft.Services.Security.ClaimProperties.html">ClaimProperties</a>&gt;</td>
+        <td><p>Claim values as Claim instances, property values as byte arrays.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

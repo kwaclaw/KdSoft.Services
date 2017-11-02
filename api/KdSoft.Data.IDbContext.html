@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IDbContext
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IDbContext
+   ">
+    <meta name="generator" content="docfx 2.26.3.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="KdSoft.Data.IDbContext">
+  
+  
+  <h1 id="KdSoft_Data_IDbContext" data-uid="KdSoft.Data.IDbContext" class="text-break">Interface IDbContext
+  </h1>
+  <div class="markdown level0 summary"><p>Interface for managing connection strings and connections. Helps keep connections alive 
+between database and service calls, mainly to prevent a transaction from implicitly
+being elevated to a Distributed Transaction when not necessary.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.IDisposable.Dispose()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="KdSoft.Data.html">KdSoft.Data</a></h6>
+  <h6><strong>Assembly</strong>: KdSoft.Data.dll</h6>
+  <h5 id="KdSoft_Data_IDbContext_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IDbContext : IDisposable</code></pre>
+  </div>
+  <h5 id="KdSoft_Data_IDbContext_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Database connections opened from this instance will only be closed/returned to the pool
+when this instance is closed/disposed of.</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="KdSoft_Data_IDbContext_Culture_" data-uid="KdSoft.Data.IDbContext.Culture*"></a>
+  <h4 id="KdSoft_Data_IDbContext_Culture" data-uid="KdSoft.Data.IDbContext.Culture">Culture</h4>
+  <div class="markdown level1 summary"><p>Culture to use when database access should include culture context.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">CultureInfo Culture { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Globalization.CultureInfo</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="KdSoft_Data_IDbContext_GetConnectionSetting_" data-uid="KdSoft.Data.IDbContext.GetConnectionSetting*"></a>
+  <h4 id="KdSoft_Data_IDbContext_GetConnectionSetting_System_String_" data-uid="KdSoft.Data.IDbContext.GetConnectionSetting(System.String)">GetConnectionSetting(String)</h4>
+  <div class="markdown level1 summary"><p>Retrieves connection setting by name. Connection settings are intended to be shared
+between all instances of the same implementation class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">DbConnectionSetting GetConnectionSetting(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of connection setting.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="KdSoft.Data.DbConnectionSetting.html">DbConnectionSetting</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Data_IDbContext_OpenConnection_" data-uid="KdSoft.Data.IDbContext.OpenConnection*"></a>
+  <h4 id="KdSoft_Data_IDbContext_OpenConnection_System_String_" data-uid="KdSoft.Data.IDbContext.OpenConnection(System.String)">OpenConnection(String)</h4>
+  <div class="markdown level1 summary"><p>Opens a connection for the specified connection setting. Will re-use connections
+already opened for the same name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">DbConnection OpenConnection(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of <a class="xref" href="KdSoft.Data.DbConnectionSetting.html">DbConnectionSetting</a> to use.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Data.Common.DbConnection</span></td>
+        <td><p>New or existing connection.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Data_IDbContext_OpenNewConnection_" data-uid="KdSoft.Data.IDbContext.OpenNewConnection*"></a>
+  <h4 id="KdSoft_Data_IDbContext_OpenNewConnection_System_String_" data-uid="KdSoft.Data.IDbContext.OpenNewConnection(System.String)">OpenNewConnection(String)</h4>
+  <div class="markdown level1 summary"><p>Opens a new connection for the specified connection setting - &apos;new&apos; can mean a connection
+available from the connection pool. Will not re-use connections already opened for the same name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">DbConnection OpenNewConnection(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of <a class="xref" href="KdSoft.Data.DbConnectionSetting.html">DbConnectionSetting</a> to use.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Data.Common.DbConnection</span></td>
+        <td><p>New connection.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="KdSoft_Data_IDbContext_OpenNewConnection_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Since a database connection can only have one transaction context during its life-time
+(that is, until it is closed/returned to the pool), it will be necessary to call OpenNewConnection(string)
+instead of <a class="xref" href="KdSoft.Data.IDbContext.html#KdSoft_Data_IDbContext_OpenConnection_System_String_">OpenConnection(String)</a> if we want to use a connection with the same name
+from the same <a class="xref" href="KdSoft.Data.IDbContext.html">IDbContext</a> instance inside a new transaction.<br>
+In other words, we cannot have multiple transactions on the same connection before it is closed,
+which means, before this <a class="xref" href="KdSoft.Data.IDbContext.html">IDbContext</a> instance is closed.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

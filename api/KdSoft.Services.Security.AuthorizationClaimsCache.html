@@ -1,0 +1,730 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class AuthorizationClaimsCache
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class AuthorizationClaimsCache
+   ">
+    <meta name="generator" content="docfx 2.26.3.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache">
+  
+  
+  <h1 id="KdSoft_Services_Security_AuthorizationClaimsCache" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache" class="text-break">Class AuthorizationClaimsCache
+  </h1>
+  <div class="markdown level0 summary"><p>Default authorization claims cache.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="KdSoft.Services.Security.ClaimsCache.html">ClaimsCache</a></div>
+    <div class="level2"><span class="xref">AuthorizationClaimsCache</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_Store">ClaimsCache.Store</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_AllCreateLockRequests">ClaimsCache.AllCreateLockRequests</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_AllReadLockRequests">ClaimsCache.AllReadLockRequests</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_MaxLockWaitTimeSeconds">ClaimsCache.MaxLockWaitTimeSeconds</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_emptyBuffer">ClaimsCache.emptyBuffer</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_ClaimTypeDescs">ClaimsCache.ClaimTypeDescs</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_PropertiesStartIndex">ClaimsCache.PropertiesStartIndex</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_ClonePropEntries_System_ArraySegment_KdSoft_Services_StorageServices_Transient_PropEntry__">ClaimsCache.ClonePropEntries(ArraySegment&lt;PropEntry&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_CreatePropValue_System_String_System_Byte___">ClaimsCache.CreatePropValue(String, Byte[])</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_CreateStringPropValue_System_String_System_String_">ClaimsCache.CreateStringPropValue(String, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_StorePropertyValuesAsync_System_Byte___System_Collections_Generic_IList_KdSoft_Services_Security_PropertyValue__">ClaimsCache.StorePropertyValuesAsync(Byte[], IList&lt;PropertyValue&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_CreateClaims_System_ArraySegment_KdSoft_Services_StorageServices_Transient_PropEntry__">ClaimsCache.CreateClaims(ArraySegment&lt;PropEntry&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_GetPropertyValuesAsync_System_Byte___System_Collections_Generic_IList_System_Int32__">ClaimsCache.GetPropertyValuesAsync(Byte[], IList&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_GetClaimsAsync_System_Byte___System_Collections_Generic_IList_System_Int32__">ClaimsCache.GetClaimsAsync(Byte[], IList&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_RemoveClaimsAsync_System_Byte___">ClaimsCache.RemoveClaimsAsync(Byte[])</a>
+    </div>
+    <div>
+      <a class="xref" href="KdSoft.Services.Security.ClaimsCache.html#KdSoft_Services_Security_ClaimsCache_ClaimsExist_System_Byte___">ClaimsCache.ClaimsExist(Byte[])</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="KdSoft.Services.Security.html">KdSoft.Services.Security</a></h6>
+  <h6><strong>Assembly</strong>: KdSoft.Services.Security.Authorization.dll</h6>
+  <h5 id="KdSoft_Services_Security_AuthorizationClaimsCache_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class AuthorizationClaimsCache : ClaimsCache</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache__ctor_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.#ctor*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache__ctor_System_String_KdSoft_Services_Security_IAuthorizationClaimsConfig_KdSoft_Services_Security_IAuthorizationProvider_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.#ctor(System.String,KdSoft.Services.Security.IAuthorizationClaimsConfig,KdSoft.Services.Security.IAuthorizationProvider)">AuthorizationClaimsCache(String, IAuthorizationClaimsConfig, IAuthorizationProvider)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AuthorizationClaimsCache(string name, IAuthorizationClaimsConfig config, IAuthorizationProvider provider)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="KdSoft.Services.Security.IAuthorizationClaimsConfig.html">IAuthorizationClaimsConfig</a></td>
+        <td><span class="parametername">config</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="KdSoft.Services.Security.IAuthorizationProvider.html">IAuthorizationProvider</a></td>
+        <td><span class="parametername">provider</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_Provider_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.Provider*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_Provider" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.Provider">Provider</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IAuthorizationProvider Provider { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="KdSoft.Services.Security.IAuthorizationProvider.html">IAuthorizationProvider</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_RefreshPeriod_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.RefreshPeriod*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_RefreshPeriod" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.RefreshPeriod">RefreshPeriod</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected TimeSpan RefreshPeriod { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_AddClaimsToBeCachedAsync_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.AddClaimsToBeCachedAsync*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_AddClaimsToBeCachedAsync_System_String_System_String_System_Nullable_System_Int32__System_Collections_Generic_List_KdSoft_Services_Security_PropertyValue__" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.AddClaimsToBeCachedAsync(System.String,System.String,System.Nullable{System.Int32},System.Collections.Generic.List{KdSoft.Services.Security.PropertyValue})">AddClaimsToBeCachedAsync(String, String, Nullable&lt;Int32&gt;, List&lt;PropertyValue&gt;)</h4>
+  <div class="markdown level1 summary"><p>Uses the configured authorization provider and Active Directory (if applicable) to retrieve
+authorization information and add it to the <see param="properties"></see> list passed as argument.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual Task AddClaimsToBeCachedAsync(string userName, string authType, int ? userKey, List&lt;PropertyValue&gt; properties)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userName</span></td>
+        <td><p>User name component.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">authType</span></td>
+        <td><p>Authentication type component.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">userKey</span></td>
+        <td><p>User key component.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="KdSoft.Services.Security.PropertyValue.html">PropertyValue</a>&gt;</td>
+        <td><span class="parametername">properties</span></td>
+        <td><p>List to add authorization properties to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_AddPropertiesToBeCachedAsync_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.AddPropertiesToBeCachedAsync*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_AddPropertiesToBeCachedAsync_System_String_System_String_System_Nullable_System_Int32__System_Collections_Generic_List_KdSoft_Services_Security_PropertyValue__" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.AddPropertiesToBeCachedAsync(System.String,System.String,System.Nullable{System.Int32},System.Collections.Generic.List{KdSoft.Services.Security.PropertyValue})">AddPropertiesToBeCachedAsync(String, String, Nullable&lt;Int32&gt;, List&lt;PropertyValue&gt;)</h4>
+  <div class="markdown level1 summary"><p>Uses the configured authorization provider and Active Directory (if applicable) to retrieve
+non-claim authorization information and add it to the <see param="properties"></see> list passed as argument.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual Task AddPropertiesToBeCachedAsync(string userName, string authType, int ? userKey, List&lt;PropertyValue&gt; properties)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userName</span></td>
+        <td><p>User name component.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">authType</span></td>
+        <td><p>Authentication type component.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">userKey</span></td>
+        <td><p>User key component.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="KdSoft.Services.Security.PropertyValue.html">PropertyValue</a>&gt;</td>
+        <td><span class="parametername">properties</span></td>
+        <td><p>List to add authorization properties to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_DateTimeOffsetUtcClaimDecode_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.DateTimeOffsetUtcClaimDecode*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_DateTimeOffsetUtcClaimDecode_System_Byte___" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.DateTimeOffsetUtcClaimDecode(System.Byte[])">DateTimeOffsetUtcClaimDecode(Byte[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static string DateTimeOffsetUtcClaimDecode(byte[] bytes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">bytes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_GetClaimPropertyValuesAsync_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.GetClaimPropertyValuesAsync*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_GetClaimPropertyValuesAsync_System_Byte___System_Collections_Generic_IList_System_Int32__System_Int32_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.GetClaimPropertyValuesAsync(System.Byte[],System.Collections.Generic.IList{System.Int32},System.Int32)">GetClaimPropertyValuesAsync(Byte[], IList&lt;Int32&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Retrieves claims and properties for a given claims identifier.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;ClaimProperties&gt; GetClaimPropertyValuesAsync(byte[] claimsId, IList&lt;int&gt; propIndexes = null, int claimsCount = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">claimsId</span></td>
+        <td><p>Identifier for cache entry.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IList</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">propIndexes</span></td>
+        <td><p>List of indexes for property values stored in cache entry.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">claimsCount</span></td>
+        <td><p>Number of property values that are claims, counted from the start of the propIndexes list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="KdSoft.Services.Security.ClaimProperties.html">ClaimProperties</a>&gt;</td>
+        <td><p>Lists of claims and property buffers.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_GetClaimPropertyValuesAsync_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.GetClaimPropertyValuesAsync*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_GetClaimPropertyValuesAsync_System_String_System_String_System_Nullable_System_Int32__" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.GetClaimPropertyValuesAsync(System.String,System.String,System.Nullable{System.Int32})">GetClaimPropertyValuesAsync(String, String, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Retrieves or refreshes claims and properties for a given set of identifier components.
+Refresh is based on <a class="xref" href="KdSoft.Services.Security.IAuthorizationClaimsConfig.html#KdSoft_Services_Security_IAuthorizationClaimsConfig_ClaimsRefreshPeriod">ClaimsRefreshPeriod</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;ClaimProperties&gt; GetClaimPropertyValuesAsync(string userName, string authType, int ? userKey)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userName</span></td>
+        <td><p>User name for which to load authorization information.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">authType</span></td>
+        <td><p>Authentication type used to validate user identity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">userKey</span></td>
+        <td><p>Optional user key for data storage lookups.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="KdSoft.Services.Security.ClaimProperties.html">ClaimProperties</a>&gt;</td>
+        <td><p>Lists of claims and property buffers.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_GetClaimsId_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.GetClaimsId*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_GetClaimsId_System_String_System_String_System_Nullable_System_Int32__" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.GetClaimsId(System.String,System.String,System.Nullable{System.Int32})">GetClaimsId(String, String, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Builds claims identifier from components.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte[] GetClaimsId(string userName, string authType, int ? userKey)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userName</span></td>
+        <td><p>User name component.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">authType</span></td>
+        <td><p>Authentication type component.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">userKey</span></td>
+        <td><p>User key component.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><p>Byte buffer representing identifier for cache entry.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_RetrieveAndCacheClaimPropertiesAsync_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.RetrieveAndCacheClaimPropertiesAsync*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_RetrieveAndCacheClaimPropertiesAsync_System_String_System_String_System_Nullable_System_Int32__" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.RetrieveAndCacheClaimPropertiesAsync(System.String,System.String,System.Nullable{System.Int32})">RetrieveAndCacheClaimPropertiesAsync(String, String, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Loads authorization information and returns it in the form of claims and property buffers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;ClaimProperties&gt; RetrieveAndCacheClaimPropertiesAsync(string userName, string authType, int ? userKey)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userName</span></td>
+        <td><p>User name for which to load authorization information.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">authType</span></td>
+        <td><p>Authentication type used to validate user identity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">userKey</span></td>
+        <td><p>Optional user key for data storage lookups.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="KdSoft.Services.Security.ClaimProperties.html">ClaimProperties</a>&gt;</td>
+        <td><p>Lists of claims and property buffers.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="KdSoft_Services_Security_AuthorizationClaimsCache_StringSplitClaimDecode_" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.StringSplitClaimDecode*"></a>
+  <h4 id="KdSoft_Services_Security_AuthorizationClaimsCache_StringSplitClaimDecode_System_Byte___" data-uid="KdSoft.Services.Security.AuthorizationClaimsCache.StringSplitClaimDecode(System.Byte[])">StringSplitClaimDecode(Byte[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static string[] StringSplitClaimDecode(byte[] bytes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">bytes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
