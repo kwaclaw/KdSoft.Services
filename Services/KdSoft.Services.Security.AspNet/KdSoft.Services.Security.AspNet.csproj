@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Title>KdSoft.Services.Security.AspNet</Title>
     <Description>KdSoft.Services.Security.AspNet Class Library</Description>
-    <VersionPrefix>2.0.2</VersionPrefix>
+    <VersionPrefix>2.0.3</VersionPrefix>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
   </PropertyGroup>
 

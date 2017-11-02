@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Title>KdSoft.Services.WebApi.Shared</Title>
     <Description>KdSoft.Services.WebApi.Shared Class Library</Description>
-    <VersionPrefix>2.0.1</VersionPrefix>
+    <VersionPrefix>2.0.2</VersionPrefix>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
   </PropertyGroup>
 
