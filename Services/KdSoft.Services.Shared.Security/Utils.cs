@@ -9,7 +9,7 @@ namespace KdSoft.Services.Security
     public static class Utils
     {
         /// <summary>
-        /// Serializer like <see cref="BitConverter"/>, with methods to serialize into existing byte arrays.
+        /// Serializer like <see cref="System.BitConverter"/>, with methods to serialize into existing byte arrays.
         /// </summary>
         public static readonly ByteConverter Converter = new ByteConverter(BitConverter.IsLittleEndian ? ByteOrder.LittleEndian : ByteOrder.BigEndian);
 

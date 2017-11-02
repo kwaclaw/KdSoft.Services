@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}"
 	ProjectSection(SolutionItems) = preProject
@@ -59,8 +59,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{BB785B46-FA30-45A6-9B80-1B9E49E21410}"
 	ProjectSection(SolutionItems) = preProject
 		artifacts\CollectPackages.cmd = artifacts\CollectPackages.cmd
-		artifacts\MyFeed_push_all.cmd = artifacts\MyFeed_push_all.cmd
-		artifacts\QLineFeed_push_all.cmd = artifacts\QLineFeed_push_all.cmd
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{8775046D-55A3-4520-A09C-D5EF88BA14A7}"
@@ -72,12 +70,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CAE7EE00
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KdSoft.Services.Security.Tests", "Tests\KdSoft.Services.Security.Tests\KdSoft.Services.Security.Tests.csproj", "{E38BFCC6-0907-4291-B823-E24ABE98146F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docfx_project", "docfx_project", "{12D4597B-C3FC-48E9-B632-871AC11C1D69}"
-	ProjectSection(SolutionItems) = preProject
-		docfx_project\BuildDocs.cmd = docfx_project\BuildDocs.cmd
-		docfx_project\docfx.json = docfx_project\docfx.json
-		docfx_project\RebuildDocs.Cmd = docfx_project\RebuildDocs.Cmd
-		docfx_project\RunSite.cmd = docfx_project\RunSite.cmd
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "docfx", "docfx\docfx.csproj", "{EB4ED826-00BE-4838-BC4D-28EC2BF152BB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{690DFA00-CEA3-403B-8145-44355E63FA75} = {690DFA00-CEA3-403B-8145-44355E63FA75}
+		{C86D9B56-E2E9-4C20-A94D-F24761322AF8} = {C86D9B56-E2E9-4C20-A94D-F24761322AF8}
+		{967D6157-574E-4A28-BE7E-CFFD668D7EAD} = {967D6157-574E-4A28-BE7E-CFFD668D7EAD}
+		{18ABE965-D56D-4D16-BD06-404B94B4CE72} = {18ABE965-D56D-4D16-BD06-404B94B4CE72}
+		{FC0C6A92-2C09-4323-866D-0DFE33B5921C} = {FC0C6A92-2C09-4323-866D-0DFE33B5921C}
 	EndProjectSection
 EndProject
 Global
@@ -158,6 +157,9 @@ Global
 		{E38BFCC6-0907-4291-B823-E24ABE98146F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E38BFCC6-0907-4291-B823-E24ABE98146F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E38BFCC6-0907-4291-B823-E24ABE98146F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB4ED826-00BE-4838-BC4D-28EC2BF152BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4ED826-00BE-4838-BC4D-28EC2BF152BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4ED826-00BE-4838-BC4D-28EC2BF152BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,7 +185,6 @@ Global
 		{BB785B46-FA30-45A6-9B80-1B9E49E21410} = {BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}
 		{8775046D-55A3-4520-A09C-D5EF88BA14A7} = {BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}
 		{E38BFCC6-0907-4291-B823-E24ABE98146F} = {CAE7EE00-98DD-4F15-9AB4-062A53CFA364}
-		{12D4597B-C3FC-48E9-B632-871AC11C1D69} = {BE0D66EE-3CCB-4C85-9E63-68054BCD8D49}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D45E843-08A0-4270-9B73-8C7B6BA4184A}

@@ -4,7 +4,7 @@
     <Description>KdSoft.Services.Security.Authorization Class Library</Description>
     <VersionPrefix>2.0.1</VersionPrefix>
     <Authors>Karl Waclawek</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>

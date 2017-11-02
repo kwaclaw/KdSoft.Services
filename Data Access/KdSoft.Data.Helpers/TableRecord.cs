@@ -11,7 +11,7 @@ namespace KdSoft.Data.Helpers
 {
     /// <summary>
     /// Case-insensitive dictionary for generating insert and update SQL for a given table from
-    /// property names or <see cref="KeyValuePair{T,V}">KeyValuePair&lt;string,object></see> collections.
+    /// property names or <see cref="KeyValuePair{TKey, TValue}">KeyValuePair&lt;string,object&gt;</see> collections.
     /// Does not allow adding or removing properties once created.
     /// </summary>
     /// <remarks>Not thread safe.</remarks>
