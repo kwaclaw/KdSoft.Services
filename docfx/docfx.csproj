@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <Import Project="..\common.props" />
+
     <PropertyGroup>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <IncludeSymbols>False</IncludeSymbols>
         <TargetFramework>net461</TargetFramework>
     </PropertyGroup>
 

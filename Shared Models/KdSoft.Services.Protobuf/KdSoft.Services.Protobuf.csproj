@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(SolutionDir)common.props" />
+  <Import Project="..\..\common.props" />
 
   <PropertyGroup>
     <Title>KdSoft.Services.Protobuf</Title>
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.4.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.4.1" />
     <PackageReference Include="KdSoft.Reflection.Portable" Version="1.0.3" />
   </ItemGroup>
 
